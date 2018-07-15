@@ -1,0 +1,18 @@
+<div class="helplist">
+    <h1 class="list_title">
+         {$title|default=''}
+    </h1>
+        <div>
+            <h2 class="list_title2">{$list.0.title}</h2>
+            <section class="list_content">
+                <div class="content_lists">
+                    {volist name="list" id="vo" }
+                       <a class="item-category" data-id="{$vo.id|default=''}" data-value="{$title|default=''}">{$vo.name|default='--'}</a>
+                    {/volist}
+                </div>
+            </section>
+            <a class="list_title3">
+                <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+            </a>
+        </div>
+</div>

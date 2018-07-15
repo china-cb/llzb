@@ -1,0 +1,110 @@
+<!-- inject:admin_header:html -->
+<div class="header admin">
+    <div class="h-bar">
+        <div class="warp">
+            <a class="logo" href=""></a>
+            <div class="nav">
+                <div class="name">你好,<a>
+                    {empty name="user_info.nick_name"}
+                    {$user_info.phone|default=''}
+                    {else/}
+                    {$user_info.nick_name|default="大哥,您火星来的吧"}
+                    {/empty}
+                </a></div>
+                <a class="logout quit_btn">退出</a>
+                <a class="nav-item">安全中心</a>
+                <a class="nav-item">会员保障</a>
+                <a class="nav-item">客户服务</a>
+            </div>
+        </div>
+    </div>
+    <div class="h-main">
+        <div class="warp">
+            <a class="logo-top"></a>
+            <ul class="hm-menu">
+                <li class="menu-item active"><a href="{:url('index/admin/index')}">玲珑首页</a></li>
+                <li class="menu-item">
+                    <div class="mi-list">
+                        <div class="menu-content">
+                            <a class="mc-close">
+                                <i class="iconfont">&#xe61f;</i>
+                            </a>
+                            <a href="{:url('index/admin/channel_manage')}" class="mc-item">
+                                频道管理
+                            </a>
+                            <a href="{:url('index/admin/channel_manage',['type'=>2])}" class="mc-item">
+                                数据统计
+                            </a>
+                        </div>
+                        <div class="menu-title">直播服务</div>
+                    </div>
+                </li>
+                <li class="menu-center">
+                    <div class="user-info-warp">
+                        <div class="user-ava">
+                            {empty name='user_info.user_face'}
+                            <img src="__static__/index/src/img/temp/user_ava.png">
+                            {else/}
+                            <img src="{$Think.config.CONFIG_CDN_URL}{$user_info.user_face|default=''}">
+                            {/empty}
+                            <h4>你好,<span>
+                                {empty name="user_info.nick_name"}
+                                   {$user_info.phone|default=''}
+                                {else/}
+                                   {$user_info.nick_name|default="大哥,您火星来的吧"}
+                                {/empty}
+                            </span></h4>
+                            <div class="user-auth">
+                                <a href="{:url('index/user_center/account','type=1')}" class="real-name "></a>
+                                <a href="{:url('index/user_center/account','type=5')}" class="phone "></a>
+                                <a href="{:url('index/user_center/account','type=6')}" class="email "></a>
+                            </div>
+                            <div class="user-info">
+                                <div class="info-item">
+                                    <p><span>账户类型 :</span>{switch name="user_info.account_type"}
+                                            {case value="1"}基础版{/case}
+                                            {case value="2"}专业版{/case}
+                                            {case value="3"}企业版{/case}
+                                            {default /}基础版
+                                        {/switch}
+                                        <a class="updata">升级</a></p>
+                                    <p><span>账户余额 :</span><i class="iconfont">&#xe644;</i>{$user_info.balance|default='0.00'}<a class="charge" href="{:url('index/user_center/account','type=3')}">充值</a></p>
+                                    <p><span>套餐类型 :</span>{$user_info.name|default='---'}<a class="buy">购买</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="mc-close quit_btn">退出</a>
+                    </div>
+                </li>
+                <li class="menu-item"><a class="demand_live">点播服务</a></li>
+                <li class="menu-item">
+                    <div class="mi-list">
+                        <div class="menu-content">
+                            <a class="mc-close">
+                                <i class="iconfont">&#xe61f;</i>
+                            </a>
+                            <a href="{:url('index/user_center/account','type=1')}" class="mc-item">
+                                账户信息
+                            </a>
+                            <a href="{:url('index/user_center/account','type=2')}" class="mc-item">
+                                账单详情
+                            </a>
+                            <a href="{:url('index/user_center/account','type=3')}" class="mc-item">
+                                余额充值
+                            </a>
+                            <a href="{:url('index/user_center/account','type=4')}" class="mc-item">
+                                充值订单
+                            </a>
+                        </div>
+                        <div class="menu-title">账户管理</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script>
+    $(".demand_live").click(function(){
+        layer.msg("此模块正在开发中,稍后开放,敬请期待!",{icon:6,title:"前方施工,注意安全"});
+    });
+</script>

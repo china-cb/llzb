@@ -1,0 +1,54 @@
+<?php
+namespace app\index\controller;
+use app\index\model\IndexModel;
+use app\lib\TisApi;
+use app\lib\WisApi;
+use think\Controller;
+//use Mts\Request\V20140618 as Mts;
+
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/5
+ * Time: 13:19
+ */
+class Index extends CommonIndex
+{
+    protected $partNum;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /** 玲珑TV首页 */
+    public function index()
+    {
+        return $this->fetch();
+    }
+
+    /** 套餐购买 */
+    public function package(){
+
+        $this->assign("nav_num","3");
+        return $this->fetch();
+    }
+
+    /** 购买套餐提交页面 */
+    public function package_buy(){
+        return $this->fetch();
+    }
+
+    /** 支付成功页面 */
+    public function pay_success(){
+        return $this->fetch();
+    }
+    /** 获取套餐信息 */
+    public function pay_info(){
+        $id = input('post.b','');
+        $m = new IndexModel();
+        $list = $m->get_package_info($id);
+        (empty($list)) && wrong_return('套餐信息不正确');
+        ok_return('上传成功',1,$list);
+    }
+}

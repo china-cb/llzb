@@ -1,0 +1,21 @@
+<div class="block">
+    <div class="help_docs">
+        <h1 class="title_path">
+            <a>
+               {$title|default=''}
+            </a>>>
+            <a class="top-category" data-id="{$help_info.hid|default=''}" data-value="{$title|default=''}">{$help_info.title|default='--'}</a>>>
+            <span>{$help_info.name|default='--'}</span>
+        </h1>
+        <div style="clear: both;">
+
+        </div>
+        <h2 class="title_h2">
+            {$help_info.name|default='--'}
+        </h2>
+        <section class="docs_main">
+            {$help_info.content|default='--'}
+        </section>
+    </div>
+</div>
+

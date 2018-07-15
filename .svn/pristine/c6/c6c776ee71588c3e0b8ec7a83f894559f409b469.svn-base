@@ -1,0 +1,26 @@
+/**
+ * Created by deloo on 2016/11/30.
+ */
+var _admin=(function(){
+    var menu_admin;
+    function init(){
+        menu_admin=$(".main.admin .menu .menu-item");
+    }
+    /*定义菜单位置*/
+    function menu(n,m){
+        if(n||n==0){
+            menu_admin.eq(n).trigger("click");
+            if(m){
+                menu_admin.eq(n).find(".ig-item").removeClass("active").eq(m).addClass("active");
+            }
+        }
+    }
+    return {
+        menu:menu,
+        init:init
+    }
+})();
+
+$(function(){
+    _admin.init();
+});

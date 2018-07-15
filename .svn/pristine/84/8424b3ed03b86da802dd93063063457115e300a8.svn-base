@@ -1,0 +1,70 @@
+{extend name="base/base"/}
+{block name="css"}{/block}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}模版管理{/block}
+{block name="site_nav_2"}模版列表{/block}
+{block name='content'}
+
+<!--<div class="cl pd-5 bg-1 bk-gray mt-20">-->
+    <!--<span class="l">-->
+    <!--<a class="btn btn-primary radius open_form" data-url="{:url('exec',['type'=>'add'])}" href="javascript:;">-->
+        <!--<i class="Hui-iconfont">&#xe600;</i> 添加菜单</a>-->
+    <!--</span>-->
+
+<!--</div>-->
+{notempty name='base_path'}
+    <div class="cl pd-5 bg-1 bk-gray mt-20">
+
+        <span class="l">  上级目录:
+            {php}$path = '';{/php}
+            <a href="{:url('index')}">..</a>/{foreach name="path_arr" key='k' item="vo"}{php}$path = $path. '/' .$vo;$path= ltrim($path,'/');{/php}<a href="{:url('index',['path'=>base64_encode($path)])}">{$vo}</a>/{/foreach}
+        </span>
+
+    </div>
+{/notempty}
+<div class="mt-20">
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th>名称</th>
+            <th>类型</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td class="text-l">
+
+                {notempty name='vo.type'}
+                {switch name='vo.type'}
+                {case value='dir'}
+                    <i class="fa fa-folder-o"></i>&nbsp;<a href="{:url('index',['path'=>base64_encode($base_path.'/'.$vo['name'])])}"  title="打开">
+                        {$vo.name|default=''}
+                    </a>
+                {/case}
+                {case value='file'}
+                <a class="open_form" href="javascript:"  data-url="{:url('code_edit',['path'=>base64_encode($base_path.'/'.$vo['name'])])}" title="编辑">
+                    <i class="fa fa-file-text-o"></i>&nbsp;{$vo.name|default=''}
+                </a>
+                {/case}
+                {default /}--
+                {/switch}
+                {/notempty}
+
+            </td>
+            <td>
+                {notempty name='vo.type'}
+                {switch name='vo.type'}
+                {case value='dir'}<span class="label label-default radius">文件夹</span>{/case}
+                {case value='file'}<span class="label label-success radius">文件</span>{/case}
+                {default /}--
+                {/switch}
+                {/notempty}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+{/block}
+

@@ -1,0 +1,138 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/swiper.min.css"/}
+{css file="__static__/index/src/css/applications.css"/}
+{css file="__static__/index/src/css/animate.min.css"/}
+{/block}
+{block name="title"}应用场景{/block}
+{block name="content"}
+	<div class="banners_slide">
+		<div class="swiper-container">
+	        <div class="swiper-wrapper">
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1 class="ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="1s" swiper-animate-delay="0.3s">大型直播保障</h1>
+	            		<h2 class="ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="0.5s" swiper-animate-delay="0.8s">高并发稳定承载，保障网络直播活动额画面清晰度，传输稳定性</h2>
+	            		<a href="{:url('index/index/package')}" class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="1s" swiper-animate-delay="0.3s">购买套餐>></a>
+	            		<span class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="1.2s" swiper-animate-delay="0.4s">联系我们</span>
+	            	</div>
+	            </div>
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1>企业专属频道</h1>
+	            		<!-- php截取文章前部详细字段 -->
+	            		<h2>现成的视频托管、直播工具，自定义控制台的标签服务，低成本让您拥有企业专属直播工作平台。</h2>
+	            		<a href="{:url('index/index/package')}">购买套餐>></a>
+	            		<span>联系我们</span>
+	            	</div>
+	            </div>
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1>跨平台合作直播</h1>
+	            		<!-- php截取文章前部详细字段 -->
+	            		<h2>以合作形式在网站、手机H5页面开启直播，与三方视频网站协议直播，实现多平台同步直播。</h2>
+	            		<a href="{:url('index/index/package')}">购买套餐>></a>
+	            		<span>联系我们</span>
+	            	</div>
+	            </div>
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1>微信视频直播</h1>
+	            		<!-- php截取文章前部详细字段 -->
+	            		<h2>自助式发起，开放接入微信、微信公众号，以及基于微信的分享、互动。</h2>
+	            		<a href="{:url('index/index/package')}">购买套餐>></a>
+	            		<span>联系我们</span>
+	            	</div>
+	            </div>
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	    </div>
+	</div>
+	<div class="content_list">
+		<div class="title_list">
+			<ul class="nav">
+				<li class="active">所有内容</li>
+				{volist name="app_list" id="vo" }
+				   <li class="app_menu" data-id="{$vo.id}">{$vo.title|default=''}</li>
+				{/volist}
+			</ul>
+			<div class="list_content">
+			  <div class="list_table active">
+				  {volist name="app_child_list" id="vo" }
+						  <a href="{:url('index/index/app_article',['id'=>$vo.id])}">
+							  {empty name="vo.cover"}
+							  <img src="/static/index/src/img/applications/list_ico3.jpg" alt="" />
+							  {else/}
+							  <img src="{$Think.config.CONFIG_CDN_URL}{$vo.cover|default=''}" alt="" />
+							  {/empty}
+							  <!-- php正则取字数，超出隐藏 -->
+							  <span class="list_h1">
+								    {elt name="vo['name']|mb_strlen='utf8'" value="22"}
+									   {$vo['name']|default=''}
+									{else/}
+									   {$vo['name']|mb_substr=0,22,'utf-8'}...
+									{/elt}
+							  </span>
+							  <!-- php正则取字数，超出隐藏 -->
+							  <span class="list_h2">
+								   {elt name="vo['desc']|mb_strlen='utf8'" value="33"}
+									   {$vo['desc']|default=''}
+									{else/}
+									   {$vo['desc']|mb_substr=0,33,'utf-8'}...
+									{/elt}
+							  </span>
+						  </a>
+				  {/volist}
+			  </div>
+              {volist name="app_list" id="vo" }
+                 <div class="list_table">
+                    {volist name="vo.child" id="vo2" }
+                         <a href="{:url('index/index/app_article',['id'=>$vo['id']])}">
+                             {empty name="vo2.cover"}
+                             <img src="/static/index/src/img/applications/list_ico3.jpg" alt="" />
+                             {else/}
+                             <img src="{$Think.config.CONFIG_CDN_URL}{$vo2.cover|default=''}" alt="" />
+                             {/empty}
+                             <!-- php正则取字数，超出隐藏 -->
+                             <span class="list_h1">
+								  {elt name="vo2['name']|mb_strlen='utf8'" value="22"}
+									 {$vo2['name']|default=''}
+								  {else/}
+									 {$vo2['name']|mb_substr=0,22,'utf-8'}...
+								  {/elt}
+							 </span>
+                             <!-- php正则取字数，超出隐藏 -->
+                             <span class="list_h2">
+								 {elt name="vo2['desc']|mb_strlen='utf8'" value="33"}
+								     {$vo2['desc']|default=''}
+								 {else/}
+									 {$vo2['desc']|mb_substr=0,33,'utf-8'}...
+								 {/elt}
+							 </span>
+                         </a>
+                    {/volist}
+                 </div>
+              {/volist}
+			</div>
+		</div>
+	</div>
+    <input type="hidden" id="get_article" value="{:url('index/index/get_article_list')}">
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/swiper.min.js"/}
+{js href="__static__/index/src/js/swiper.animate1.0.2.min.js"/}
+{js href="__static__/index/src/js/applications.js"/}
+<script>
+//	$(document).on("click",",app_menu",function(){
+//		var id = $(this).data('id');
+//		var url = $("#get_article").val();
+//        common.ajax_post(url,{id:id},true,function(rt){
+//            var obj = common.str2json(rt);
+//            if(obj.code == 1){
+//
+//            }
+//        });
+//	});
+</script>
+{/block}

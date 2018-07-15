@@ -1,0 +1,224 @@
+/**
+ * Created by 冯天元 on 2016/12/28.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            var type = $("#type_html").val();
+            var obj = $("#"+type);
+            obj.addClass("active");
+            obj.parents(".item-group").addClass("active");
+            obj.parents(".menu-item").addClass("active");
+        },
+        ajax_html:function(url){
+            common.ajax_post(url,false,true,function(rt){
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    $(".content").html(obj.html);
+                }
+            },true,[0.3,'#444']);
+        },
+        /** 引导图提交 */
+        edit_guide:function(){
+            var id = $("#guide_id").val();
+            var map_guide = $("#map_guide").val();
+            var guide_type = $("#guide_val").val();
+            var url = $("#map_guide_url").val();
+            common.ajax_post(url,{id:id,map_guide:map_guide,guide_type:guide_type},true, function (rt){
+                    var obj = common.str2json(rt);
+                    if (obj.code == 1) {
+                        layer.msg(obj.msg,{icon:1});
+                        location.reload();
+                    }else{
+                        layer.msg(obj.msg,{icon:2});
+                    }
+            });
+        },
+        /** 引导图开关设置 */
+        guide_switch:function(guide_val){
+            var id = $("#guide_id").val();
+            var url = $("#map_guide_switch").val();
+            common.ajax_post(url,{id:id,guide_val:guide_val},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** LOGO开关设置 */
+        logo_switch:function(logo_val){
+            var id = $("#logo_id").val();
+            var url = $("#logo_switch_url").val();
+            common.ajax_post(url,{id:id,logo_val:logo_val},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 视频LOGO提交 */
+        edit_logo:function(){
+            var id = $("#logo_id").val();
+            var logo_type = $("#logo_type").val();
+            var map_logo = $("#map_logo").val();
+            var url = $("#map_logo_url").val();
+            common.ajax_post(url,{id:id,logo_type:logo_type,map_logo:map_logo},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 窗口背景提交 */
+        edit_window:function(){
+            var id = $("#window_id").val();
+            var map_window = $("#map_window").val();
+            var url = $("#window_url").val();
+            common.ajax_post(url,{id:id,map_window:map_window},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        }
+
+    };
+    func.init();
+    /**ajax请求页面*/
+    $(document).on("click",".ig-item",function(){
+        $(".ig-item").removeClass("active");
+        $(this).addClass("active");
+    });
+    ///**选项卡切换*/
+    //$(document).on("click",".menu-item",function(){
+    //    $(".menu-item").removeClass("active");
+    //    $(this).addClass("active");
+    //    $(this).children(".item-group").addClass("active");
+    //});
+    /** 窗口背景提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_window();
+    });
+    /** 直播引导图提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_guide();
+    });
+    /** 视频LOGO提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_logo();
+    });
+    /** 直播引导图关*/
+   $(document).on("click",".guide_off",function(){
+        $(".on_off i").addClass("off_act");
+        $(".guide_layer2").addClass("guide_layer2_act");
+        $(".on_off").removeClass("guide_off");
+        $(".on_off").addClass("guide_on");
+        func.guide_switch(0);
+   });
+    /** 直播引导图開*/
+    $(document).on("click",".guide_on",function(){
+        $(".on_off i").removeClass("off_act");
+        $(".guide_layer2").removeClass("guide_layer2_act");
+        $(".on_off").addClass("guide_off");
+        $(".on_off").removeClass("guide_on");
+        func.guide_switch(1);
+    });
+    /** 直播引导图上传*/
+    $("input[name='guide_url']").change(function(){
+        var data = new FormData($('#guide_up')[0]);
+        $.ajax({
+            url: $("#up_guide_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_guide").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 直播窗口背景上传*/
+    $("input[name='window_img']").change(function(){
+        var data = new FormData($('#window_list')[0]);
+        $.ajax({
+            url: $("#up_window_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_window").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 直播LOGO关*/
+    $(document).on("click",".logon_off",function(){
+        $(".on_off i").addClass("off_act");
+        $(".guide_layer2").addClass("guide_layer2_act");
+        $(".on_off").removeClass("logon_off");
+        $(".on_off").addClass("logon_on");
+        func.logo_switch(0);
+    });
+    /** 直播LOGO開*/
+    $(document).on("click",".logon_on",function(){
+        $(".on_off i").removeClass("off_act");
+        $(".guide_layer2").removeClass("guide_layer2_act");
+        $(".on_off").addClass("logon_off");
+        $(".on_off").removeClass("logon_on");
+        func.logo_switch(1);
+    });
+    /** 判断LOGO位置  */
+    $(document).on('click','.logo_val',function(){
+        var logo_type = $(this).data('val');
+        $("#logo_type").val(logo_type);
+    });
+    /** LOGO上传*/
+    $("input[name='logo_url']").change(function(){
+        var data = new FormData($('#logo_up')[0]);
+        $.ajax({
+            url: $("#up_logo_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_logo").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    
+});

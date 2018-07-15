@@ -1,0 +1,69 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_channel.css"/}
+{/block}
+{block name="title"}频道管理 - 玲珑直播{/block}
+{block name="content"}                                                                                                       <!--base-->
+<!-- endinject -->
+<div class="main admin admin-bg-1">
+    <div class="container without-menu">
+        <div class="channel-index">
+            <h4>频道设置</h4>
+            <div class="channel-i-menu-group">
+                <div class="item">
+                    <i class="iconfont">&#xe60b;</i>
+                    <span>基础设置</span>
+                    <p>进行直播的基础设置项</p>
+                    <a href="{:url('index/channel_set/set_guide_map',['id'=> $id])}">去设置</a>
+                </div>
+                <div class="item">
+                    <i class="iconfont">&#xe60e;</i>
+                    <span>互动打赏</span>
+                    <p>进行直播的基础设置项</p>
+                    <a href="{:url('index/channel_set/set_reward')}">去设置</a>
+                </div>
+                <div class="item">
+                    <i class="iconfont">&#xe929;</i>
+                    <span>观看设置</span>
+                    <p>进行观看的基础设置项</p>
+                    <a href="{:url('index/channel_set/set_look')}">去设置</a>
+                </div>
+                <div class="item">
+                    <i class="iconfont">&#xe8d4;</i>
+                    <span>分享嵌入</span>
+                    <p>进行分享嵌入设置项</p>
+                    <a href="{:url('index/channel_set/set_weixin_share')}">去设置</a>
+                </div>
+                <div class="item">
+                    <i class="iconfont">&#xe6e9;</i>
+                    <span>视频回放</span>
+                    <p>进行视频回放设置项</p>
+                    <a href="{:url('index/channel_set/video_back_play')}">去设置</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal m-channel-add">
+    <div class="modal-main">
+        <span class="close">&#xe607;</span>
+        <h4>创建频道</h4>
+        <div class="modal-form">
+            <div class="mf-line">
+                <label class="mfl-warp" > 频道名称<input type="text" placeholder="请输入频道名称"></label>
+            </div>
+            <div class="mf-line">
+                <label class="mfl-warp">频道类型 <span class="text channel">RTMP</span></label>
+            </div>
+            <button class="mf-submit">创建频道</button>
+        </div>
+
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin_manager.js"/}
+{js href="__static__/index/js/admin/channel.js"/}
+{/block}

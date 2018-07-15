@@ -1,0 +1,41 @@
+<!--footer-->
+<div class="footer">
+    <div class="fot-top">
+        <div class="fb-item"><i class="iconfont">&#xe612;</i>100倍故障时长赔偿</div>
+        <div class="fb-item"><i class="iconfont">&#xe640;</i>7*24小时售后支持</div>
+        <div class="fb-item"><i class="iconfont">&#xe636;</i>7天无理由赔偿</div>
+        <div class="fb-item"><i class="iconfont">&#xe611;</i>首充多少送多少</div>
+    </div>
+    <div class="fot-list">
+        <div class="fl-group">
+            <h4><i class="iconfont">&#xe744;</i>联系我们</h4>
+            <p><span>微信</span>General</p>
+            <p><span>QQ</span>800-133-388</p>
+            <p><span>邮箱</span>yyg@mengdie.com</p>
+        </div>
+        <div class="fl-group">
+            <h4><i class="iconfont">&#xe658;</i>关于我们</h4>
+            <a >关于我们链接</a>
+            <a >关于我们链接</a>
+            <a >关于我们链接</a>
+            <a >关于我们链接</a>
+        </div>
+        <div class="fl-group">
+            <h4><i class="iconfont">&#xe616;</i>合作伙伴</h4>
+            <a >合作伙伴链接</a>
+            <a >合作伙伴链接</a>
+            <a >合作伙伴链接</a>
+        </div>
+        <div class="focus-qr">
+            <img src="__static__/index/src/img/temp/qr.png">
+            <h4>关注微信</h4>
+            <h6>了解更多直播方案</h6>
+        </div>
+    </div>
+    <div class="fot-bar">
+        <p><a>虫虫加速器</a>|<a>芝麻代理</a>|<a>一元购</a>|<a>梦蝶直播</a></p>
+        <h6>徐州灵匠信息科技有限公司 版权所有</h6>
+    </div>
+</div>
+<input type="hidden" id="quit_url" value="{:url('index/login/quit')}">
+<input type="hidden" id="root_url" value="{:url('index/index/index')}">

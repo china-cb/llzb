@@ -1,0 +1,39 @@
+
+$(function(){
+	applications.swipers();
+	applications.cilck_animate();
+})
+var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        direction: 'vertical',
+        slidesPerView: 1,
+        paginationClickable: true,
+        mousewheelControl: true,
+        onInit: function(swiper){ //Swiper2.x的初始化是onFirstInit
+		    swiperAnimateCache(swiper); //隐藏动画元素 
+		    swiperAnimate(swiper); //初始化完成开始动画
+		  }, 
+		  onSlideChangeEnd: function(swiper){ 
+		    swiperAnimate(swiper); //每个slide切换结束时也运行当前slide动画
+		  } 
+});
+var applications = {
+	swipers:function (argument) {
+		var no0 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p><img class="blacks" src="/static/index/src/img/applications/ico_small_1.png"/>',
+			no1 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p><img class="blacks" src="/static/index/src/img/applications/ico_small_2.png"/>',
+			no2 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p><img class="blacks" src="/static/index/src/img/applications/ico_small_3.png"/>',
+			no3 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p><img class="blacks" src="/static/index/src/img/applications/ico_small_4.jpg"/>';
+			no4 = '<span class="blacks"></span>';
+			$(".swiper-pagination-bullet").eq(0).append(no0);
+			$(".swiper-pagination-bullet").eq(1).append(no1);
+			$(".swiper-pagination-bullet").eq(2).append(no2);
+			$(".swiper-pagination-bullet").eq(3).append(no3);
+	},
+	cilck_animate:function () {
+		 $(".nav li").on("click",function(){
+		 	var a = $(this).index(".nav li");
+		 	$(".nav li").eq(a).addClass("active").siblings().removeClass("active");
+		 	$(".list_table").eq(a).addClass("active").siblings().removeClass("active");
+		 })
+	}
+}

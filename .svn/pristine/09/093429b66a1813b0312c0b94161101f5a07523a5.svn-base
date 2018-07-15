@@ -1,0 +1,38 @@
+{extend name='base:base' /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}用户反馈{/block}
+{block name="site_nav_2"}查看详情{/block}
+{block name='content'}
+<form class="form form-horizontal" id="form-article-add">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">用户ID</label>
+        <div class="formControls col-xs-8 col-sm-9">
+				{$info.uid|default=""}
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">用户昵称</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            {$info.nickname|default=""}
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">反馈内容</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            {$info.content|default=""}
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">反馈日期</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            {$info.createline|date="Y/m/d H:i:s",###}
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"></label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <a title="返回" href="javascript:;" onClick="layer_close();" class="btn btn-primary ml-5 radius del_by_id" style="text-decoration:none"><i class="Hui-iconfont">返回</i></a>
+        </div>
+    </div>
+</form>
+{/block}

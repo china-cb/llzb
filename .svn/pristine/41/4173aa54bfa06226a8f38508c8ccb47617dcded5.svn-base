@@ -1,0 +1,16 @@
+$(function(){
+	applications.swipers();
+})
+var applications = {
+	swipers:function (argument) {
+		var no_0 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p>',
+			no_1 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p>',
+			no_2 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p>',
+			no_3 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</p>';
+		$(".swiper-pagination-bullet").eq(0).append(no_0);
+		$(".swiper-pagination-bullet").eq(1).append(no_1);
+		$(".swiper-pagination-bullet").eq(2).append(no_2);
+		$(".swiper-pagination-bullet").eq(3).append(no_3);
+		// 可以用点击事件取索引方法，缩短代码长度
+	}
+}

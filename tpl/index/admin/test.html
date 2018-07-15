@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!--template compile at 2017-01-13 03:48:48-->
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content=" initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <title> 奥点云 —— 管理控制台 </title>
+</head>
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/jquery/jquery-1.7.2.min.js"></script>
+<style type="text/css">
+    html {
+        width: 100%;
+        height: 100%;
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+
+    }
+</style>
+
+<body>
+<h1>播放器预览</h1>
+
+<script type="text/javascript" src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+<div id="play" style="width:100%;"></div>
+<div>
+    <input type="button" onClick="hls()" value="换hls"/>
+    <input type="button" onClick="rtmp()" value="换rtmp"/>
+
+
+    <input type="button" onClick="startPlay()" value="播放"/>
+    <input type="button" onClick="pause()" value="暂停"/>
+    <input type="button" onClick="stopPlayer()" value="停止"/>
+    静音：
+    <input type="checkbox" onclick="setMute(this.checked)"/>
+    音量：
+    <input type="text" id="volume" size="5"/>
+    <input type="button" onclick="setVolume(document.getElementById('volume').value)" value="设置音量"/>
+    视频伸展性：
+    <select onChange="setStretching(this.value)">
+        <option value="1" selected>按比例撑满至全屏</option>
+        <option value="2">铺满全屏</option>
+        <option value="3">视频原始大小</option>
+    </select>
+</div>
+<script type="text/javascript">
+
+    var rtmp_url = 'rtmp://26836.lssplay.aodianyun.com/linglong735/1_1?k=c7b1c5da4f68426a5044da5da952c898&t=1484282332';
+    var hls_url = 'http://26836.long-vod.cdn.aodianyun.com/u/26836/m3u8/adaptive/6d9ab274fc8e03d11b74ae4039003678.m3u8';
+    var conf = {
+        container: 'play',//播放器容器ID，必要参数
+        rtmpUrl: '',//控制台开通的APP rtmp地址，必要参数
+
+        hlsUrl: '',//控制台开通的APP hls地址，必要参数
+
+        /* 以下为可选参数*/
+        width: '720',//视频宽度，可用数字、百分比
+        height: '480',//视频高度，可用数字、百分比等
+        autostart: true,//是否自动播放，默认为false
+        bufferlength: '1',//视频缓冲时间，默认为3秒
+        maxbufferlength: '2',//最大视频缓冲时间，默认为2秒
+        stretching: '1',//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1
+        controlbardisplay: 'enable',//是否显示控制栏，值为：disable、enable默认为disable
+        isclickplay: false,//是否单击播放，默认为false
+        isfullscreen: true,//是否双击全屏，默认为false
+        lssCallBackFunction: function () {
+            var h = $('#' + 'play').children().attr('height');
+            $('#' + 'play').css('height', h);
+        }
+
+    };
+    var objectPlayer = new aodianPlayer(conf);
+    /* 以下为adplayer支持的事件 */
+    // objectPlayer.startPlay();//播放 */';
+    // objectPlayer.pausePlay();//暂停 */';
+    // objectPlayer.stopPlay();//停止 hls不支持*/';
+    // objectPlayer.closeConnect();//断开连接 */';
+    // objectPlayer.setMute(true);//静音或恢复音量，参数为true|false */';
+    // objectPlayer.setVolume(volume);//设置音量，参数为0-100数字 */';
+    // objectPlayer.setFullScreenMode(1);//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。手机不支持 */';默认值为1
+
+    function hls() {
+        $("#play").html('');
+        conf.rtmpUrl = '';
+        conf.hlsUrl = hls_url;
+        objectPlayer = new aodianPlayer(conf);
+        objectPlayer.startPlay();
+    }
+
+    function rtmp() {
+        $("#play").html('');
+        conf.hlsUrl = '';
+        conf.rtmpUrl = rtmp_url;
+        objectPlayer = new aodianPlayer(conf);
+        objectPlayer.startPlay();
+    }
+
+
+    function pause() {
+        objectPlayer.pausePlay();
+    }
+    function startPlay() {
+        objectPlayer.startPlay();
+    }
+    function stopPlayer() {
+        objectPlayer.stopPlay();
+    }
+    function setMute(isMute) {
+        objectPlayer.setMute(true);
+    }
+    function setVolume(volume) {
+        objectPlayer.setVolume(volume);
+    }
+    function setStretching(stretching) {
+        objectPlayer.setFullScreenMode(stretching);
+    }
+
+
+</script>
+</body>
+</html>

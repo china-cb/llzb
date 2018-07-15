@@ -1,0 +1,14 @@
+<div id="playerView"></div>
+<input type="hidden" id="now_url" value="{$channel_info.hls_url|default=''}">
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+<script>
+    var objectPlayer1 = new aodianPlayer({
+        container: 'playerView',//播放器容器ID，必要参数
+        hlsUrl: $("#now_url").val(),
+        width: '278',//播放器宽度，可用数字、百分比等
+        height: '180',//播放器高度，可用数字、百分比等
+        autostart: true,//是否自动播放，默认为false
+        controlbardisplay: 'disable'//是否显示控制栏，值为：disable、enable默认为disable。
+    });
+</script>

@@ -1,0 +1,91 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}观看设置 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="statistics">
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">观看设置</span>
+                </h1>
+                <div class="guide">
+                    <div class="guide_title guide_title2s">
+                        付费观看：
+                        <span class="on_off secret_val {eq name='list.type' value='2'}secret_off{else/}secret_on{/eq}">
+                            <i class="{eq name='list.type' value='2'}{else/}off_act{/eq}"></i>
+                        </span>
+                        <div class="preview_none preview_none2">
+                            <p class="sum_of_money">
+                                <input type="text/css" name="" value="" placeholder="请输入观看金额" class="moneys">
+                                <span class="money_ps2s">*请设置粉丝观看该直播时的付费金额</span>
+                            </p>
+                            <input type="submit" name="" value="修改" class="preview_sub preview_sub4">
+                        </div>
+
+                        <div class="preview_block preview_block2">
+                            <p class="sum_of_money">
+                                <span class="money_ps1"><i class="iconfont">&#xe644;</i><span class="moneys">{$list.unit_price|default='0'}</span></span>
+                            </p>
+                            <input type="submit" name="" value="修改" class="preview_sub preview_sub4">
+                            
+                        </div>
+
+                        <div class="guide_layer secret_key guide_layer_e {eq name='list.type' value='2'}{else/}guide_layer_dis{/eq}"></div>
+                    </div>
+                    <!-- 密码15位 -->
+                    <div class="guide_title guide_title2s">
+                        私密观看：
+                        <span class="on_off unit_val {eq name='list.type' value='1'}unit_off{else/}unit_on{/eq}">
+                            <i class="{eq name='list.type' value='1'}{else/}off_act{/eq}"></i>
+                        </span>
+
+                        <div class="preview_none preview_none1">
+                            <p class="sum_of_money">
+                                <input type="text/css" name="" value="" placeholder="请输入观看密码" class="pawds1">
+                                <span class="money_ps2s">*成功设置密码后，粉丝进入房间需输入密码。密码框清空，观看密码取消</span>
+                            </p>
+                            <input type="submit" name="" value="保存" class="preview_sub preview_sub4 preserve_submit2">
+                        </div>
+                        <div class="preview_block preview_block1">
+                            <p class="sum_of_money">
+                                <span class="money_ps1">
+                                    <span class="money_ps1_line1">
+                                        <span class="shows">{empty name='list.secret_key'}{else/}******{/empty}</span>
+                                        <span class="disappears shows dislpays pwds">{$list.secret_key|default=''}</span>
+                                    </span>
+                                    <i class="iconfont eyes">&#xe63a;</i>
+                                    <i class="iconfont line_ico shows">&#xe63d;</i>
+                                </span>
+                            </p>
+                            <input type="submit" name="" value="修改" class="preview_sub preview_sub4 preserve_submit">
+                        </div>
+                        <div class="guide_layer guide_layer_e unit_key {eq name='list.type' value='1'}{else/}guide_layer_dis{/eq}"></div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+</div>
+    </div>
+</div>
+<input type="hidden" id="record_id" value="{$id}"><!--当前房间ID-->
+<input type="hidden" id="unit_price_url" value="{:url('index/channel_set/record_unit_price')}"><!--设置付费直播金额-->
+<input type="hidden" id="secret_key_url" value="{:url('index/channel_set/record_secret_key')}"><!--设置私密直播金额-->
+<input type="hidden" id="all_switch" value="{:url('index/channel_set/all_switch')}"><!--功能开关-->
+
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

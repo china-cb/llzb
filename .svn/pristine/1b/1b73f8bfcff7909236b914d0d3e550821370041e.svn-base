@@ -1,0 +1,67 @@
+{extend name="base/login_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/login.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<header id="header" class="login-header">
+    <span class="logo"></span>
+    <span class="login-list">绑定手机号</span>
+    <div class="login-main">
+        <a href="{:url('index/index/index')}">
+            玲珑直播首页
+            <i class="arrow-right"></i>
+        </a>
+    </div>
+</header>
+<div class="main login_reg bind_phone" >
+    <img src="{$Think.config.CONFIG_CDN_URL}{$list['user_face']|default=''}" alt="" class="login_header">
+    <h2 class="login_name">{$list['nick_name']|default='我是个假登录'}</h2>
+    <!--<a href="" class="login_name">-->
+        <!--<i class="qq_img"></i>-->
+        <!--<span class="qq_go">QQ登录</span>-->
+        <!--<i class="iconfont">&#xe601;</i>-->
+    <!--</a>-->
+    <form action="" method="get">
+        <label class="login_reg_lable">
+            <input type="text" id="phone_reg" name="phone" placeholder="请输入手机号" class="login_reg_inpit1" />
+        </label>
+        <label class="login_reg_lable">
+            <input type="text" id="phone_code_bind" name="phone_code" placeholder="请输入验证码" class="login_reg_inpit1"/>
+            <input type="button" id="btn" value="发送验证码" class="login_reg_free reg_get_code vacode"/>
+        </label>
+        <!-- 密码不一致添加 .password_no_act -->
+        <div class="password_no">密码输入不一致</div>
+        <label class="login_reg_lable">
+            <input type="password" id="password_bind" name="password" placeholder="6～16位密码" class="login_reg_inpit2" />
+            <span class="login_reg_span1">设置密码</span>
+        </label>
+        <label class="login_reg_lable">
+            <input type="password" id="re_password_bind" name="re_password" placeholder="6～16位密码" class="login_reg_inpit2"/>
+            <span class="login_reg_span1">确认密码</span>
+        </label>
+        <label class="login_reg_lable">
+            <input type="button" class="login_reg_inpit3 bind_phone_btn" value="下一步" />
+        </label>
+    </form>
+</div>
+
+<!-- 绑定成功 -->
+<div class="main login_reg bind_phone_success" style="display:none">
+    <img src="{$Think.config.CONFIG_CDN_URL}{$list['user_face']|default=''}" alt="" class="login_header login_header_win">
+    <h2 class="login_name">玲珑TV</h2>
+    <h2 class="login_win">绑定手机号成功！</h2>
+    <form action="" method="get">
+        <label class="login_reg_lable">
+            <a href="{:url('index/user_center/account')}" class="login_reg_inpit3">进入控制台</a>
+            <!--<input type="submit" name="" class="login_reg_inpit3" value="进入控制台" />-->
+        </label>
+    </form>
+</div>
+<input type="hidden" id="submit_bind_url" value="{:url('index/login/bind_phone_do')}">
+<input type="hidden" class="get_phone_code_type" value="bind">
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/login/login.js"/}
+{js href="__static__/index/js/login/reg.js"/}
+{/block}

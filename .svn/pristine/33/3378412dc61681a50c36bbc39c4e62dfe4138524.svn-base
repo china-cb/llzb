@@ -1,0 +1,76 @@
+<ul class="menu">
+    <li class="menu-item">
+        <h4 class="mi-text">
+            <i class="iconfont">&#xe6c2;</i>
+            基础设置
+        </h4>
+        <div class="item-group">
+            <a class="ig-item" id="set_guide_map" href="{:url('index/channel_set/set_guide_map')}">
+                <i class="iconfont">&#xe737;</i>
+                直播引导图
+            </a>
+
+            <a class="ig-item" id="set_window_background" href="{:url('index/channel_set/set_window_background')}">
+                <i class="iconfont">&#xe61e;</i>
+                直播窗口背景
+            </a>
+            <a class="ig-item" id="set_video_logo" href="{:url('index/channel_set/set_video_logo')}">
+                <i class="font">Logo</i>
+                视频LOGO
+            </a>
+            <a class="ig-item" id="set_video_icon" href="{:url('index/channel_set/set_video_icon')}">
+                <i class="iconfont">&#xe62e;</i>
+                视频图标
+            </a>
+        </div>
+    </li>
+    <li class="menu-item">
+        <h4 class="mi-text">
+            <i class="iconfont">&#xe60c;</i>
+            互动打赏
+        </h4>
+        <div class="item-group">
+            <a class="ig-item" id="set_reward" href="{:url('index/channel_set/set_reward')}">
+                <i class="iconfont">&#xe625;</i>
+                打赏设置
+            </a>
+            <a class="ig-item" id="gift_reward_record" href="{:url('index/channel_set/gift_reward_record')}">
+                <i class="iconfont">&#xe61b;</i>
+                礼物打赏记录
+            </a>
+            <a class="ig-item" id="red_reward_record" href="{:url('index/channel_set/red_reward_record')}">
+                <i class="iconfont">&#xe600;</i>
+                红包打赏记录
+            </a>
+        </div>
+    </li>
+    <li class="menu-item">
+        <a class="mi-text ig-item" id="set_look" href="{:url('index/channel_set/set_look')}">
+            <i class="iconfont">&#xe605;</i>
+            观看设置
+        </a>
+    </li>
+    <li class="menu-item">
+        <h4 class="mi-text">
+            <i class="iconfont">&#xe654;</i>
+            分享及嵌入
+        </h4>
+        <div class="item-group">
+            <a class="ig-item"  id="set_weixin_share" href="{:url('index/channel_set/set_weixin_share')}">
+                <i class="iconfont">&#xe60a;</i>
+                微信分享设置
+            </a>
+            <a class="ig-item"  id="set_embed_address">
+                <i class="iconfont">&#xe60d;</i>
+                嵌入地址
+            </a>
+        </div>
+    </li>
+    <li class="menu-item">
+        <a class="mi-text"  id="video_back_play" href="{:url('index/channel_set/video_back_play')}">
+            <i class="iconfont">&#xe61c;</i>
+            视频回放
+        </a>
+    </li>
+</ul>
+<input type="hidden" id="type_html" value="{$type|default=''}">

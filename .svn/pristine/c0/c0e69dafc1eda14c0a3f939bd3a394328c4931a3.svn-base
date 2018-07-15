@@ -1,0 +1,136 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/index.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+
+<div class="main">
+    <div class="index-banner">
+        <div class="banner-main">
+            <h4></h4>
+            <h6>一站式提供“海量存储、高效分发、极速网络”等强大服务， 轻松坐享CCTV-5、新浪微博、知乎等量级的传播能力。<br/>
+                广泛应用于 游戏直播、娱乐直播、泛生活直播、 教育类、 远程医疗、 企业远程视频会议等典型场景</h6>
+            <div class="banner-btn">
+                <a class="buy">套餐购买</a>
+                <a class="connect">联系我们</a>
+            </div>
+        </div>
+    </div>
+    <div class="index-acts">
+        <ul>
+            <li class="item">
+                <h4>大型活动</h4>
+                <h6>直播保障</h6>
+            </li>
+            <li class="item">
+                <h4>大型活动</h4>
+                <h6>直播保障</h6>
+            </li>
+            <li class="item">
+                <h4>大型活动</h4>
+                <h6>直播保障</h6>
+            </li>
+            <li class="item">
+                <h4>大型活动</h4>
+                <h6>直播保障</h6>
+            </li>
+            <li class="item">
+                <h4>大型活动</h4>
+                <h6>直播保障</h6>
+            </li>
+        </ul>
+    </div>
+    <div class="index-block-1">
+        <h4></h4>
+        <ul class="block-main">
+            <li >
+                <h5>大型活动直播保证</h5>
+                <p>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。</p>
+            </li>
+            <li >
+                <h5>大型活动直播保证</h5>
+                <p>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。</p>
+            </li>
+            <li >
+                <h5>大型活动直播保证</h5>
+                <p>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。</p>
+            </li>
+            <li >
+                <h5>大型活动直播保证</h5>
+                <p>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。</p>
+            </li>
+        </ul>
+    </div>
+    <div class="index-block-2">
+        <h4></h4>
+        <h6>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。目睹直播从平台稳定性，技术保障力，
+            现场执行能力以及编码硬件的<br/>多重保障，来确保视频直播的顺利进行。目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障。</h6>
+        <ul class="active">
+            <li>
+                <span class="cover iconfont">&#xe650;</span>
+                <div class="content">
+                    <h4>多端直播</h4>
+                    <p>负载均衡（Server Load Balancer）是对多台云服务器进行流量分发的负载均衡服务，
+                        可以通过流量分发扩展应用系统对外的服务能力，通过消除单点故障提升应用系统的可用性。</p>
+                </div>
+            </li>
+            <li>
+                <span class="cover iconfont" >&#xe65c;</span>
+                <div class="content">
+                    <h4>多端直播</h4>
+                    <p>负载均衡（Server Load Balancer）是对多台云服务器进行流量分发的负载均衡服务，
+                        可以通过流量分发扩展应用系统对外的服务能力，通过消除单点故障提升应用系统的可用性。</p>
+                </div>
+            </li>
+            <li>
+                <span class="cover iconfont">&#xe64e;</span>
+                <div class="content">
+                    <h4>多端直播</h4>
+                    <p>负载均衡（Server Load Balancer）是对多台云服务器进行流量分发的负载均衡服务，
+                        可以通过流量分发扩展应用系统对外的服务能力，通过消除单点故障提升应用系统的可用性。</p>
+                </div>
+            </li>
+            <li>
+                <span class="cover iconfont">&#xe912;</span>
+                <div class="content">
+                    <h4>多端直播</h4>
+                    <p>负载均衡（Server Load Balancer）是对多台云服务器进行流量分发的负载均衡服务，
+                        可以通过流量分发扩展应用系统对外的服务能力，通过消除单点故障提升应用系统的可用性。</p>
+                </div>
+            </li>
+            <li>
+                <span class="cover iconfont">&#xe907;</span>
+                <div class="content">
+                    <h4>多端直播</h4>
+                    <p>负载均衡（Server Load Balancer）是对多台云服务器进行流量分发的负载均衡服务，
+                        可以通过流量分发扩展应用系统对外的服务能力，通过消除单点故障提升应用系统的可用性。</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="index-block-3">
+        <h4></h4>
+        <p>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件的多重保障，来确保视频直播的顺利进行。
+            目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件的多重保障，来确保视频直播的顺利进行。<br/>
+            目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障。</p>
+        <div class="block-main">
+            <h4>视频点播</h4>
+            <p>目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。
+                目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障，来确保视频直播的顺利进行。
+                目睹直播从平台稳定性，技术保障力，现场执行能力以及编码硬件 的多重保障。</p>
+            <div class="content">
+                <ul>
+                    <li><span>易用</span>0代码</li>
+                    <li><span>安全</span>永久存储</li>
+                    <li><span>灵活</span>弹性伸缩</li>
+                </ul>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/index.js"/}
+{/block}

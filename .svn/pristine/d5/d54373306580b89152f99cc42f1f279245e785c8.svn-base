@@ -1,0 +1,10 @@
+<header id="header" class="login-header">
+    <span class="logo"></span>
+    <span class="login-list">绑定手机号</span>
+    <div class="login-main">
+        <span>
+            玲珑直播首页
+            <i class="arrow-right"></i>
+        </span>
+    </div>
+</header>

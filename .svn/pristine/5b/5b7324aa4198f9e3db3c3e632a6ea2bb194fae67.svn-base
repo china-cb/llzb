@@ -1,0 +1,88 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}频道管理{/block}
+{block name="site_nav_2"}频道列表{/block}
+{block name='content'}
+<title>主播认证</title>
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c">
+            名称搜索：
+            <input type="text" class="input-text" style="width:250px" placeholder="请输入频道名称"  value="{:input('get.search_word')}" name="search_word">
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            日期范围：
+            <input type="text" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" id="datemin" name="start_time" value="{:input('get.start_time')}" placeholder="请输入直播开始时间" class="input-text Wdate" style="width:250px;">
+            -
+            <input type="text"  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" id="datemax" name="end_time" value="{:input('get.end_time')}"class="input-text Wdate" placeholder="请输入直播结束时间" style="width:250px;">
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  name="search_empty"><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total|default=''}</strong> 条</span>
+        </div>
+    </form>
+</div>
+
+<div class="mt-20">
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="11">频道列表</th>
+        </tr>
+        <tr class="text-c">
+            <th>频道序号</th>
+            <th>频道图标</th>
+            <th>频道名称</th>
+            <th>频道状态</th>
+            <th>直播开始时间</th>
+            <th>观看人次</th>
+            <th>累计播放时长</th>
+            <th>累计花费</th>
+        </tr>
+        </thead>
+        <tbody>
+        {empty name='list'}
+        <tr>
+            <td class="text-c" colspan="12">暂无数据..</td>
+        </tr>
+        {else/}
+        {volist name="list" id='vo'}
+        <tr class="text-c">
+            <td>{$vo['id']|default='--'}</td>
+            <td><img src="{$Think.config.CONFIG_CDN_URL}{$vo.cover|default='09b0deb8ac55e50fef76c0870d5a0052.png'}"></td>
+            <td>{$vo['title']|default='0'}</td>
+            <td>
+                {switch name="$vo['status']"}
+                {case value="1"}正在直播{/case}
+                {case value="-1"}空闲{/case}
+                {case value="-2"}空闲{/case}
+                {default /}空闲
+                {/switch}
+            </td>
+            <td>{$vo['update_time']|date="Y-m-d H:i:s",###}</td>
+            <td>{$vo['c_num']|default='0.00'}</td>
+            <td>{$vo['s_num']|default='0'}分钟</td>
+            <td>￥{$vo['sum_money']|default='0.00'}</td>
+        </tr>
+        {/volist}
+        {/empty}
+        </tbody>
+    </table>
+</div>
+<nav class="page_admin">
+    {$page|default=""}
+</nav>
+<script>
+    $("#search_empty").click(function(){
+        $("input[name='start_time']").val('');
+        $("input[name='end_time']").val('');
+    })
+</script>
+{/block}
+{block name='js'}
+{js href="__static__/admin/js/index/index.js"/}
+{/block}
+
+
+
+
+

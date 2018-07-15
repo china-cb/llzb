@@ -1,0 +1,130 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/8/30
+ * Time: 15:27
+ */
+
+namespace app\core\model;
+use think\Db;
+
+class PayModel
+{
+    //获取订单信息
+    public function get_order_info_by_id($order_id){
+        return db('order_list_parent')->where('order_id',$order_id)->find();
+    }
+    //获取购买订单信息
+    public function get_balance_info_by_id($order_id){
+        return db('buy_orders')->where('order_id',$order_id)->find();
+    }
+    public function get_charge_info_by_orderid($order_id){
+        return db('recharge')->where('order_id',$order_id)->find();
+
+    }
+    
+    //将订单信息标记为已支付
+    public function sign_order_status_to_two($order_id){
+        if(empty($order_id)) return false;
+        return db('order_list_parent')->where('order_id',$order_id)->setField('pay_status',ORDER_PAY_STATUS2);
+
+    }
+
+    //更新订单支付时间
+    public function update_order_pay_time($order_id){
+        return db('order_list_parent')->where('order_id',$order_id)->setField('pay_date',NOW_TIME);
+    }
+
+    //获取用户账户余额
+    public function get_user_real_money($uid){
+        $info = db('member')->where('id',$uid)->find();
+        return $info['real_money'];
+    }
+    //获取用户账户余额
+    public function get_user_money($uid){
+        $info = db('member')->where('member_id',$uid)->find();
+        return $info['balance'];
+    }
+    //更新用户账户余额
+    public function update_user_real_money($uid,$real_money){
+        return db('member')->where('id',$uid)->setField('real_money',$real_money);
+    }
+
+
+    //创建订单
+    public function create_order($dt_1, $dt_2)
+    {
+
+        Db::startTrans();
+
+        $father = array(
+            "order_id" => (string)$dt_1['order_id'],
+            "uid" => $dt_1['uid'],
+            "username" => $dt_1['username'],
+            "bus_type" => $dt_1['bus_type'],
+            "name" => $dt_1['name'],
+            "num" => $dt_1['num'],
+            "price" => $dt_1['price'],
+            "pay_status" => '1',
+            "close_time" => $dt_1['close_time'],
+            "origin" => $dt_1['origin'],
+            "create_time" => NOW_TIME,
+        );
+
+        //存储父级获取父级订单id
+        $pid = Db::table('sp_order_list_parent')->insertGetId($father);
+        foreach ($dt_2 as $k => $v) {            //构建子菜单
+            $child[$k]['pid'] = $pid;
+            $child[$k]["order_id"] = (string)$v['order_id'];
+            $child[$k]["bus_type"] = $v['bus_type'];
+            $child[$k]["goods_id"] = $v['goods_id'];
+            $child[$k]["goods_name"] = $v['goods_name'];
+            $child[$k]["num"] = $v['num'];
+            $child[$k]["username"] = $v["username"];
+            $child[$k]["uid"] = $v["uid"];
+            $child[$k]["exec_data"] = $v['exec_data'];
+            $child[$k]["money"] = $v['money'];
+            $child[$k]["status"] = '1';
+            $child[$k]["pay_status"] = '1';
+            $child[$k]["promoter_pos"] = $v['promoter_pos'];
+            $child[$k]["luck_status"] = 'false';
+            $child[$k]["create_time"] = NOW_TIME;
+            $child[$k]["join_type"]=!empty($v['join_type'])?$v['join_type']:0;
+        }
+        //获取子级菜单
+        $c_list = Db::table('sp_order_list')->insertAll($child);
+
+        //获取子表单id
+        $c_ids = Db::table('sp_order_list')->where(array("pid" => $pid))->field(array("id", "nper_id","join_type"))->select();
+        $ids = "";
+        $carts = [];
+        foreach ($c_ids as $k => $v) {
+            $ids = $ids . "," . $v["id"];
+            //  $nper_ids = $nper_ids . "," . $v["nper_id"];
+            $carts[]=[
+
+                'join_type'=>!empty($v['join_type'])?$v['join_type']:0
+            ];
+        }
+        $ids = str_implode($ids);
+          $nper_ids = str_implode($nper_ids);
+
+        //更新到父级数据库
+        $r = Db::table('sp_order_list_parent')->where(array("id" => $pid))->update(array("order_list" => $ids));
+        $r = $r !== false;
+
+        //删除用户购物车中期数内容
+        if (!empty($carts)) {
+            $this->del_carts($carts);
+        }
+
+        if ($pid && $c_list && $c_ids && $r) {
+            Db::commit();
+            return $dt_1['order_id'];
+        } else {
+            Db::rollback();
+            return false;
+        }
+    }
+}

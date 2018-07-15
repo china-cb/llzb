@@ -1,0 +1,12 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{/block}
+{block name="title"}模块正在开发中...{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="main admin-developing">
+    <div class="developing-main"></div>
+</div>
+
+{/block}

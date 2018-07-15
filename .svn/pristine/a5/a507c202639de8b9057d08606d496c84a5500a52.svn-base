@@ -1,0 +1,7 @@
+{js href="__static__/index/src/js/jquery.min.js"/}
+{js href="__static__/public/js/common.js"/}
+{js href="__plugin__/layer/2.1/layer.js" /}
+{js href="__static__/index/src/js/common.js"/}
+{js href="__static__/index/js/admin_public.js"/}
+{js href="__static__/index/src/assembly/laydate.js"/}
+{js href="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"/}<!--微信登录-->

@@ -1,0 +1,655 @@
+{extend name="base/login_base"/}
+{block name="css"}
+{css file="__static__/zb/src/css/admin.css"/}
+{css file="__static__/zb/src/css/live-center.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<!-- inject:admin_header:html -->
+<div class="header admin">
+    <div class="h-bar">
+        <div class="warp">
+            <a class="logo" href=""></a>
+            <div class="nav">
+                <div class="name">你好,<a>这是用户名</a></div>
+                <a class="logout">退出</a>
+                <a class="nav-item">安全中心</a>
+                <a class="nav-item">会员保障</a>
+                <a class="nav-item">客户服务</a>
+            </div>
+        </div>
+    </div>
+    <div class="h-main">
+        <div class="warp">
+            <a class="logo-top"></a>
+            <ul class="hm-menu">
+                <li class="menu-item"><a href="/index.html">玲珑首页</a></li>
+                <li class="menu-item">
+                    <div class="mi-list">
+                        <div class="menu-content">
+                            <a class="mc-close">
+                                <i class="iconfont">&#xe61f;</i>
+                            </a>
+                            <a href="" class="mc-item">
+                                频道管理
+                            </a>
+                            <a href="" class="mc-item">
+                                数据统计
+                            </a>
+                        </div>
+                        <div class="menu-title">直播服务</div>
+                    </div>
+                </li>
+                <li class="menu-center">
+                    <div class="mc-warp">
+                        <div class="user-ava">
+                            <img src="__static__/zb/src/img/temp/user_ava.png">
+                            <h4>你好,<span>虫虫科技</span></h4>
+                            <div class="user-auth">
+                                <a class="real-name"></a>
+                                <a class="phone"></a>
+                                <a class="email"></a>
+                            </div>
+                            <div class="user-info">
+                                <div class="info-item">
+                                    <p><span>账户类型 :</span>基础版<a class="updata">升级</a></p>
+                                    <p><span>账户余额 :</span><i class="iconfont">&#xe644;</i>50.00<a class="charge">充值</a></p>
+                                    <p><span>套餐类型 :</span>--<a class="buy">购买</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="mc-close">退出</a>
+                    </div>
+                </li>
+                <li class="menu-item"><a href="/index.html">点播服务</a></li>
+                <li class="menu-item">
+                    <div class="mi-list">
+                        <div class="menu-content">
+                            <a class="mc-close">
+                                <i class="iconfont">&#xe61f;</i>
+                            </a>
+                            <a href="" class="mc-item">
+                                账户信息
+                            </a>
+                            <a href="" class="mc-item">
+                                账单详情
+                            </a>
+                            <a href="" class="mc-item">
+                                余额充值
+                            </a>
+                            <a href="" class="mc-item">
+                                充值订单
+                            </a>
+                        </div>
+                        <div class="menu-title">账户管理</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- endinject -->
+<div class="main admin ">
+    <div class="container without-menu">
+        <div class="channel_menu">
+            <a class="item"><i class="iconfont">&#xe6ba;</i>频道管理</a>
+            <a class="item"><i class="iconfont">&#xe609;</i>数据统计</a>
+        </div>
+        <div class="content">
+            <div class="block channel-block channel-list">
+                <div class="channel-search">
+                    <label class="cs-input">
+                        <input placeholder="请输入视频名称" >
+                        <a class="cs-submit"><i class="iconfont">&#xe626;</i></a>
+                    </label>
+                </div>
+                <div class="channel-group">
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="channel-item">
+                        <div class="ci-btn">
+                            <a class="location"></a>
+                            <a class="return"></a>
+                            <a class="pause"></a>
+                            <a class="play"></a>
+                            <a class="close"></a>
+                        </div>
+                        <div class="channel-cover">
+                            <span class="play-flag">正在直播</span>
+                            <img src="__static__/zb/src/img/temp/cover-img.png">
+                            <h4>这是频道名称</h4>
+                        </div>
+                        <div class="channel-desc">
+                            <h4>
+                                <label>观看人次:</label>
+                                <span class="cd-num">332人次</span>
+                            </h4>
+                            <h4>
+                                <label>观看时长:</label>
+                                <span class="cd-error">该频道暂未直播</span>
+                            </h4>
+                            <h4>
+                                <label>最后直播时间:</label>
+                                <span class="cd-time">2016.01.01 12:00</span>
+                            </h4>
+                        </div>
+                        <div class="channel-control">
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+                                <h4>频道设置</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+                                <h4>数据统计</h4>
+                            </a>
+                            <a class="cc-item">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+                                <h4>PC预览</h4>
+                            </a>
+                            <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+                                <h4>手机预览</h4>
+                                <div class="phone-view-hd">
+                                    <img src="__static__/zb/src/img/temp/qr.png">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <a class="channel-item add-new">
+                        创建直播频道
+                    </a>
+                </div>
+            </div>
+            <div class="block channel-block channel-data">
+                <span class="title">统计报表</span>
+                <div class="drop-sel channel-change">
+                    <div class="dp-content">
+                        <span class="dp-text">我的频道-01</span>
+                        <button class="dp-icon"></button>
+                        <input type="hidden">
+                        <ul class="dp-group">
+                            <li class="dp-item" data-val="2010-01-01">我的频道-01</li>
+                            <li class="dp-item" data-val="2010-01-01">我的频道-02</li>
+                            <li class="dp-item" data-val="2010-01-01">我的频道-03</li>
+                            <li class="dp-item" data-val="2010-01-01">我的频道-04</li>
+                            <li class="dp-item" data-val="2010-01-01">我的频道-05</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="time-change">
+                    <div class="drop-sel time-ds">
+                        <label class="dp-label">开始时间</label>
+                        <input type="hidden">
+                        <div class="dp-content">
+                            <span class="dp-text">2010-01</span>
+                            <button class="dp-icon"></button>
+                            <ul class="dp-group">
+                                <li class="dp-item" data-val="2010-01-01">2010-01</li>
+                                <li class="dp-item" data-val="2010-01-01">2010-02</li>
+                                <li class="dp-item" data-val="2010-01-01">2010-03</li>
+                                <li class="dp-item" data-val="2010-01-01">2010-04</li>
+                                <li class="dp-item" data-val="2010-01-01">2010-05</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a class="tc-submit">查询</a>
+                </div>
+                <div class="cd-container">
+                    <div class="cd-menu">
+                        <a class="cdm-item">
+                            流量统计
+                        </a>
+                        <a class="cdm-item">
+                            宽带统计
+                        </a>
+                    </div>
+                    <div class="cd-block flow-data">
+                        <div>
+                            这里是流量统计报表
+                        </div>
+                        <p class="title">
+                            统计数据仅供参考,实际数据以账单为准
+                        </p>
+                    </div>
+                    <div class="cd-block wb-data">
+                        <div>
+                            这里是宽带统计报表
+                        </div>
+                        <p class="title">
+                            统计数据仅供参考,实际数据以账单为准
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal m-channel-add">
+    <div class="modal-main">
+        <span class="close">&#xe607;</span>
+        <h4>创建频道</h4>
+        <div class="modal-form">
+            <div class="mf-line">
+                <label class="mfl-warp" > 频道名称<input type="text" placeholder="请输入频道名称"></label>
+            </div>
+            <div class="mf-line">
+                <label class="mfl-warp">频道类型 <span class="text channel">RTMP</span></label>
+            </div>
+            <button class="mf-submit">创建频道</button>
+        </div>
+
+    </div>
+</div>
+<!-- inject:admin_footer:html -->
+<!-- inject:admin_footer:html -->
+{/block}
+{block name="js"}
+{js href="__static__/zb/src/js/admin/channel_manager.js"/}
+{/block}

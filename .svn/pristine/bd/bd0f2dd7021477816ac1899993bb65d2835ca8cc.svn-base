@@ -1,0 +1,71 @@
+{extend name="base/base"/}
+{extend name="base/base"/}
+{block name="css"}{/block}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}管理员{/block}
+{block name="site_nav_2"}角色管理{/block}
+{block name='content'}
+
+<div class="cl pd-5 bg-1 bk-gray mt-10">
+    <span class="l">
+    <a class="btn btn-primary radius open_form" data-url="{:url('exec',['type'=>'add'])}" href="javascript:;">
+        <i class="Hui-iconfont">&#xe600;</i> 添加角色</a>
+    </span>
+
+</div>
+<div class="mt-10">
+    <table class="table table-border table-bordered table-bg table-hover table-sort">
+        <thead>
+        <tr class="text-c">
+            <th width="80">角色ID</th>
+            <th  width="300">角色名称</th>
+            <th width="50">是否超级管理员</th>
+            <th width="50">状态</th>
+            <th width="150">默认打开页</th>
+            <th width="300">描述</th>
+            <th width="60">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td>{$vo.id|default=''}</td>
+            <td class="text-l">{$vo.title_show|default='--'}</td>
+            <td>
+                {notempty name='vo.is_super'}
+                {switch name='vo.is_super'}
+                {case value='true'}<span class="label label-success radius">√</span>{/case}
+                {case value='false'}<span class="label label-info radius">×</span>{/case}
+                {default /}--
+                {/switch}
+                {/notempty}
+            </td>
+            <td class="text-c">
+                {notempty name='vo.status'}
+                {switch name='vo.status'}
+                {case value='1'}<span class="label label-default radius">生效</span>{/case}
+                {case value='-2'}<span class="label label-info radius">冻结</span>{/case}
+                {default /}--
+                {/switch}
+                {/notempty}
+            </td>
+            <td>{$vo.index_name|default='--'}</td>
+            <td>{$vo.tips|default='--'}</td>
+            <td class="td-manage">
+                <a style="text-decoration:none"  href="javascript:;" title="当前节点新增" class="open_form"  data-url="{:url('exec',['type'=>'add','pid'=>$vo['id']])}">
+                    <i class="Hui-iconfont">&#xe600;</i>
+                </a>
+                <a style="text-decoration:none" class="ml-5 open_form" href="javascript:" data-url="{:url('exec',['type'=>'edit','id'=>$vo['id']])}" title="编辑">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <a data-url="{:url('del')}" data-id="{$vo.id|default=0}" style="text-decoration:none" class="ml-5 del_by_id" href="javascript:;" title="删除">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+{/block}
+

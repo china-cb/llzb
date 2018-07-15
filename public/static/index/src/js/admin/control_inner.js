@@ -1,0 +1,97 @@
+/**
+ * Created by deloo on 2016/12/8.
+ */
+
+var preview_page = {
+    on_off:function() {
+        // $(".on_off").on("click",function() {
+        //     var a = $(this).index(".on_off");
+        //      $(".on_off i").eq(a).toggleClass("off_act");
+        //      $(".guide_layer_e").eq(a).toggleClass("guide_layer_dis");
+        //      $(".guide_layer2").eq(a).toggleClass("guide_layer2_act");
+        // });
+
+        $(".eyes").on("click",function() {
+             $(".shows").toggleClass("dislpays");
+        });
+
+        $(".preview_block1 .preview_sub").on("click",function() {  
+             $(".preview_block1").hide();
+             $(".preview_none1").show();
+        });
+
+        $(".preview_none1 .preview_sub").on("click",function() {
+            var pwds = $(".pawds1").val();
+            var id = $("#record_id").val();
+            if(pwds == ''){
+                layer.msg('请输入密码',{icon:2});
+                $(".preview_block1").show();
+                $(".preview_none1").hide();
+                return;
+            }
+            var url = $("#secret_key_url").val();
+            common.ajax_post(url,{id:id,pwds:pwds},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    $(".pawds1").text(pwds);
+                    $(".preview_block1").show();
+                    $(".preview_none1").hide();
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        });
+        $(".preview_block2 .preview_sub").on("click",function() {  
+             $(".preview_block2").hide();
+             $(".preview_none2").show();
+        });
+        $(".preview_none2 .preview_sub").on("click",function() {
+            var money = $(".moneys").val();
+            var id = $("#record_id").val();
+            if(money == ''){
+                $(".preview_block2").show();
+                $(".preview_none2").hide();
+                return;
+            }
+
+            var url = $("#unit_price_url").val();
+            common.ajax_post(url,{id:id,money:money},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    $(".moneys").text(money);
+                    $(".preview_block2").show();
+                    $(".preview_none2").hide();
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        });
+        
+        
+    },
+    file_uploads:function () {
+         $(".file_upload").change(function() {
+                var $file = $(this); 
+                var $file_indx = $(this).index(".file_upload");
+                var fileObj = $file[0];
+                var windowURL = window.URL || window.webkitURL;
+                var dataURL;
+                var $img = $(".preview").eq($file_indx);
+                if(fileObj && fileObj.files && fileObj.files[0]){
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $img.attr('src',dataURL);
+                }else{
+                    dataURL = $file.val();
+                    var imgObj = $(".preview").eq($file_indx);
+                }
+            });
+    }
+}
+$(function(){
+    preview_page.on_off();
+    preview_page.file_uploads();
+});

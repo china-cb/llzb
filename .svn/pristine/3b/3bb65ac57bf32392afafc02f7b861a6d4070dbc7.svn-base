@@ -1,0 +1,84 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}视频水印 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="statistics">
+
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">视频LOGO</span>
+                </h1>
+                <div class="guide">
+                    <div class="guide_title">
+                        视频窗口Logo显示
+                        <span class="on_off">
+                            <i class=""></i>
+                        </span>
+                    </div>
+                    <!-- <div class="box"> -->
+                        <div class="logo_location">
+                                <p class="login_agreement">
+                                   logo位置
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_top_left">左上角</label>
+                                    <input name="radios" type="radio" id="types_top_left">
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_right_left">右上角</label>
+                                    <input name="radios" type="radio" id="types_right_left">
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_bottom_left">左下角</label>
+                                    <input name="radios" type="radio" id="types_bottom_left">
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_bottom_right">右上角</label>
+                                    <input name="radios" type="radio" id="types_bottom_right">
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                            <div style="clear: both"></div>
+                            <label class="guide_label">上传图片<input class="file_upload box_img" type="file" value="1" /></label>
+                            <p class="guide_p">片大小为2M以内；建议尺寸：144*36px、72*18px;支持PNG、JPG、JPEG格式</p>
+                            <p class="guide_p guide_p2">预览：</p>
+                            <div class="win_preview4">
+                                <img class="preview" src="__static__/index/src/img/admin/win_preview.png"/> 
+                            </div>
+                            <div style="clear: both"></div>
+                            <!-- 正在审核  preview_sub添加 guide_layer_act，guide_layer显示-->
+                           
+                            <input type="submit" name="" value="提交" class="preview_sub "/>
+                        </div>
+                         <div class="guide_layer guide_layer2"></div>
+                    <!-- </div> -->
+                </div>
+
+            </div>
+
+        </div>
+</div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

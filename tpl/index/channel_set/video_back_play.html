@@ -1,0 +1,62 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}视频回放 - 玲珑直播{/block}
+{block name="content"}
+<div class="statistics">
+
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">视频回放</span>
+                    <a class="guide_h1_left">功能开启后，当您不在直播时，用户可点击播放该视频</a>
+                </h1>
+                <div class="guide">
+                    <div class="guide_title">
+                        视频回放开关
+                        <span class="on_off">
+                            <i class=""></i>
+                        </span>
+                    </div>
+                        <div class="logo_location">
+                            <div style="clear: both"></div>
+                            <label class="guide_label">选择视频<input class="box_img" type="file" value="1" /></label>
+                            <p class="guide_p guide_p2">播放预览：</p>
+                            <div class="win_preview4">
+                                <img class="preview" src="__static__/index/src/img/admin/win_preview.png"/>
+                                <video controls>
+                                      <source src="" type="video/ogg">
+                                      <source src="" type="video/mp4">
+                                      <source src="" type="video/webm">
+                                      <object data="">
+                                        <embed src="movie.swf">
+                                      </object>
+                                </video>
+                            </div>
+                            <div style="clear: both"></div>
+                            <!-- 正在审核  preview_sub添加 guide_layer_act，guide_layer显示-->
+                            
+                            <input type="submit" name="" value="提交" class="preview_sub "/>
+                        </div>
+                        <div class="guide_layer guide_layer2"></div>
+                </div>
+
+            </div>
+
+        </div>
+</div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

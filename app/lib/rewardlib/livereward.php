@@ -1,0 +1,63 @@
+<?php
+
+include_once 'rewardLibrary.php';
+
+class livereward extends rewardLibrary {
+    public $object_type = OBJECT_TYPE_LIVE;
+    protected $msgType = 11;
+    public $type_name = "直播";
+    public $object_uid;
+    protected function getData($object_id) {
+        $data = db('live_record')->where('id',$object_id)->find();
+        if(!empty($data)) $this->object_uid = $data['mid'];
+        return $data;
+    }
+
+    public function getGoodMessage($nickName,$objectname,$something='神秘礼物',$num=1,$coin=1) {
+
+        if($this->reward_type == REWARD_TYPE_GOOD){
+            return $nickName.'赠送了'.$objectname.$num.'个'. $something.'价值'.$coin.'个'.config('CONFIG_FLATFORM_NAME').'票';
+        }else
+            return '你获得'.$nickName.'发送的红包中的'. $num .'个'.config('CONFIG_FLATFORM_NAME').'票';
+    }
+
+    protected function getMessage($nickname,$something='神秘礼物',$num=1) {
+        if($this->reward_type == REWARD_TYPE_GOOD){
+            $something = $this->vgoods['vgoods_name'];
+            return $nickname.'赠送了你'.$num.'个'. $something;
+        }elseif($this->reward_type == REWARD_TYPE_FEEBASED){
+
+            return $nickname.'付费'.$something.'个'.config('CONFIG_FLATFORM_NAME').config('PLATFORM_UNIT').'进入您的直播';
+        }elseif($this->reward_type == REWARD_TYPE_REDBAG){
+            return '你获得'.$nickname.'发送的红包中的'. number_format($num, 2) .'个'.config('CONFIG_FLATFORM_NAME').config('PLATFORM_UNIT');
+        }
+
+    }
+    
+    protected function getPayBody() {
+        return "打赏{$this->userInfo['nickname']}的直播";
+    }
+    
+    protected function getModel() {
+        if(!$this->livemodel) $this->livemodel=( 'live');
+        return $this->livemodel;
+    }
+    
+    protected function getMobileMessage($money = null) {
+        return "";
+    }
+
+    public function doPay($rewardId) { //
+        $result = $this->_doPayResult($rewardId);
+        if(!$result) {
+            wrong_return('应用内支付异常，所有执行已经恢复');
+        }else{
+            ok_return('红包支付成功');
+        }
+
+    }
+    protected function getSystemMessage($nickname, $good_name = null) {
+
+    }
+}
+

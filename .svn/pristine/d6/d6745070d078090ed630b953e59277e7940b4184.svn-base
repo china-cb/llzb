@@ -1,0 +1,54 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}红包打赏记录 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->
+        <div class="content">
+            <div class="block-com rp-list">
+                <h4 class="title">红包记录</h4>
+                <div class="live-table">
+                    <div class="l-th">
+                        <span class="l-td t-time">
+                            <i class="iconfont">&#xe61a;</i>
+                            时间
+                        </span>
+                        <span class="l-td t-phone">
+                            <i class="iconfont">&#xe627;</i>
+                            手机号
+                        </span>
+                        <span class="l-td t-price">
+                            <i class="iconfont">&#xe63b;</i>
+                            金额(元)
+                        </span>
+                    </div>
+                    {volist name="list" id="vo"}
+                    <div class="l-tr">
+                        <span class="l-td t-time">
+                            {$vo.create_time|date="Y-m-d H:i:s",###}
+                        </span>
+                        <span class="l-td t-phone">
+                            {$vo.phone|default='--'}
+                        </span>
+                        <span class="l-td t-price">
+                            {$vo.coin|default='0.00'}
+                        </span>
+                    </div>
+                    {/volist}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

@@ -1,0 +1,40 @@
+
+{volist name="recharge_list" id="vo"}
+<ul class="statis_ul statis_ul2">
+    <li>{$vo['order_id']|default=''}</li>
+    <li>{$vo['create_time']|date="Y-m-d H:i:s",###}</li>
+    <li>{$vo['money']|default=''}</li>
+    <li>
+        {switch name="vo['pay_status']"}
+        {case value="0"}未支付{/case}
+        {case value="1"}已支付{/case}
+        {case value="2"}支付失败{/case}
+        {default /}未支付
+        {/switch}
+    </li>
+    <li>
+        {switch name="vo['pay_type']"}
+        {case value="0"}未知{/case}
+        {case value="1"}支付宝{/case}
+        {case value="2"}微信{/case}
+        {case value="2"}苹果支付{/case}
+        {case value="2"}爱贝{/case}
+        {default /}未知
+        {/switch}
+    </li>
+    <li>
+        {eq name="vo['pay_status']" value="0"}
+        <a href="" title="" class="at_buys">立即支付</a>
+        {/eq}
+        {eq name="vo['pay_status']" value="1"}
+        --
+        {/eq}
+        {eq name="vo['pay_status']" value="3"}
+        支付失敗
+        {/eq}
+    </li>
+</ul>
+{/volist}
+<div>
+    {$recharge_page|default=''}{$recharge_total|default=''}
+</div>

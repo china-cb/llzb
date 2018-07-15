@@ -1,0 +1,242 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}打赏设置 - 玲珑直播{/block}
+{block name="content"}
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->
+        <div class="content">
+            <form id="reward_list" method="post" action="">
+                <input type="hidden" name="rid" value="{$id|default=''}"><!--当前房间ID-->
+                <div class="block-com rp">
+                <h4 class="title">打赏配置</h4>
+                <div class="reword-config">
+                    <div class="rc-line">
+                        <span>打赏功能开关</span>
+                        <label class="ll-switch">
+                            <input id="hs-1" class="reward_switch {eq name='list.reward_switch' value='1'}reward_on{else/}reward_off{/eq}" type="checkbox" {eq name='list.reward_switch' value='1'}checked="checked"{/eq}>
+                            <label for="hs-1"></label>
+                        </label>
+                        <span>打赏名称</span>
+                        <label class="input">
+                            <span></span>
+                            <input placeholder="" id="share_speak" name="reward_name" value="{$list.reward_data|default=''}" onkeyup="count_num();"  maxlength="10">
+                            <span class="count"><i id="share_num">0</i>/10</span>
+                        </label>
+                    </div>
+                    <div class="rc-line">
+                        <span>填写手机号开关</span>
+                        <label class="ll-switch">
+                            <input id="hs-2" class="phone_switch {eq name='list.phone_switch' value='1'}phone_on{else/}phone_off{/eq}"  type="checkbox" {eq name='list.phone_switch' value='1'}checked="checked"{/eq}>
+                            <label for="hs-2"></label>
+                        </label>
+                        <span>手机提示语</span>
+                        <label class="input">
+                            <input placeholder="eg:输入手机号才可以参与打赏哦" name="phone_prompt" value="{$list.phone_data|default=''}" id="phone_speak"  onkeyup="phone_num();"  maxlength="10">
+                            <span class="count"><i id="phone_num">0</i>/10</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="gc-block">
+                    <div class="gc-menu">
+                        <a class="">礼物打赏</a>
+                        <a>红包打赏</a>
+                        <h6 class="gift-tips">建议上传图片为180*180像素，大小不能超过100K，礼物数量上限为6个</h6>
+                    </div>
+                    <div  class="gc-content">
+                        <div class="warp ">
+                            <div class="gifts">
+                            {volist name='gift_list' id='vo' key="k"}
+                                <div class="item gift_box" data-id="$k">
+                                    <div class="cover">
+                                        {empty name='vo.gift_url'}
+                                        <img class="preview" src="__static__/index/src/img/admin/sitives.png">
+                                        {else/}
+                                        <img class="preview" src="{$Think.config.CONFIG_CDN_URL}{$vo.gift_url|default=''}">
+                                        {/empty}
+                                        <label class="add-new">
+                                            <input class="file_upload gift_img" type="file" accept="image" name="gift_img{$k}"/>
+                                            <i class="iconfont"></i>
+                                            <span>上传图片</span>
+                                        </label>
+                                        <input type="hidden" class="gift_msg" name="gift_url[]" value="{$vo.gift_url|default=''}">
+                                    </div>
+                                    <div class="info">
+                                        <div class="gc-i-line">
+                                            <span class="label">礼物名称</span>
+                                            <label class="input">
+                                                <input placeholder="请输入礼物名称" name="gift_name[]" id="gift_name_len" onkeyup="gift_num(this);" class="gift_length" value="{$vo.gift_name|default=''}" maxlength="10">
+                                                <span class="tip"><i class="gift_num">{$vo.gift_len|default='0'}</i>/10</span>
+                                                <input type="hidden" class="gift_length" name="gift_len[]" value="{$vo.gift_len|default='0'}">
+                                            </label>
+                                        </div>
+                                        <div class="gc-i-line">
+                                            <span class="label">礼物金额</span>
+                                            <label class="input">
+                                                <input placeholder="请输入礼物价格" name="gift_price[]" value="{$vo.gift_price|default=''}" >
+                                                <span class="tip">元</span>
+                                            </label>
+                                        </div>
+                                        <div class="control">
+                                            <a class="delete">
+                                                <i class="iconfont">&#xe623;</i>
+                                                删除
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {/volist}
+                                <div class="item gift_list" >
+                                    <div class="cover">
+                                        <img  src="__static__/index/src/img/admin/sitives.png" class="preview"  />
+                                        <label class="add-new">
+                                            <input class="file_upload gift_img" type="file"  accept="image" name="gift_img"/>
+                                            <i class="iconfont">&#xe6cb;</i>
+                                            <span>上传图片</span>
+                                        </label>
+                                        <input type="hidden" class="gift_msg" name="gift_url[]" value="">
+                                    </div>
+                                    <div class="info">
+                                        <div class="gc-i-line">
+                                            <span class="label">礼物名称</span>
+                                            <label class="input">
+                                                <input placeholder="请输入礼物名称" name="gift_name[]" onkeyup="gift_num(this);" value="" maxlength="10">
+                                                <span class="tip"><i class="gift_num">0</i>/10</span>
+                                                <input type="hidden" class="gift_length" name="gift_len[]" value="">
+                                            </label>
+                                        </div>
+                                        <div class="gc-i-line">
+                                            <span class="label">礼物金额</span>
+                                            <label class="input">
+                                                <input placeholder="请输入礼物价格" name="gift_price[]" value="" >
+                                                <span class="tip">元</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="gift-submit">提交</a>
+                            </div>
+                        </div>
+
+
+
+                        <div class="warp ">
+                            <div class="gc-form">
+                                <div class="gc-line">
+                                    <span class="label">红包描述</span>
+                                    <label class="input">
+                                        <input placeholder="" onkeyup="red_warde_num();" id="red_reward" maxlength="20" value="{$red.red_des|default=''}">
+                                        <span class="tip"><i id="red_length">0</i>/20</span>
+                                    </label>
+                                    <span class="info">*请输入你想要的红包描述</span>
+                                </div>
+                                <div class="gc-line">
+                                    <span class="label">红包金额</span>
+                                    <label class="input">
+                                        <input placeholder="" id="red_price" value="{$red.coin|default=''}">
+                                        <span class="tip">元</span>
+                                    </label>
+                                </div>
+                                <div class="gc-line">
+                                    <span class="label">红包个数</span>
+                                    <label class="input">
+                                        <input placeholder="" id="red_num" value="{$red.num|default=''}">
+                                        <span class="tip">个</span>
+                                    </label>
+                                </div>
+                                <div class="gc-line">
+                                    <span class="label">红包分配规则</span>
+                                    <label class="radio">
+                                        <input type="radio" name="rule"  value="1" {eq name='red.type' value='1'}checked="checked"{/eq}>
+                                        <span class="radio-main"></span>
+                                        <span class="radio-text">随机分配</span>
+                                    </label>
+                                    <label class="radio">
+                                        <input type="radio" name="rule" value="2" {eq name='red.type' value='2'}checked="checked"{/eq}>
+                                        <span class="radio-main"></span>
+                                        <span class="radio-text">平均分配</span>
+                                    </label>
+                                </div>
+                                <div class="gc-line">
+                                    <span class="label">&nbsp;</span>
+                                    {eq name='red.status' value='1'}
+                                    <a class="submit">提交</a>
+                                    {/eq}
+                                    {empty name='red'}
+                                    <a class="submit">提交</a>
+                                    {/empty}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal modal-gift">
+    <div class="modal-main">
+        <span class="top"></span>
+        <p>你上传的照片不是建议尺寸，有可能会导致封面图不美观,建议您按照建议尺寸上传，效果更好哦～</p>
+        <a>我知道了</a>
+    </div>
+</div>
+<input type="hidden" id="reward_id" value="{$id}"><!--当前房间ID-->
+<input type="hidden" id="all_switch" value="{:url('index/channel_set/all_switch')}"><!--功能开关-->
+<input type="hidden" id="gift_art" value="{:url('index/channel_set/gift_art')}"><!--礼物打赏提交-->
+<input type="hidden" id="gift_img_url" value="{:url('index/channel_set/gift_img')}"><!--礼物打赏上传-->
+<input type="hidden" id="length" value="{$length|default='0'}"><!--礼物数量-->
+<input type="hidden" id="gift_red_reward" value="{:url('index/channel_set/red_reward')}"><!--红包打赏上传-->
+
+<script>
+    $(function(){
+        var gif_length = $("#length").val();
+        if(gif_length == 6){
+            $(".gift_list").remove();
+        }
+    });
+    $(function(){
+        var num = $("#share_speak").val();
+        $("#share_num").html(num.length);
+    });
+    $(function(){
+        var num = $("#phone_speak").val();
+        $("#phone_num").html(num.length);
+    });
+    $(function(){
+        var num = $("#red_reward").val();
+        $("#red_length").html(num.length);
+    });
+</script>
+<script>
+    function count_num(){
+        var num = $("#share_speak").val();
+        $("#share_num").html(num.length);
+    }
+    function phone_num(){
+        var num = $("#phone_speak").val();
+        $("#phone_num").html(num.length);
+    }
+    function gift_num(btn){
+        var data = $(btn).val();
+        $(btn).next().children(".gift_num").html(data.length);
+        $(btn).siblings('.gift_length').val(data.length);
+    }
+   function red_warde_num(){
+       var num = $("#red_reward").val();
+       $("#red_length").html(num.length);
+   }
+</script>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/live_reward.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

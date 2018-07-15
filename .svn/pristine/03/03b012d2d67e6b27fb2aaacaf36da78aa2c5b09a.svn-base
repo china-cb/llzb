@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>TIS SDK</title>
+    <!--Tis默认UI样式-->
+    <link href="http://cdn.aodianyun.com/tis/ui/default/css/jquery.splitter.css" rel="stylesheet" />
+    <link href="http://cdn.aodianyun.com/tis/shared/css/idangerous.swiper.css" rel="stylesheet" />
+    <link href="http://cdn.aodianyun.com/tis/ui/default/css/tis-ui-1.1.css" rel="stylesheet" />
+    <!--Tis基础库-->
+    <script type="text/javascript" src="http://cdn.aodianyun.com/static/jquery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="http://cdn.aodianyun.com/tis/core/tis-api-1.1.js"></script>
+    <script type="text/javascript" src="http://cdn.aodianyun.com/tis/core/tis-1.1.js"></script>
+    <!--Tis默认UI脚本-->
+    <script type="text/javascript" src="http://cdn.aodianyun.com/tis/ui/default/js/jquery.splitter-0.14.0.js"></script>
+    <script type="text/javascript" src="http://cdn.aodianyun.com/tis/shared/js/idangerous.swiper-2.0.min.js"></script>
+    <script type="text/javascript" src="http://cdn.aodianyun.com/tis/ui/default/js/tis-ui-1.1.js"></script>
+    <!--其他样式-->
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            background-color: lightgray;
+        }
+        .chat-box {
+            height: 400px;
+            width: 300px;
+            margin: auto;
+            margin-top: 50px;
+            border-radius: 5px;
+            filter:progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=3);/*ie*/
+            -moz-box-shadow: 2px 2px 10px #909090;/*firefox*/
+            -webkit-box-shadow: 2px 2px 10px #909090;/*safari或chrome*/
+            box-shadow:2px 2px 10px #909090;/*opera或ie9*/
+        }
+    </style>
+        <script>
+        function getQueryStr(str) {
+            var LocString = String(window.document.location.href);
+            var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+            if (tmp = rs) {
+                return decodeURIComponent(tmp[2]);
+            }
+            return "";
+        }
+        $(function () {
+            var api = TISAPI.New('interface2', { tisId: getQueryStr("tisId") }, false);
+            window.tis = TIS(".tis-container", {
+                api: api,                               //必须
+                //clientid:"clientId1"                  //可选，默认随机生成
+                name: "江苏网友",                           //可选，默认为Anonymous
+                image: "http://cdn.aodianyun.com/tis/ui/default/img/anonymous.png",          //可选，默认未定义
+                generateUserEvent: true,             //可选，默认为true
+                template:           tis_default_ui,     //界面模版
+                //以下均可选
+
+                failure: function (error, when) {       //某个操作失败时调用
+                    if (typeof error != "string") {
+                        if (when == "sendMsg" && error.code == 400 && error.error == "instance closed") {
+                            alert("TIS实例已关闭");
+                            return;
+                        }
+                        alert(when + "操作失败");
+                    } else {
+                        alert("操作失败：" + error);
+                    }
+                },
+                onSendSuccess: function (data) {
+                    //当发送消息成功时调用
+                    console.log("消息发送成功");
+                },
+                onReconnect: function () {
+                    //当需要与服务器重新连接时调用
+                    console.log("正在与服务器重连");
+                },
+                onConnect: function () {
+                    //当与服务器连接成功时调用
+                    console.log("与服务器重连接成功");
+                },
+                onLoadComponent: function () {
+                    //当组件加载完成时调用
+                    console.log("组件加载完成");
+                },
+                updateUser: function (total, clientId) {
+                    //当generateUserEvent=true,并且在线人数发生变化时调用
+                    alert(total);
+                    console.log("在线人数:",total);
+                }
+            });
+
+            var swiper = null;
+            var tis_perty_ui = function () {
+                var tisApp, temp;
+                function onInitUI(container,options) {
+                    var tis_html =
+                            '<div class="tis-top-bar">\
+                               <span>我的昵称：</span><span class="tis-top-name">匿名</span>\
+                            </div>\
+                            <div class="tis-center-box">\
+                                <div class="tis-msgs-panel"></div>\
+                                <div class="tis-tools-panel" style="display:none">\
+                                    <div class="tis-tools-panel disableSelect">\
+                                        <div class="tis-faces-box">\
+                                            <div class="tis-faces-swiper">\
+                                                <div class="swiper-wrapper"><div class="swiper-slide"></div></div>\
+                                                <div class="swiper-pagination"></div>\
+                                            </div>\
+                                            <div class="tis-facegroups"></div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                            <div class="tis-bottom-panel">\
+                                <div class="tis-tools-bar">\
+                                    <a class="tis-face-btn"></a>\
+                                </div>\
+                                <div class="tis-sendText-wrap">\
+                                    <textarea class="tis-sendText"></textarea>\
+                                </div>\
+                                <a class="tis-sendBtn">发送</a>\
+                                <div class="tis-bottom-tips tis-disableSelect">发送:Ctrl+Enter 回车:Enter</div>\
+                            </div>';
+                    $(container).html(tis_html);
+                    $(".tis-top-name").html(options.name);
+                    $(".tis-top-name").width($(".tis-top-name").parent().width() - 70);
+                    $(".tis-center-box").height(
+                            $(".tis-container").height() -
+                            $(".tis-top-bar").height() - $(".tis-bottom-panel").height() - 1);
+                    $(".tis-sendText-wrap").width($(".tis-bottom-panel").width() - $(".tis-sendBtn").width() - 25);
+
+                    function hideToolPanel() {
+                        $(".tis-msgs-panel").height($(".tis-msgs-panel").parent().height());
+                        $(".tis-tools-panel").hide();
+                        $(".tis-msgs-panel").scrollTop($(".tis-msgs-panel")[0].scrollHeight);
+                        $(".tis-msgs-panel").parent().scrollTop($(".tis-msgs-panel").parent()[0].scrollHeight);
+                    }
+                    function showToolPanel() {
+                        if ($(".tis-tools-panel").parent().height() > 125) {
+                            $(".tis-msgs-panel").height($(".tis-tools-panel").parent().height() - 125);
+                            $(".tis-tools-panel").css("height", "125px");
+                        } else {
+                            $(".tis-msgs-panel").height(0);
+                            $(".tis-tools-panel").height($(".tis-tools-panel").parent().height());
+                        }
+                        $(".tis-tools-panel").show();
+                    }
+                    $(".tis-tools-bar a").click(function (e) {
+                        if ($(".tis-tools-panel").css("display") == "none") {
+                            showToolPanel();
+                        } else {
+                            hideToolPanel();
+                        }
+                        if (!swiper) {
+                            swiper = new Swiper('.tis-faces-swiper', {
+                                pagination: '.swiper-pagination',
+                                paginationClickable: true
+                            });
+                            if ($(container + " .tis-facegroups").children().length > 0) {
+                                $(container + " .tis-facegroups").children()[0].click();
+                            }
+                        }
+                    });
+                    $(container + " .tis-sendText").mousedown(hideToolPanel);
+                    function sendMessage() {
+                        tisApp = tisApp ? tisApp : window.tis;
+                        hideToolPanel();
+                        var sendText = $(container + " .tis-sendText").val();
+                        if (sendText.length > 1000) {
+                            alert("发送内容太长啦");
+                            return;
+                        }
+                        tisApp.SendMessage(sendText);
+                        $(container + " .tis-sendText").val("")
+                    }
+                    $(container + " .tis-sendText").keydown(function (e) {
+                        if (e == null || e.keyCode == null || e.ctrlKey == null) return;
+                        if (e.keyCode == 13 && e.ctrlKey) {
+                            e.preventDefault();
+                            sendMessage();
+                        }
+                    });
+                    $(container + " .tis-sendBtn").click(sendMessage);
+                }
+                function appendTisMessage(msgBox, data, faceMap) {
+                    if (msgBox.children().length >= temp.maxMesageNum) {
+                        msgBox.children().eq(0).remove();
+                    }
+                    for (var item in faceMap) {
+                        data.body = data.body.replace(new RegExp("\\" + item, "g"), "<img src='" + faceMap[item] + "'/>");
+                    }
+                    var timestr;
+                    if(data.time) {
+                        var date = new Date(data.time*1000);
+                        timestr = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+                    }
+                    var headimg = $("<img src='" + (!!data.image ? data.image : "http://cdn.aodianyun.com/tis/ui/perty/img/anonymous2.png") + "'/>");
+                    var namelabel = $("<span class='tis-msg-name'>" + data.name + "：</span>");
+                    var timelabel = $("<span>" + timestr + "</span>");
+                    var div = $("<div class='tis-msg-head'></div>").append(headimg).append(namelabel).append(timelabel);
+                    if (msgBox.width() < 180) {
+                        namelabel.width(msgBox.width() - 10 - 8 - 32 - 10);
+                        timelabel.html("");
+                    } else {
+                        namelabel.width(msgBox.width() - 10 - 8 - 32 - 55 - 10);
+                    }
+                    msgBox.append($("<a></a>").append(div).append("<div class='tis-msg-body'>" + data.body + "</div>"));
+                    if ($(".tis-tools-panel").css("display") != "none") {
+                        showToolPanel();
+                    } else {
+                        msgBox.height(msgBox.parent().height());
+                    }
+                    msgBox.scrollTop(msgBox[0].scrollHeight);
+                    msgBox.parent().scrollTop(msgBox.parent()[0].scrollHeight);
+                }
+                function onReceiveMessage(data, container, faceMap) {
+                    var msglist = $(container + " .tis-msgs-panel");
+                    appendTisMessage(msglist, data, faceMap);
+                }
+                function onLoadHistory(data, container, faceMap , opts) {
+                    var msglist = $(container + " .tis-msgs-panel");
+                    var list = data.list;
+                    var length = 0;
+                    if (list) {
+                        length = list.length;
+                    }
+                    for (var index = length - 1; index >= 0; --index) {
+                        var item = list[index];
+                        if (!item.content) continue;
+                        var msgdata;
+                        try {
+                            msgdata = JSON.parse(item.content);
+                            msgdata = opts.prepareMessage(msgdata);
+                            appendTisMessage(msglist, msgdata, faceMap);
+                        } catch (ex) { }
+                    }
+                }
+                function onLoadGroup(data, container, groupClicked) {
+                    var groups = $(container + " .tis-facegroups");
+                    for (var index in data) {
+                        var item = data[index];
+                        var group = $('<a gid="' + item.id + '" ><img src="' + item.icon + '" /></a>');
+                        group.click(function () {
+                            $(container + " .swiper-wrapper").html("");
+                        });
+                        group.click(groupClicked);
+                        groups.append(group);
+                    }
+                }
+                function onLoadFaces(keys, faceMap, container, groupId) {
+                    var i = 0, pageSize = 24;
+                    var pagePanel = $(container + " .swiper-wrapper").append('<div class="swiper-slide"></div>').children().last();
+                    for (var index = 0; index < keys.length; index++) {
+                        var item = keys[index];
+                        pagePanel.append($("<a text='" + item + "'><img src='" + faceMap[item] + "' /></a>").click(function () {
+                            var sendText = $(container + " .tis-sendText");
+                            sendText.val(sendText.val() + $(this).attr("text"));
+                        }));
+                        if (++i >= pageSize) {
+                            i = 0;
+                            pagePanel = $(container + " .swiper-wrapper").append('<div class="swiper-slide"></div>').children().last();
+                        }
+                    }
+                    for (; i < pageSize; i++) {
+                        pagePanel.append("<a class='noneFace'></a>");
+                    }
+                    swiper.swipeTo(0, 0, false);
+                    swiper.reInit();
+                }
+                temp = {
+                    onInitUI: onInitUI,               //必须，在这个时机去初始化界面
+                    onLoadHistory: onLoadHistory,          //可选，加载历史消息时调用，不填则不加载
+                    onLoadGroup: onLoadGroup,            //加载分组完毕时调用
+                    onLoadFaces: onLoadFaces,            //加载表情完毕时调用
+                    onReceiveMessage: onReceiveMessage,         //收到消息时调用
+                    onPreSendMessage: function (msg) { return true },         //发送消息之前调用
+                    setTisApp: function (_tisApp) {
+                        tisApp = _tisApp;
+                    },
+                    historyPageSize: 10,                        //加载历史消息的条数
+                    maxMesageNum: 11,
+                    version: 1.2                                //模版版本
+                }
+                return temp;
+            }();
+        });
+    </script>
+</head>
+<body>
+    <div class="tis-container chat-box"></div>
+</body>
+</html>

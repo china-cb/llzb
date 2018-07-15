@@ -1,0 +1,29 @@
+/**
+ * 全局公共js
+ * Created by 冯天元 on 2016/12/12.
+ */
+$(function(){
+    var func = {
+        init:function(){
+
+        },
+        //退出
+        quit:function(){
+            var url = $("#quit_url").val();
+            layer.confirm("您确定要退出吗?",{btn:['确定','取消'],icon:3,skin:'layui-layer-lan',title:'玲珑TV小提示'},function(){
+                common.ajax_post(url,false,true,function(rt){
+                    var obj = common.str2json(rt);
+                    if(obj.code == 1){
+                        var root_url = $("#root_url").val();
+                        location.href = root_url;
+                    }
+                },true, [0.3, "#444"]);
+            });
+        }
+    };
+
+    /** 退出 */
+    $(document).on("click",".quit_btn",function(){
+        func.quit();
+    });
+});

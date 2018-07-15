@@ -1,0 +1,42 @@
+<?php
+namespace app\core\controller;
+
+use app\core\common\BusinessCommon;
+Class Business
+{
+    /**
+     * 统一下单接口
+     * @post int money 充值金额*
+     * @post int coin 充值币额*
+     * @post string pay_type 支付类型*
+     * @post string q 订单来源
+     * @return string order_id 返回订单id
+     */
+    public function order()
+    {
+        $post = remove_arr_xss(input('post.', []));
+        $m = new BusinessCommon();
+        $m->union_order($post);
+    }
+
+    /** 获取奥点云推流和拉流地址 */
+    public function get_push_url($stream){
+        empty($stream) && wrong_return("stream参数不能为空");
+        $config = [
+            'app_id'=>config("LIVE_APP_ID"),
+            'publish_token'=>config("LIVE_PUBLISH_TOKEN"),
+            'play_token'=>config("LIVE_PLAY_TOKEN"),
+            'hls_token'=>config("LIVE_HLS_TOKEN"),
+        ];
+        $publish_k = md5($config['publish_token'].$stream.$config['publish_token'].NOW_TIME); //推流加密防盗链
+        $play_k = md5($config['publish_token'].$stream.$config['play_token'].NOW_TIME); //推流加密防盗链
+        $hls_k = md5($config['publish_token'].$stream.$config['hls_token'].NOW_TIME); //推流加密防盗链
+
+        $address = [
+            'push_url'=>"rtmp://26284.lsspublish.aodianyun.com/".$config['app_id']."/".$stream."?k=".$publish_k,
+            'rtmp'=>"rtmp://26284.lsspublish.aodianyun.com/".$config['app_id']."/".$stream."?k=".$play_k,  //仅用于PC
+            'hls'=>"rtmp://26284.lsspublish.aodianyun.com/".$config['app_id']."/".$stream."?k=".$hls_k,   //可同时用于PC和移动端
+        ];
+        return $address;
+    }
+}

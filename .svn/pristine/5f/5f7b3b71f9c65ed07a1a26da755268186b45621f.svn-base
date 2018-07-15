@@ -1,0 +1,30 @@
+/**
+ * Created by deloo on 2016/11/30.
+ */
+var _admin=(function(){
+    var menu;
+    function init(){
+        var menu=$(".main.admin .menu .menu-item");
+    }
+    function set_menu(index_1,index_2){
+        if(!index_1&&index_1!=0){
+            return ;
+        }
+        if(!index_2){
+            index_2=0;
+        }
+        if(menu.length>0){
+            menu.removeClass("active").eq(index_1).addClass("active");
+            if(index_2>=0){
+                menu.eq(index_1).find(".ig-item").removeClass("active").eq(index_1).addClass("active");
+            }
+        }
+    }
+    return {
+        init:init,
+        menu:set_menu
+    }
+})();
+$(function(){
+    _admin.init();
+});

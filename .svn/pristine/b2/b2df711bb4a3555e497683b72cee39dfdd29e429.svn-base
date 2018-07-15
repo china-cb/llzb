@@ -1,0 +1,129 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/index.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+
+<div class="main">
+    <div class="index-banner">
+        <div class="banner-main">
+            <h4></h4>
+            <h6>提供视频流媒体服务，全平台播放，支持多终端实时稳定流畅观看直播，解决很多行业的痛点，<br/>
+                低成本、播放流畅、安全加密等，从录播到直播，为您实现完整的端到端直播服务，满足不同网络环境。</h6>
+            <div class="banner-btn">
+                <a  href="{:url('index/index/package')}" class="buy">套餐购买</a>
+                <a class="connect">联系我们</a>
+            </div>
+        </div>
+    </div>
+    <div class="index-acts">
+        <ul>
+            <li class="item">
+                <h4>直播</h4>
+                <h6>端到端服务，安全认证，数据加密，秒级时延</h6>
+            </li>
+            <li class="item">
+                <h4>点播</h4>
+                <h6>上传、转码、播放、云分发，多码率支持</h6>
+            </li>
+            <li class="item">
+                <h4>客户端SDK</h4>
+                <h6>完全开源，多平台，支持推流拉流，开发者最优使用体验</h6>
+            </li>
+            <li class="item">
+                <h4>转码</h4>
+                <h6>开放式API，方便用户接入</h6>
+            </li>
+            <li class="item">
+                <h4>跨平台直播</h4>
+                <h6>支持全部H5浏览器实现多平台观看直播</h6>
+            </li>
+        </ul>
+    </div>
+    <div class="index-block-1">
+        <h4></h4>
+        <ul class="block-main">
+            <li >
+                <h5>微博直播</h5>
+                <p>精准推送，无需跳转，直接在微博客户端观看直播，读取微博用户名、头像参与互动，</p>
+            </li>
+            <li >
+                <h5>微信直播</h5>
+                <p>自助式发起，开放接入微信、微信公众号，分享、传播、互动、嵌入微信公众号，可以进行独立配置</p>
+            </li>
+            <li >
+                <h5>大型活动直播保障</h5>
+                <p>高并发稳定承载，保障网络直播活动额画面清晰度，传输稳定性</p>
+            </li>
+            <li >
+                <h5>教育直播</h5>
+                <p>创新在线学习模式，引领直播课堂潮流</p>
+            </li>
+        </ul>
+    </div>
+    <div class="index-block-2">
+        <h4></h4>
+        <h6>无论视频编解码、流媒体、课件、管理接口都采用最流行的国际标准，大幅增加互动录播的兼容性，<br/>提高可用性，更适应与其它第三方平台对接。</h6>
+        <ul class="active">
+            <li class="active">
+                <span class="cover iconfont">&#xe650;</span>
+                <div class="content">
+                    <h4>多端直播</h4>
+                    <p>支持PC、OTT机顶盒、超级电视等多屏播放</p>
+
+                </div>
+            </li>
+            <li class="active-none">
+                <span class="cover iconfont" >&#xe65c;</span>
+                <div class="content">
+                    <h4>云平台</h4>
+                    <p>接口简单易操作可快速接入您的业务</p>
+
+                </div>
+            </li>
+            <li class="active-none">
+                <span class="cover iconfont">&#xe64e;</span>
+                <div class="content">
+                    <h4>实时性强</h4>
+                    <p>支持word、ppt图片各种数据的实时传输</p>
+                </div>
+            </li>
+            <li class="active-none">
+                <span class="cover iconfont">&#xe912;</span>
+                <div class="content">
+                    <h4>高交互低延时</h4>
+                    <p>多用户同时在线观看直播，实时书写绘制，观看页面清晰流畅</p>
+                </div>
+            </li>
+            <li class="active-none">
+                <span class="cover iconfont">&#xe907;</span>
+                <div class="content">
+                    <h4>音视频分流</h4>
+                    <p>支持独立音频、视频直播，在直播过程可灵活切换</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="index-block-3">
+        <h4></h4>
+        <p>直播内容实时储存，视频上传、下载、外嵌支持。<br/>
+            云媒体库兼具视频管理、储存的功能，并融合了自动转码、剪辑、拼合的视频线上处理功能，帮助用户轻松做视频运营。</p>
+        <div class="block-main">
+            <h4>视频点播</h4>
+            <p>从媒体库选择视频即可自助创建点播频道；从云媒体库获取Iframe地址，进行页面嵌入，同样能够获取点播解决方案。</p>
+            <div class="content">
+                <ul>
+                    <li><span>双向加速</span>上传分双向加速</li>
+                    <li><span>多种格式</span>MP4，FLV，F4V，HLS，TS等通用格式</li>
+                    <li><span>加密保障</span>多重安全加密机制保障视频内容</li>
+                </ul>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/index.js"/}
+{/block}

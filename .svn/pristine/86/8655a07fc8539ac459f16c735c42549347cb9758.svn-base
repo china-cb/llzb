@@ -1,0 +1,137 @@
+$(function(){
+    function update_recharge(page) {
+        var used_url=$('#recharge_ajx').val();
+        $.post(used_url,{page:page}, function (data) {
+            if(data.code==1){
+                $('.rechage').html(data.html);
+            }
+        },'json')
+    }
+    function update_list(page) {
+        var used_url=$('#user_order_ajx').val();
+        $.post(used_url,{page:page}, function (data) {
+            if(data.code==1){
+                $('.li_text1s').html(data.data.year);
+                $('.li_text2s').html(data.data.month);
+            }
+        },'json')
+    }
+
+
+    var type = $("input[name='item_type']").val();
+    if(type == 1){
+        $('.menu-item ').removeClass('active');
+        $('.content').removeClass('content_act');
+        $('.account').addClass('active');
+        $('.account-msg').addClass('content_act');
+        $('.item-group').addClass('active');
+    }
+    if(type == 2){
+        $('.menu-item ').removeClass('active');
+        $('.content').removeClass('content_act');
+        $('.bill').addClass('active');
+        $('.bill-msg').addClass('content_act');
+    }
+    if(type == 3){
+        $('.menu-item ').removeClass('active');
+        $('.content').removeClass('content_act');
+        $('.balance').addClass('active');
+        $('.balance-msg').addClass('content_act');
+    }
+    if(type == 4){
+        $('.menu-item ').removeClass('active');
+        $('.content').removeClass('content_act');
+        $('.recharge').addClass('active');
+        $('.recharge-msg').addClass('content_act');
+    }
+    if(type ==  5){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.go_phone_list').addClass('block_act');
+    }
+    if(type == 6){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.go_email_list').addClass('block_act');
+    }
+    /** 认证区域弹出 */
+    $(document).on("click",".go_audit",function(){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.audit').addClass('block_act');
+    });
+    /** 修改密码区域弹出 */
+    $(document).on("click",".go_modify",function(){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.go_modify_list').addClass('block_act');
+    });
+    /** 手机号区域弹出 */
+    $(document).on("click",".go_phone_up",function(){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.go_phone_list').addClass('block_act');
+    });
+    /** 邮箱区域弹出 */
+    $(document).on("click",".go_email",function(){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.go_email_list').addClass('block_act');
+    });
+    /** 邮箱区域弹出 */
+    $(document).on("click",".go_email_up",function(){
+        $('.block2s ').removeClass('block_act');
+        $('.block1s').removeClass('block_act');
+        $('.go_email_list').addClass('block_act');
+    });
+//修改基本信息
+    $(document).on("click",".vocation",function(){
+        var val = $(this).html();
+        $('#vocation_val').val(val);
+    });
+//实名认证
+//写入行业
+    $(document).on("click",".addres_li3",function(){
+        var val = $(this).html();
+        $('#industry').val(val);
+    });
+//写入地区省
+    $(document).on("click",".addres_li",function(){
+        var val = $(this).html();
+        $('#province').val(val);
+    });
+//写入地区市
+    $(document).on("click",".addres_li2",function(){
+        var val = $(this).html();
+        $('#city').val(val);
+    });
+// 页面加载过来时写入行业，地区，市
+
+//写入时间（年）筛选
+    $(document).on("click",".years_li",function(){
+        var val = $(this).children(".years_li_list").html();
+        $('.li_text1s').html(val);
+    });
+//写入时间（月）筛选
+    $(document).on("click",".years_li2",function(){
+        var val = $(this).children(".years_li2_list").html();
+        $('.li_text2s').html(val);
+    });
+//获得焦点使提示信息消失
+    $("input").focus(function(){
+        $("#error_message").hide();
+        $("#error_email_message").hide();
+    });
+    // $(document).on('click', '.page_btn', function () {
+    //     var obj = $(this);
+    //     var page = obj.data('page');
+    //     update_list(page);
+    // });
+    update_list();
+    // $(document).on('click', '.page_btn', function () {
+    //     var obj = $(this);
+    //     var page = obj.data('page');
+    //     update_list(page);
+    // });
+    update_recharge();
+});

@@ -1,0 +1,597 @@
+.agreement_sign .forget_pss:after, .agreement_sign .register_reg:after, footer .introduce > .introduce_inner .introduce_time:after, footer .introduce > .introduce_inner > ul:after {
+  *zoom: 1; }
+  .agreement_sign .forget_pss:after, .agreement_sign .register_reg:after, footer .introduce > .introduce_inner .introduce_time:after, footer .introduce > .introduce_inner > ul:after {
+    content: "";
+    display: table; }
+  .agreement_sign .forget_pss:after, .agreement_sign .register_reg:after, footer .introduce > .introduce_inner .introduce_time:after, footer .introduce > .introduce_inner > ul:after {
+    clear: both; }
+
+.agreement_sign .forget_pss:after, .agreement_sign .register_reg:after, footer .introduce > .introduce_inner .introduce_time:after, footer .introduce > .introduce_inner > ul:after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0; }
+
+.login_reg {
+  margin: 60px auto 150px auto;
+  width: 340px;
+  height: auto;
+  font-size: 12px; }
+  .login_reg > h1 {
+    font-size: 12px;
+    color: #222222;
+    font-weight: 700;
+    text-align: right;
+    margin-bottom: 10px; }
+    .login_reg > h1 > a {
+      margin-left: 5px;
+      color: #26c5e1;
+      transition: all 0.6s;
+      -webkit-transition: all 0.6s;
+      /* Safari */
+      -moz-transition: all 0.6s;
+      -o-transition: all 0.6s; }
+      .login_reg > h1 > a:hover {
+        color: #069db7; }
+  .login_reg .login_reg_lable {
+    text-align: center;
+    display: block;
+    width: 340px;
+    height: auto;
+    position: relative; }
+    .login_reg .login_reg_lable > input {
+      margin-bottom: 20px;
+      cursor: pointer;
+      padding: 0 18px;
+      border: none;
+      width: 302px;
+      height: 50px;
+      color: #999999;
+      font-size: 14px;
+      font-weight: 700;
+      border: 1px solid #e5e5e5;
+      transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      /* Safari */
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s; }
+      .login_reg .login_reg_lable > input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px #fff inset; }
+      .login_reg .login_reg_lable > input:focus {
+        border-color: #00c1df; }
+    .login_reg .login_reg_lable .login_reg_inpit1::-webkit-input-placeholder {
+      /* WebKit browsers */
+      color: #999999; }
+    .login_reg .login_reg_lable .login_reg_inpit1:-moz-placeholder {
+      /* Mozilla Firefox 4 to 18 */
+      color: #999999; }
+    .login_reg .login_reg_lable .login_reg_inpit1::-moz-placeholder {
+      /* Mozilla Firefox 19+ */
+      color: #999999; }
+    .login_reg .login_reg_lable .login_reg_inpit1:-ms-input-placeholder {
+      /* Internet Explorer 10+ */
+      color: #999999; }
+    .login_reg .login_reg_lable .login_reg_inpit2 {
+      text-indent: 95px; }
+      .login_reg .login_reg_lable .login_reg_inpit2::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #dadada; }
+      .login_reg .login_reg_lable .login_reg_inpit2:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #dadada; }
+      .login_reg .login_reg_lable .login_reg_inpit2::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #dadada; }
+      .login_reg .login_reg_lable .login_reg_inpit2:-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #dadada; }
+    .login_reg .login_reg_lable > .login_reg_inpit1s {
+      border: none;
+      background: none;
+      box-shadow: 0 0 15px #bcb7b7 inset;
+      background-color: rgba(204, 204, 204, 0.15);
+      border-radius: 3px;
+      color: #fff;
+      letter-spacing: 1px; }
+      .login_reg .login_reg_lable > .login_reg_inpit1s:focus {
+        outline: none; }
+    .login_reg .login_reg_lable .login_reg_free {
+      padding: 0;
+      border: none;
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 100px;
+      height: 40px;
+      font-weight: 700;
+      border-radius: 3px;
+      background-color: #00c1df;
+      color: #fff;
+      font-size: 14px; }
+    .login_reg .login_reg_lable .login_reg_span1 {
+      display: block;
+      position: absolute;
+      width: 80px;
+      height: 48px;
+      top: 2px;
+      left: 20px;
+      text-align: left;
+      color: #999999;
+      font-size: 14px;
+      line-height: 50px;
+      font-weight: 700;
+      background-color: #fff; }
+    .login_reg .login_reg_lable .login_sign_ico1 {
+      display: block;
+      position: absolute;
+      width: 43px;
+      height: 40px;
+      line-height: 40px;
+      top: 10px;
+      left: 25px;
+      text-align: left;
+      color: #999999;
+      font-size: 14px;
+      line-height: 50px;
+      font-weight: 700; }
+      .login_reg .login_reg_lable .login_sign_ico1 > .iconfont {
+        position: relative;
+        top: -5px;
+        font-size: 35px;
+        color: #00c1df; }
+      .login_reg .login_reg_lable .login_sign_ico1 > .iconline {
+        position: relative;
+        top: 9px;
+        float: right;
+        display: inline-block;
+        width: 2px;
+        height: 18px;
+        background-color: #fff; }
+    .login_reg .login_reg_lable > a {
+      margin-bottom: 20px;
+      cursor: pointer;
+      padding: 0;
+      width: 340px;
+      height: 50px;
+      line-height: 50px;
+      font-weight: 700;
+      transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      /* Safari */
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s; }
+    .login_reg .login_reg_lable > .login_reg_inpit3, .login_reg .login_reg_lable > a {
+      display: block;
+      width: 340px;
+      letter-spacing: 2px;
+      margin-top: 40px;
+      background-color: #00c1df;
+      font-size: 16px;
+      color: #fff;
+      border-radius: 4px; }
+      .login_reg .login_reg_lable > .login_reg_inpit3:hover, .login_reg .login_reg_lable > a:hover {
+        background-color: #0888bd; }
+    .login_reg .login_reg_lable > .login_reg_inpit3s {
+      margin-top: 20px;
+      box-shadow: none;
+      border: none;
+      margin-left: 2px; }
+  .login_reg .login_reg_sign {
+    margin-bottom: 12px;
+    padding: 3px 2px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    transition: all 0.6s;
+    -webkit-transition: all 0.6s;
+    /* Safari */
+    -moz-transition: all 0.6s;
+    -o-transition: all 0.6s; }
+    .login_reg .login_reg_sign input {
+      text-indent: 95px;
+      margin: 0; }
+      .login_reg .login_reg_sign input::-webkit-input-placeholder {
+        /* WebKit browsers */
+        color: #fff; }
+      .login_reg .login_reg_sign input:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 */
+        color: #fff; }
+      .login_reg .login_reg_sign input::-moz-placeholder {
+        /* Mozilla Firefox 19+ */
+        color: #fff; }
+      .login_reg .login_reg_sign input:-ms-input-placeholder {
+        /* Internet Explorer 10+ */
+        color: #fff; }
+  .login_reg .login_sign_act {
+    border: 1px solid #fff; }
+  .login_reg .password_no {
+    overflow: hidden;
+    width: 340px;
+    height: 0px;
+    text-align: center;
+    line-height: 27px;
+    background-color: #ec8a54;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    transition: all 0.6s;
+    -webkit-transition: all 0.6s;
+    /* Safari */
+    -moz-transition: all 0.6s;
+    -o-transition: all 0.6s; }
+  .login_reg .password_no_act {
+    height: 27px;
+    margin-bottom: 5px; }
+  .login_reg .login_header {
+    display: block;
+    margin: 0 auto 10px auto;
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff; }
+  .login_reg .login_header_win {
+    margin-top: 120px; }
+  .login_reg .login_name {
+    text-align: center;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center; }
+    .login_reg .login_name:nth-child(3) {
+      display: inline-block;
+      transition: all 0.6s;
+      -webkit-transition: all 0.6s;
+      /* Safari */
+      -moz-transition: all 0.6s;
+      -o-transition: all 0.6s;
+      margin-bottom: 25px; }
+      .login_reg .login_name:nth-child(3):hover {
+        transform: translateX(25px);
+        -webkit-transform: translateX(25px);
+        -moz-transform: translateX(25px);
+        -ms-transform: translateX(25px); }
+      .login_reg .login_name:nth-child(3):hover .iconfont, .login_reg .login_name:nth-child(3):hover .qq_go {
+        color: #04afca; }
+    .login_reg .login_name > .qq_img {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      background: url(../img/login/login_ico.png) no-repeat -1px -1px; }
+    .login_reg .login_name > .qq_go {
+      position: relative;
+      top: -7px;
+      font-size: 13px;
+      color: #222222;
+      transition: all 0.6s;
+      -webkit-transition: all 0.6s;
+      /* Safari */
+      -moz-transition: all 0.6s;
+      -o-transition: all 0.6s; }
+    .login_reg .login_name > .iconfont {
+      position: relative;
+      top: -9px;
+      color: #222222;
+      font-size: 9px;
+      transition: all 0.6s;
+      -webkit-transition: all 0.6s;
+      /* Safari */
+      -moz-transition: all 0.6s;
+      -o-transition: all 0.6s; }
+  .login_reg .login_win {
+    margin: 40px auto 40px auto;
+    text-align: center;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center; }
+  .login_reg .login_pass {
+    font-size: 12px;
+    margin-bottom: 18px;
+    opacity: 0;
+    transition: all 0.6s;
+    -webkit-transition: all 0.6s;
+    /* Safari */
+    -moz-transition: all 0.6s;
+    -o-transition: all 0.6s; }
+  .login_reg .login_pass_act {
+    opacity: 1; }
+
+.login_reg_signs {
+  width: 346px;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  margin: -162px 0 0 -173px; }
+
+.other_sign {
+  position: relative;
+  margin: 25px auto 0 auto;
+  width: 240px;
+  height: 25px; }
+  .other_sign > a {
+    position: absolute;
+    display: block;
+    width: 110px;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    line-height: 25px;
+    color: #222;
+    font-size: 12px;
+    font-weight: 700;
+    text-indent: 30px;
+    transition: all 0.6s;
+    -webkit-transition: all 0.6s;
+    /* Safari */
+    -moz-transition: all 0.6s;
+    -o-transition: all 0.6s; }
+    .other_sign > a i {
+      font-size: 10px;
+      position: relative;
+      top: -2px;
+      margin-left: 8px; }
+    .other_sign > a:hover {
+      transform: translateX(10px);
+      -webkit-transform: translateX(10px);
+      -moz-transform: translateX(10px);
+      -ms-transform: translateX(10px); }
+  .other_sign .other_sign_qq {
+    left: 0px;
+    background: url(../img/login/login_ico.png) no-repeat 12px -2px #fff; }
+  .other_sign .other_sign_wx {
+    right: 0;
+    background: url(../img/login/login_ico.png) no-repeat -150px -2px #fff; }
+
+.login_agreement {
+  margin: 0 auto;
+  width: 228px;
+  height: 22px;
+  position: relative;
+  text-align: right; }
+  .login_agreement > input {
+    position: absolute;
+    cursor: pointer;
+    z-index: 1;
+    opacity: 0;
+    top: 0px;
+    left: 0px;
+    border: none;
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+    background-color: #000; }
+  .login_agreement > i {
+    position: absolute;
+    top: 0px;
+    left: 1px;
+    color: #00c1df;
+    opacity: 0;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    /* Safari */
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s; }
+  .login_agreement > input:checked + i {
+    opacity: 1; }
+  .login_agreement .login_checkeds {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: block;
+    float: left;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    box-shadow: 0 0 6px #ccc inset; }
+  .login_agreement .sign-fff {
+    color: #fff; }
+  .login_agreement > span {
+    color: #222222;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    /* Safari */
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s; }
+    .login_agreement > span > a {
+      color: #00c1df;
+      cursor: pointer; }
+      .login_agreement > span > a:hover {
+        color: #0095ac; }
+
+.agreement_sign {
+  text-align: left;
+  width: 338px;
+  font-size: 14px;
+  font-weight: 700; }
+  .agreement_sign > .sign_free {
+    width: 100px; }
+  .agreement_sign .free_sign {
+    cursor: pointer;
+    color: #fff;
+    margin-left: 25px; }
+  .agreement_sign .forget_pss, .agreement_sign .register_reg {
+    margin-top: 2px;
+    line-height: 14px;
+    float: right;
+    color: #fff;
+    border-right: 2px solid #fff;
+    padding-right: 10px; }
+    .agreement_sign .forget_pss:hover, .agreement_sign .register_reg:hover {
+      color: #373d41; }
+  .agreement_sign .register_reg {
+    margin-left: 10px;
+    padding-right: 0;
+    border: none; }
+
+.login-header {
+  width: 100%;
+  height: 110px;
+  line-height: 110px;
+  border-bottom: 2px solid #f3f3f3; }
+  .login-header .logo {
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 20px;
+    width: 400px;
+    height: 90px;
+    background: url(../img/login/login_ico.png) no-repeat 0px -36px; }
+  .login-header .logo_sign {
+    background-position: 0px -173px; }
+  .login-header .login-list {
+    position: absolute;
+    left: 430px;
+    color: #222;
+    font-weight: 700; }
+  .login-header .login-main {
+    position: absolute;
+    right: 410px; }
+    .login-header .login-main span, .login-header .login-main a {
+      font-size: 16px;
+      font-weight: 700;
+      color: #222;
+      transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+      /* Safari */
+      -moz-transition: all 0.3s;
+      -o-transition: all 0.3s; }
+      .login-header .login-main span .arrow-right, .login-header .login-main a .arrow-right {
+        margin-left: 15px;
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 8px solid #222; }
+      .login-header .login-main span .sign-arrow, .login-header .login-main a .sign-arrow {
+        border-left: 8px solid #fff; }
+      .login-header .login-main span:hover, .login-header .login-main a:hover {
+        color: #0cbad8; }
+      .login-header .login-main span:hover i, .login-header .login-main a:hover i {
+        border-left: 8px solid #0cbad8; }
+    .login-header .login-main .login_sign_s {
+      color: #fff; }
+
+.login-sign-in {
+  border: none; }
+
+footer {
+  position: relative; }
+  footer .introduce {
+    position: relative;
+    z-index: 2;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 125px;
+    background-color: #4cd3e9; }
+    footer .introduce > .introduce_inner {
+      margin: 0 auto;
+      width: 1200px;
+      height: 100%;
+      color: #fff;
+      font-weight: 700; }
+      footer .introduce > .introduce_inner .introduce_time {
+        float: left;
+        margin-top: 18px;
+        width: 290px;
+        height: 90px;
+        text-align: left; }
+        footer .introduce > .introduce_inner .introduce_time i {
+          float: left;
+          font-size: 70px;
+          font-weight: 400; }
+        footer .introduce > .introduce_inner .introduce_time span {
+          display: block;
+          line-height: 25px;
+          text-indent: 50px; }
+          footer .introduce > .introduce_inner .introduce_time span:nth-child(2) {
+            font-size: 16px;
+            margin-top: 22px; }
+          footer .introduce > .introduce_inner .introduce_time span:nth-child(3) {
+            font-size: 21px; }
+      footer .introduce > .introduce_inner > ul {
+        float: right;
+        text-align: center;
+        width: 760px;
+        height: 100%;
+        line-height: 125px; }
+        footer .introduce > .introduce_inner > ul > li {
+          display: inline-block;
+          padding-right: 3px;
+          width: 165px;
+          height: 20px;
+          font-size: 16px;
+          border-right: 2px solid #fff;
+          line-height: 20px;
+          overflow: hidden; }
+          footer .introduce > .introduce_inner > ul > li:last-child {
+            border-right: none;
+            width: 140px; }
+  footer .footer_inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 65px;
+    background-color: #373d41; }
+    footer .footer_inner .footer_main {
+      margin: 0 auto;
+      width: 1200px;
+      height: 100%; }
+      footer .footer_inner .footer_main > p {
+        line-height: 23px;
+        text-align: center; }
+        footer .footer_inner .footer_main > p:first-child {
+          padding-top: 10px; }
+        footer .footer_inner .footer_main > p a {
+          margin: 0 10px;
+          color: #707d86;
+          font-size: 12px;
+          font-weight: 700;
+          transition: all 0.3s;
+          -webkit-transition: all 0.3s;
+          /* Safari */
+          -moz-transition: all 0.3s;
+          -o-transition: all 0.3s; }
+          footer .footer_inner .footer_main > p a:hover {
+            color: #fff; }
+  footer .footer_sign_in1 {
+    background: none; }
+
+.footer_sign {
+  width: 100%;
+  position: fixed;
+  bottom: 0; }
+
+.sign_in {
+  background: url(../img/login/sign_in.jpg) no-repeat 0px 0px;
+  background-size: cover; }
+  .sign_in > header {
+    border: none; }
+    .sign_in > header > .logo {
+      background-position: 0 -174px; }
+
+.footer_sign_in2 {
+  position: fixed;
+  z-index: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background-color: #222;
+  opacity: 0.7; }
+
+.footer_sign_in3 {
+  position: fixed;
+  z-index: 0;
+  bottom: 65px;
+  left: 0;
+  width: 100%;
+  height: 125px;
+  background-color: #2c535d;
+  opacity: 0.7; }

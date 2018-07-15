@@ -1,0 +1,135 @@
+{extend name="base/base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}房间管理{/block}
+{block name="site_nav_2"}已禁用房间{/block}
+{block name="content"}
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <span class="l">
+    <a class="btn btn-danger radius open_all_room_btn"  href="javascript:;">
+        <i class="Hui-iconfont">&#xe615;</i> 批量开启</a>
+    </span>
+
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c"> 名称搜索：
+            <input type="text" class="input-text" style="width:250px" placeholder="请输入房间号/主播" id="" name="search_word" value="{:input('param.search_word','')}">
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  name=""><i class="fa fa-times"></i> 清空搜索</button>
+        </div>
+    </form>
+</div>
+
+    <div class="mt-20">
+        <table class="table table-border table-bordered table-bg table-sort">
+            <thead>
+            <tr class="text-c">
+                <th><input type="checkbox" name="" value=""></th>
+                <th>房间ID</th>
+                <th>主播ID</th>
+                <th>主播真实姓名</th>
+                <th>禁用时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {empty name='stop_room_list'}
+            <tr>
+                <td class="text-c" colspan="12">暂无数据..</td>
+            </tr>
+            {else /}
+            {volist name='stop_room_list' id='item'}
+            <tr class="text-c">
+                <td><input name="" type="checkbox" class="check" data-id="{$item['id']}" value="{$item['id']}"></td>
+                <td>{$item['id']|default='--'}</td>
+                <td>{$item.member_id|default="--"}</td>
+                <td>{$item.true_name|default='--'}</td>
+                <td>
+                    {eq name="item.create_time" value=""}
+                       --
+                    {else/}
+                       {$item['create_time']|date="Y-m-d H:i:s",###}
+                    {/eq}
+                </td>
+                <td>
+                    {eq name="item.status" value="2"}
+                       <span class="label radius">已禁用</span>
+                    {else/}
+                        error
+                    {/eq}
+                </td>
+                <td class="f-14 product-brand-manage">
+                    <button class ='btn btn-secondary radius start_room ' data-id="{$item['id']}" title="开启房间"><i class="Hui-iconfont">&#xe6e6;</i></button>
+                </td>
+            </tr>
+            {/volist}
+            </tbody>
+            {/empty}
+        </table>
+    </div>
+
+<input type="hidden" id="start_room_url" value="{:Url('start_room')}">
+<input type="hidden" id="open_room_url" value="{:Url('open_all_room')}">
+<nav class="page_admin">
+    {$page|default=''}
+</nav>
+<script>
+    $(function(obj){
+        var func={
+            start:function(obj){
+                var url = $('#start_room_url').val();
+                var id = obj.data('id');
+                layer.confirm("您确定要开启该房间么?",{
+                    btn:['确定','取消']
+                },function(){
+                    common.ajax_post(url,{'room_id':id},true,function(rt){
+                        common.post_tips(rt,function(index){
+                            $(obj).parents("tr").fadeOut("slow");
+                            layer.msg(index.msg,{icon:1});
+                        });
+                    })
+                });
+            },
+            //批量开启房间
+            open_all_room:function(){
+                var check_audit = $('.check:checked');
+                var url = $('#open_room_url').val();
+                if(check_audit.length == 0) {
+                    layer.msg('请选择要开启的房间',{icon:2});
+                    return false;
+                }
+                var check_str = '';
+                check_audit.each(function () {
+                    check_str += $(this).data('id') + ',';
+
+                });
+                check_str = check_str.substring(0,check_str.length-1);
+                layer.confirm("您确定要批量开启选中的房间么?",{
+                    btn:["确定","取消"]
+                },function(){
+                    common.ajax_post(url,{id:check_str},true,function(rt){
+                        common.post_tips(rt);
+                        var obj = common.str2json(rt);
+                        if(obj.code == 1){
+                            location.replace(location);
+                        }
+                    })
+                });
+            }
+        };
+        $(document).on('click','.start_room',function(){
+            func.start($(this));
+        });
+
+        //批量开启房间
+        $(document).on("click",".open_all_room_btn",function(){
+            func.open_all_room();
+        });
+    });
+</script>
+
+
+{/block}
+
+
+{block name='js'}
+{/block}

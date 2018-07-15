@@ -1,0 +1,110 @@
+/**
+ * Created by admin on 2017/2/3.
+ */
+
+
+
+$(function () {
+    var func = {
+        init: function () {
+        },
+        //下单
+        order: function (param) {
+            var url = $('.go_pay').data('url');
+            common.ajax_post(url, param, false, function (rt) {
+                common.post_tips(rt, function (obj) {
+                    var order = obj.ret_data.order;
+                    if (!order) {
+                        layer.msg('订单创建失败!',{icon:2});
+                        return false;
+                    }
+                    switch (param.pay_type) {
+                        case '1':
+                            $("#package_form").attr('action', $("#alipay_url").val() + '?order=' + order);
+                            $("#package_form").submit();
+                            break;
+                        case '2':
+                            func.wechat_pay(order);
+                            break;
+                    }
+                },function(obj){
+                    layer.msg(obj.msg,{icon:2});
+                });
+            }, true, [0.1, '#eee'])
+        },
+        //微信支付
+        wechat_pay: function (order) {
+            layer.closeAll();
+            layer.load(2, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            //获取微信二维码url
+            var url = $('#get_qrcode_url').val();
+            var param = {
+                order: order
+            };
+            common.ajax_post(url, param, true, function (rt) {
+                layer.closeAll();
+                common.post_tips(rt, function (obj) {
+                    func.start_scan(order);
+                    var url = obj.ret_data.url;
+                    layer.confirm('请用微信扫描支付<br /><img style="width: 200px;height: 200px;" src="' + url + '" />', {
+                        title: false, btn: false, cancel: function () {
+                            func.stop_scan();
+                        }
+                    });
+                }, function (obj) {
+                    layer.msg(obj.msg);
+                });
+
+            });
+        },
+        //开始扫描
+        start_scan: function (order) {
+            var url = $('#get_order_pay_status').val();
+            index = window.setInterval(function () {
+                common.ajax_post(url, {'order': order}, true, function (rt) {
+                    common.post_tips(rt, function (obj) {
+                        layer.closeAll();
+                        func.stop_scan();
+                        layer.confirm("支付成功!",{title:'支付状态',skin:'layui-layer-molv',fixed:true,icon:1,btn:['确定']},function(){
+                            location.reload();
+                        });
+
+                    }, function () {
+                        console.log('扫描订单支付状态');
+                    })
+                });
+            }, 3000);
+        },
+        //停止扫描
+        stop_scan: function () {
+            window.clearInterval(index);
+        }
+    };
+
+    
+    func.init();
+    //立即支付
+    $(document).on('click','.go_pay',function(){
+        var money = $("#package_money").val();
+        if(money == ''){
+            return false;
+        }
+        var package_id = $("#package_type").val();
+        if(package_id == ''){
+            return false;
+        }
+        var pay_type = $("#pay_type").val();
+        if(pay_type == ''){
+            return false;
+        }
+        var param = {
+            package_id:package_id,
+            money: money,
+            pay_type: pay_type,
+            type:'buy'
+        };
+        func.order(param);
+    });
+});

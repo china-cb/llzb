@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.aodianyun.com/wis/exchange.js"></script>
+    <script src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+    <style>
+        .row {
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+        #wisIframe {
+            height: 700px;
+            width: 900px;
+            margin:0 auto;
+        }
+    </style>
+    <script>
+        var urlParam = "wisId=lc_fd8bc7344dbe52a32106ae20cdcffe7f&power=51&expire=1512151322&rand=9087&dmn=&sign=5uUepOUqQzqCK0PpymBAx1Rqpwk%3D" + "&tm=" + new Date().getTime();
+        var url = "http://web.wis.aodianyun.com/record.php?" + urlParam;
+        $(function () {
+            $("#wisIframe").attr("src", url);
+            $("#wisIframe").load(function () {
+                WISExchange.Init({
+                    iframe: "wisIframe",
+                    onSuccess: function (info) {
+                        console.log("onSuccess", info);
+                    },
+                    onDocLoad: function (info) {
+                        console.log("onDocLoad", info);
+                    },
+                    onPageChange: function (info) {
+                        console.log("onPageChange", info);
+                    },
+                    onFailure: function (info) {
+                        console.log("onFailure", info.error);
+                    }
+                });
+
+            });
+            $(".toggleBtn").click(function() {
+                if ($(this).hasClass("active"))
+                    $(this).removeClass("active");
+                else
+                    $(this).addClass("active");
+            });
+        });
+        var colors = ["#FFD700", "#FF8C00", "#000080", "#9ACD32", "#B22222", "#B0E0E6"];
+        var lineWidth = 1;
+    </script>
+</head>
+<body>
+<div style="background-color:#eaeaea;margin-bottom:10px;padding:8px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=0");'>隐藏工具栏</button>
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=111");'>隐藏文档栏</button>
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=112");'>隐藏视频栏</button>
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=11310");'>隐藏录制按钮</button>
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=110");'>隐藏右侧</button>
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=010");'>隐藏左右侧</button>
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=0100");'>隐藏左右和分页栏</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-default" onclick='WISExchange.Color(colors[parseInt(Math.random()*colors.length)]);'>颜色</button>
+            <button class="btn btn-default" onclick='WISExchange.LineWidth(lineWidth++%4 + 1);'>线宽</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    画笔类型<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a onclick='WISExchange.SetDrawType("custom");'>笔</a></li>
+                    <li><a onclick='WISExchange.SetDrawType("rect");'>矩形</a></li>
+                    <li><a onclick='WISExchange.SetDrawType("arc");'>椭圆</a></li>
+                    <li><a onclick='WISExchange.SetDrawType("text");'>文字</a></li>
+                    <li><a onclick='WISExchange.SetDrawType("clear");'>橡皮檫</a></li>
+                </ul>
+            </div>
+            <button class="btn btn-default" onclick='WISExchange.Clear();'>清空</button>
+            <button class="btn btn-default toggleBtn" onclick='WISExchange.AllowDraw({ ballow: $(this).hasClass("active") }); '>画板锁</button>
+            <button class="btn btn-default toggleBtn" onclick='WISExchange.Alpha($(this).hasClass("active")?1:0.5);'>半透明</button>
+            <button class="btn btn-default toggleBtn active" onclick='WISExchange.Track($(this).hasClass("active") ? { state: false, time: 200 } : { state: true, time: 200 });'>鼠标追踪</button>
+            <button class="btn btn-default" onclick='WISExchange.Resize(780,600);'>改变大小</button>
+        </div>
+    </div>
+</div>
+<div>
+    <iframe id="wisIframe" frameborder="0" ></iframe>
+</div>
+</body>
+</html>

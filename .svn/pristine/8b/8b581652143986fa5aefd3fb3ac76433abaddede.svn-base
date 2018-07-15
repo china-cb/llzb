@@ -1,0 +1,59 @@
+.main > .container, .main > .container > .content, .main > .container > .content .block > .basic_h1 .basic_h1_left:after, .main > .container > .content .block > .basic_h1 > .modify:after, .main > .container > .content .block .basic_content > .head_img:after, .main > .container > .content .block .basic_content .basic_info:after, .main > .container > .content .block .basic_content .basic_info li:after, .main > .container > .content .block .basic_content .basic_info li > span .go_bound:after { *zoom: 1; }
+.main > .container:before, .main > .container > .content:before, .main > .container:after, .main > .container > .content:after, .main > .container > .content .block > .basic_h1 .basic_h1_left:after, .main > .container > .content .block > .basic_h1 > .modify:after, .main > .container > .content .block .basic_content > .head_img:after, .main > .container > .content .block .basic_content .basic_info:after, .main > .container > .content .block .basic_content .basic_info li:after, .main > .container > .content .block .basic_content .basic_info li > span .go_bound:after { content: ""; display: table; }
+.main > .container:after, .main > .container > .content:after, .main > .container > .content .block > .basic_h1 .basic_h1_left:after, .main > .container > .content .block > .basic_h1 > .modify:after, .main > .container > .content .block .basic_content > .head_img:after, .main > .container > .content .block .basic_content .basic_info:after, .main > .container > .content .block .basic_content .basic_info li:after, .main > .container > .content .block .basic_content .basic_info li > span .go_bound:after { clear: both; }
+
+.main { width: 100%; position: relative; background: #f4f5fb; }
+.main.channel-user > .container { padding-left: 0; }
+.main > .container { width: 1200px; box-sizing: border-box; padding-left: 300px; margin: auto; position: relative; }
+.main > .container.without-menu { padding: 0; }
+.main > .container > .menu { position: absolute; top: 0; left: 0; width: 300px; text-align: center; box-sizing: border-box; padding-top: 10px; }
+.main > .container > .menu > .menu-item { width: 270px; display: block; margin: 10px auto 0; position: relative; }
+.main > .container > .menu > .menu-item.active > .mi-text { background: #00c1df; color: #fff; }
+.main > .container > .menu > .menu-item.active > .mi-text > i { color: #fff; }
+.main > .container > .menu > .menu-item > .mi-text { width: 100%; height: 40px; display: block; border-radius: 40px; background: #e4e6f2; line-height: 40px; cursor: pointer; color: #666; font-weight: normal; letter-spacing: 1px; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -moz-transition: all 0.3s ease; transition: all 0.3s ease; box-sizing: border-box; padding-left: 110px; text-align: left; }
+.main > .container > .menu > .menu-item > .mi-text > i { color: #999; font-size: 30px; position: absolute; line-height: 40px; left: 60px; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -moz-transition: all 0.3s ease; transition: all 0.3s ease; }
+.main > .container > .menu > .menu-item > .mi-text:hover { background: #00c1df; color: #fff; }
+.main > .container > .menu > .menu-item > .mi-text:hover > i { color: #fff; }
+.main > .container > .menu > .menu-item .item-group { width: 100%; box-sizing: border-box; padding: 0 40px; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -moz-transition: all 0.3s ease; transition: all 0.3s ease; }
+.main > .container > .menu > .menu-item .item-group.active { padding: 10px 0 10px 40px; }
+.main > .container > .menu > .menu-item .item-group.active > .ig-item { height: 30px; margin-top: 10px; }
+.main > .container > .menu > .menu-item .item-group > .ig-item { line-height: 30px; height: 0; margin-top: 0px; cursor: pointer; color: #999; position: relative; box-sizing: border-box; padding-left: 70px; text-align: left; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -moz-transition: all 0.3s ease; transition: all 0.3s ease; white-space: nowrap; overflow: hidden; }
+.main > .container > .menu > .menu-item .item-group > .ig-item .auth { padding: 2px 10px; border-radius: 20px; margin-left: 8px; color: #fff; font-size: 12px; }
+.main > .container > .menu > .menu-item .item-group > .ig-item .auth.ing { background: #df6400; }
+.main > .container > .menu > .menu-item .item-group > .ig-item:hover, .main > .container > .menu > .menu-item .item-group > .ig-item.active { color: #00c1df; }
+.main > .container > .menu > .menu-item .item-group > .ig-item > i { position: absolute; height: 30px; line-height: 30px; left: 20px; font-size: 28px; }
+.main > .container > .menu > .menu-item .item-group > .ig-item > i.font { font-size: 16px; font-style: normal; font-family: "SimHei"; font-weight: bold; text-transform: none; }
+.main > .container > .content { width: 100%; position: relative; box-sizing: border-box; padding: 6px 0 15px 0; }
+.main > .container > .content .block-com { position: relative; box-sizing: border-box; background: #fff; box-shadow: 0 0 5px #eee; margin: 18px auto 0; min-height: 100px; }
+.main > .container > .content .block-com > .title { padding: 0 15px; height: 30px; background: #1e1b29; text-align: center; color: #fff; position: absolute; line-height: 30px; top: 10px; left: 0; border-radius: 0 5px 5px 0; }
+.main > .container > .content .block { position: relative; box-sizing: border-box; min-height: 800px; padding: 18px 0; border-radius: 8px; background: #fff; box-shadow: 0 0 3px rgba(238, 238, 238, 0.3); }
+.main > .container > .content .block > .basic_h1 { width: 845px; height: 30px; line-height: 30px; text-align: left; }
+.main > .container > .content .block > .basic_h1 .basic_h1_left { display: block; float: left; width: 100px; height: 100%; background-color: #1e1b29; text-align: center; color: #fff; font-size: 14px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+.main > .container > .content .block > .basic_h1 > .reg_time { margin-left: 22px; font-size: 14px; color: #999999; }
+.main > .container > .content .block > .basic_h1 > .reg_time > span { margin-left: 22px; }
+.main > .container > .content .block > .basic_h1 > .modify { margin-top: 5px; cursor: pointer; float: right; display: block; width: 78px; color: #fff; line-height: 20px; text-align: center; font-size: 12px; height: 20px; border-radius: 10px; background-color: #df6400; transition: all 0.6s; -webkit-transition: all 0.6s; /* Safari */ -moz-transition: all 0.6s; -o-transition: all 0.6s; }
+.main > .container > .content .block > .basic_h1 > .modify:hover { background-color: #bb5400; }
+.main > .container > .content .block .basic_content { margin: 50px auto 0 auto; width: 770px; height: 265px; }
+.main > .container > .content .block .basic_content > .head_img { overflow: hidden; float: left; width: 90px; height: 90px; border-radius: 50%; background-color: #e3e9ea; }
+.main > .container > .content .block .basic_content .basic_info { float: right; width: 588px; height: 100%; text-align: left; }
+.main > .container > .content .block .basic_content .basic_info li > span { display: block; font-size: 14px; margin-bottom: 30px; }
+.main > .container > .content .block .basic_content .basic_info li > span:nth-child(1) { width: 70px; float: left; text-align: right; color: #002222; }
+.main > .container > .content .block .basic_content .basic_info li > span:nth-child(2) { width: 500px; float: right; color: #002222; }
+.main > .container > .content .block .basic_content .basic_info li > span .not_bound { color: #df6400; margin-right: 10px; }
+.main > .container > .content .block .basic_content .basic_info li > span .go_bound { cursor: pointer; display: inline-block; margin-left: 10px; width: 78px; color: #fff; line-height: 20px; text-align: center; font-size: 12px; height: 20px; border-radius: 10px; background-color: #df6400; transition: all 0.6s; -webkit-transition: all 0.6s; /* Safari */ -moz-transition: all 0.6s; -o-transition: all 0.6s; }
+.main > .container > .content .block .basic_content .basic_info li > span .go_bound:hover { background-color: #bb5400; }
+.main > .container > .content .block .security { margin: 20px 0 0 0; }
+.main > .container > .content .block .security li { text-align: left; margin: 5px auto 0 auto; width: 750px; padding: 0 30px; height: 95px; line-height: 95px; border-radius: 5px; background-color: #f9fafe; }
+.main > .container > .content .block .security li > .security_ico { position: relative; }
+.main > .container > .content .block .security li > .security_ico > .iconfont { font-size: 36px; color: #00c1df; }
+.main > .container > .content .block .security li > .security_ico > .i_img { position: absolute; top: 7px; left: 23px; border-radius: 50%; width: 13px; height: 13px; background-color: #000; }
+
+.pages { width: 100%; position: relative; display: block; height: 20px; margin: 20px auto; letter-spacing: -1em; }
+.pages > .items { display: inline-block; color: #999; font-size: 12px; line-height: 20px; letter-spacing: 0; padding: 0 7px; border-radius: 20px; margin: 0 5px; cursor: pointer; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -moz-transition: all 0.3s ease; transition: all 0.3s ease; }
+.pages > .items.active { background: #00c1df; color: #fff; }
+.pages > .items.active:hover { background: #00c1df; }
+.pages > .items.disable { cursor: default; color: #ccc; }
+.pages > .items.disable:hover { background: none; }
+.pages > .items:hover { background: #f1f6f7; }
+.pages > .items.text { background: #f1f6f7; color: #00c1df; }
+.pages > .items.text:hover { background: #00c1df; color: #fff; }

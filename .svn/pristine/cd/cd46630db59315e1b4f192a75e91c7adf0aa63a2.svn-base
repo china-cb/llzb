@@ -1,0 +1,138 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/setmeal.css"/}
+{/block}
+{block name="title"}套餐购买{/block}
+{block name="content"}
+
+<div class="main">
+	<div class="main_top">
+		<div class="main_main">
+			<div class="package">
+				<h1 class="package_h1">
+					<span>基础收费</span>
+					无套餐限制，实时结算，方便快捷
+				</h1>
+				<ul class="package_ul">
+					<li>
+						<span>每人每分钟约为</span>
+						<span>
+							0.006
+							<i>元</i>
+						</span>
+						<i class="border_line"></i>
+					</li>
+					<li>
+						<span>起订时间</span>
+						<span class="black_c">
+							10
+							<i>分钟</i>
+						</span>
+						<i class="border_line"></i>
+					</li>
+					<li>
+						<span class="li_c">订购时间</span>
+						<span class="black_c">
+							灵活可选
+						</span>
+					</li>
+					<li class="money_right">
+						已订购金额:6,433,431
+					</li>
+				</ul>
+				<a href="{:url('index/index/package_buy')}" class="">
+					立即订购
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="charging">
+		<div class="charging_main">
+			<h1>
+				观看时常计费
+				<span>不限并发峰值&nbsp;&nbsp;不限清晰度</span>
+			</h1>
+			<ul class="charging_ul">
+				<li class="charging_img"></li>
+				<li>
+					<span>12000/年</span>
+					<span>
+						<i>0.04</i>
+						元／人／分钟
+					</span>
+					<span>时长&nbsp;:&nbsp;300000分钟</span>
+					<a href="{:url('index/index/package_buy')}">立即购买</a>
+					<i></i>	
+				</li>
+				<li>
+					<span>36000/年</span>
+					<span>
+						<i>0.03</i>
+						元／人／分钟
+					</span>
+					<span>时长&nbsp;:&nbsp;1200000分钟</span>
+					<a href="{:url('index/index/package_buy')}">立即购买</a>
+					<i></i>
+				</li>
+				<li>
+					<span>90000/年</span>
+					<span>
+						<i>0.02</i>
+						元／人／分钟
+					</span>
+					<span>时长&nbsp;:&nbsp;4500000分钟</span>
+					<a href="{:url('index/index/package_buy')}">立即购买</a>
+					<i></i>
+				</li>
+				<li>
+					<span>150000/年</span>
+					<span>
+						<i>0.015</i>
+						元／人／分钟
+					</span>
+					<span>时长&nbsp;:&nbsp;10000000分钟</span>
+					<a href="{:url('index/index/package_buy')}">立即购买</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="use_fee">
+		<div class="fee_main">
+			<h1>平台功能使用费</h1>
+			<h2>满足不同用户的需求，只需玲珑直播</h2>
+			<ul>
+				<li>
+					<span class="li_h1">[基础版]</span>
+					<span class="li_h2">满足基本直播需求</span>
+					<span class="li_fee li_fee1">完全免费</span>
+					<a href="">立即购买</a>
+				</li>
+				<li>
+					<span class="li_h1">[专业版]</span>
+					<span class="li_h2">定制功能扩展</span>
+					<span class="li_fee">
+						<span>4990元</br><i>每年服务费</i></span>
+					</span>
+					<a href="">立即购买</a>
+				</li>
+				<li>
+					<span class="li_h1">[企业版]</span>
+					<span class="li_h2">品牌保护及协同作用</span>
+					<span class="li_fee">
+						<span>19990元</br><i>每年服务费</i></span>
+					</span>
+					<a href="">立即购买</a>
+					<i></i>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="consult">
+		<h1>如果您是首次使用玲珑直播，我们乐于向您推荐适合的方案和报价。</h1>
+		<a href="">立即咨询</a>
+	</div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/index.js"/}
+{/block}

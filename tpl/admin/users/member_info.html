@@ -1,0 +1,123 @@
+{extend name="base/base"/}
+{block name="css"}{/block}
+{block name="site_nav_1"}会员管理{/block}
+{block name="site_nav_2"}查看详情{/block}
+{block name='content'}
+<table class="table table-border table-bordered table-bg mt-30 table-hover radius">
+    <thead>
+    <tr>
+        <th colspan="2" scope="col" class="f-16">用户详细信息</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th width="15%" class="f-14">玲珑ID：</th>
+        <td class="f-14">{$user_info.num_id|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">登录账号：</th>
+        <td class="f-14"> {$user_info.account|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">手机号：</th>
+        <td class="f-14"> {$user_info.phone|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">邮箱：</th>
+        <td class="f-14">{$user_info.email|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">用户状态：</th>
+        <td class="f-14">
+            {switch name="user_info.status"}
+                {case value="1"}<span class="label label-success radius">正常</span>{/case}
+                {case value="-1"}<span class="label label-danger radius">禁用</span>{/case}
+                {default /}<span class="label label-success radius">正常</span>
+            {/switch}
+        </td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">用户类型：</th>
+        <td class="f-14">
+            {switch name="user_info.user_type"}
+                {case value="1"}个人{/case}
+                {case value="2"}企业{/case}
+                {default /}个人
+            {/switch}
+        </td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">认证状态：</th>
+        <td class="f-14">
+            {switch name="user_info.state"}
+                {case value="0"}<span class="label label-warning radius">未认证</span>{/case}
+                {case value="1"}<span class="label label-primary radius">待审核</span>{/case}
+                {case value="2"}<span class="label label-success radius">已认证</span>{/case}
+                {case value="-1"}<span class="label label-danger radius">认证失败</span>{/case}
+                {default /}<span class="label label-warning radius">未认证</span>
+            {/switch}
+        </td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">真实姓名：</th>
+        <td class="f-14">{$user_info.true_name|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">身份证号：</th>
+        <td class="f-14">{$user_info.identity|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">所属行业：</th>
+        <td class="f-14"> {$user_info.vocation|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">企业名称：</th>
+        <td class="f-14">{$user_info.enterprise_name|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">注册时间：</th>
+        <td class="f-14"> {$user_info.create_time|date="Y-m-d H:i:s",###}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">所在地区：</th>
+        <td class="f-14"> {$user_info.province|default="无"} {$user_info.city|default=""} {$user_info.area|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">详细地址：</th>
+        <td class="f-14"> {$user_info.addr|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">身份证正面：</th>
+        {empty name='user_info.identity_img_z'}
+        <td class="f-14">暂未实名认证</td>
+        {else/}
+        <td class="f-14"><img style=" width: 15% " src="{$Think.config.CONFIG_CDN_URL}{$user_info.identity_img_z|default=''}"></td>
+        {/empty}
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">身份证反面：</th>
+        {empty name='user_info.identity_img_z'}
+        <td class="f-14">暂未实名认证</td>
+        {else/}
+        <td class="f-14"><img style=" width: 15% " src="{$Think.config.CONFIG_CDN_URL}{$user_info.identity_img_f|default=''}"></td>
+        {/empty}
+    </tr>
+    {eq name='user_info.user_type' value='2'}
+    <tr>
+        <th width="15%" class="f-14">营业执照：</th>
+        {empty name='user_info.identity_img_z'}
+        <td class="f-14">暂未实名认证</td>
+        {else/}
+        <td class="f-14"><img style=" width: 15% " src="{$Think.config.CONFIG_CDN_URL}{$user_info.business_img_url|default=''}"></td>
+        {/empty}
+    </tr>
+    {/eq}
+    <tr>
+        <th class="f-14">操作: </th>
+        <td class="f-14"> <button onClick="layer_close();" class="btn btn-primary radius" type="button">返回</button> </td>
+    </tr>
+    </tbody>
+</table>
+{/block}
+{block name="js"}
+{/block}

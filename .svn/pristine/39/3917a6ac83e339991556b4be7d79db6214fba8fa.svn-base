@@ -1,0 +1,423 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/28
+ * Time: 9:59
+ */
+
+namespace app\index\controller;
+
+
+use app\admin\controller\Upload;
+use app\index\model\ChannelSetModel;
+use org\Image;
+
+class ChannelSet extends Common
+{
+    /** 频道基础设置_直播引导图 */
+    public function set_guide_map()
+    {
+        $id = input("param.id", "");
+        $mid = check_login();
+        $m = new ChannelSetModel();
+        $list = $m->get_user_av_room_list($id, $mid);
+        $this->assign("id", $id);
+        $this->assign("list", $list);
+        $this->assign("type", "set_guide_map");
+        return $this->fetch();
+    }
+
+    /** 引导图上传 */
+    public function up_guide()
+    {
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('guide_url');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $version_path = $info->getRealPath();//获取文件的绝对路径
+        $version_name = $info->getFilename();//获取文件名
+//        $list = getimagesize($version_path);// 获取图片信息
+        if (!empty($info)) {
+            $rt = new \app\core\controller\Upload();
+            $res1 = $rt->server_oss_img($version_name, $version_path);//上传OSS图片
+            ok_return('引导图上传成功', 1, $version_name);
+        } else {
+            wrong_return('上传失败');
+        }
+    }
+
+    /** 引导图提交 */
+    public function map_guide_list()
+    {
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        (empty($post['map_guide'])) && wrong_return('请提交引导图');
+        $data = [
+            'map_guide' => $post['map_guide'],
+            'update_time' => NOW_TIME,
+        ];
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $data);
+        if (empty($list)) {
+            wrong_return('提交失败');
+        } else {
+            ok_return('提交成功');
+        }
+    }
+
+    /** 频道基础设置_直播窗口背景 */
+    public function set_window_background()
+    {
+        $id = input("param.id", "");
+        $mid = check_login();
+        $m = new ChannelSetModel();
+        $list = $m->get_user_av_room_list($id, $mid);
+
+        $this->assign("id", $id);
+        $this->assign("list", $list);
+        $this->assign("type", "set_window_background");
+        return $this->fetch();
+    }
+
+    /** 直播窗口背景上传 */
+    public function up_window()
+    {
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('window_img');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $version_path = $info->getRealPath();//获取文件的绝对路径
+        $version_name = $info->getFilename();//获取文件名
+        if (!empty($info)) {
+            $rt = new \app\core\controller\Upload();
+            $res1 = $rt->server_oss_img($version_name, $version_path);//上传OSS图片
+            ok_return('引导图上传成功', 1, $version_name);
+        } else {
+            wrong_return('上传失败');
+        }
+    }
+
+    /** 直播窗口背景提交 */
+    public function up_window_list()
+    {
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $data = [
+            'window' => $post['map_window'],
+            'update_time' => NOW_TIME,
+        ];
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $data);
+        if (empty($list)) {
+            wrong_return('提交失败');
+        } else {
+            ok_return('提交成功');
+        }
+    }
+
+    /** 频道基础设置_直播视频LOGO */
+    public function set_video_logo()
+    {
+        $id = input("param.id", "");
+        $mid = check_login();
+        $m = new ChannelSetModel();
+        $list = $m->get_user_av_room_list($id, $mid);
+        $this->assign("id", $id);
+        $this->assign("list", $list);
+        $this->assign("type", "set_video_logo");
+        return $this->fetch();
+    }
+    /** 视频LOGO上传*/
+    public function up_logo()
+    {
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('logo_url');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $version_path = $info->getRealPath();//获取文件的绝对路径
+        $version_name = $info->getFilename();//获取文件名
+        if (!empty($info)) {
+            $rt = new \app\core\controller\Upload();
+            $res1 = $rt->server_oss_img($version_name, $version_path);//上传OSS图片
+            ok_return('引导图上传成功', 1, $version_name);
+        } else {
+            wrong_return('上传失败');
+        }
+    }
+
+    /** 视频LOGO提交 */
+    public function map_logo_list()
+    {
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $data = [
+            'logo_position' => $post['logo_type'],
+            'logo' => $post['map_logo'],
+            'update_time' => NOW_TIME,
+        ];
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $data);
+        if (empty($list)) {
+            wrong_return('提交失败');
+        } else {
+            ok_return('提交成功');
+        }
+    }
+
+    /** 频道基础设置_直播视频图标 */
+    public function set_video_icon()
+    {
+        $id = input("param.id", "");
+        $mid = check_login();
+        $m = new ChannelSetModel();
+        $list = $m->get_user_av_room_list($id, $mid);
+        $this->assign("id", $id);
+        $this->assign("list", $list);
+        $this->assign("type", "set_video_icon");
+        return $this->fetch();
+    }
+
+    /** 视频图标上传 */
+    public function up_cover()
+    {
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('cover_file');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $version_path = $info->getRealPath();//获取文件的绝对路径
+        $version_name = $info->getFilename();//获取文件名
+        $image = Image::open($version_path);
+// 按照原图的比例生成一个最大为150*150的缩略图并保存为thumb.png
+        $list = $image->thumb(128, 128)->save($version_path);
+        if (!empty($info)) {
+            $rt = new \app\core\controller\Upload();
+            $res1 = $rt->server_oss_img($version_name, $version_path);//上传OSS图片
+            ok_return('频道图标上传成功', 1, $version_name);
+        } else {
+            wrong_return('上传失败');
+        }
+    }
+
+    /** 视频图标提交 */
+    public function map_cover_list()
+    {
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $data = [
+            'cover' => $post['map_cover'],
+            'update_time' => NOW_TIME,
+        ];
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $data);
+        if (empty($list)) {
+            wrong_return('提交失败');
+        } else {
+            ok_return('提交成功');
+        }
+    }
+
+    /** 互动打赏设置_打赏设置 */
+    public function set_reward()
+    {
+        $id = input("param.id", "");
+        $mid = check_login();
+        $m = new ChannelSetModel();
+        $list = $m->get_user_av_room_list($id, $mid);
+        $info = $m->get_reward_list($id, $mid);
+        $rt = $info['reward_gift'];
+        $gift_list = unserialize($rt);
+        if(!empty($gift_list)){
+            $length = count($gift_list);
+            $this->assign("length", $length);
+        }
+
+        $this->assign("gift_list", $gift_list);
+        $this->assign("id", $id);
+        $this->assign("list", $list);
+        $this->assign("info", $info);
+
+        return $this->fetch();
+    }
+
+    /**  功能开关*/
+    public function all_switch()
+    {
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $post['update_time']  = NOW_TIME;
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $post);
+        if (empty($list)) {
+            wrong_return('設置失败');
+        } else {
+            ok_return('設置成功');
+        }
+    }
+    /** 礼物打赏提交 */
+    public function gift_art(){
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        if(empty($post['gift_url'][0])|| empty($post['gift_name'][0])|| empty($post['gift_price'][0])){
+            wrong_return('请填写礼物名称,金额与礼物图片');
+        }
+        $data = [];
+        foreach ($post['gift_url'] as $k => $v) {
+            if(!empty($post['gift_url'][$k]) && !empty($post['gift_name'][$k]) && !empty($post['gift_price'][$k])){
+                $data[$k]['gift_url'] = $post['gift_url'][$k];
+                $data[$k]['gift_name'] = $post['gift_name'][$k];
+                $data[$k]['gift_price'] = $post['gift_price'][$k];
+            }else if(empty($post['gift_url'][$k]) && empty($post['gift_name'][$k]) && empty($post['gift_price'][$k])){
+                //....
+            }else{
+                wrong_return('请填写礼物名称,金额与礼物图片');
+            }
+        }
+
+        $reward_gift = serialize($data);
+       $rt = [
+         'reward_gift' => $reward_gift,
+           'reward_name' => $reward_name,
+           'phone_prompt' => $phone_prompt,
+       ];
+        $m = new ChannelSetModel();
+        $list = $m->up_gift_list($mid,$post['rid'],$rt);
+        (empty($list)) && wrong_return('礼物打赏提交失败');
+        ok_return('提交成功');
+    }
+    /** 礼物上传 */
+    public function gift_img()
+    {
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('gift_img');
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $version_path = $info->getRealPath();//获取文件的绝对路径
+        $version_name = $info->getFilename();//获取文件名
+        if (!empty($info)) {
+            $rt = new \app\core\controller\Upload();
+            $res1 = $rt->server_oss_img($version_name, $version_path);//上传OSS图片
+            ok_return('引导图上传成功', 1, $version_name);
+        } else {
+            wrong_return('上传失败');
+        }
+    }
+    /** 红包打赏提交 */
+    public function red_reward(){
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $m = new ChannelSetModel();
+        $list = $m->up_gift_list($mid,$post['rid'],$post);
+        (empty($list)) && wrong_return('礼物打赏提交失败');
+        ok_return('提交成功');
+    }
+    /** 互动打赏设置_礼物打赏记录 */
+    public function gift_reward_record()
+    {
+        $id = input("param.id", "");
+        $this->assign("id", $id);
+        $this->assign("type", "gift_reward_record");
+        return $this->fetch();
+    }
+
+    /** 互动打赏设置_红包打赏记录 */
+    public function red_reward_record()
+    {
+        $id = input("param.id", "");
+        $this->assign("id", $id);
+        $this->assign("type", "red_reward_record");
+        return $this->fetch();
+    }
+
+    /** 观看设置 */
+    public function set_look()
+    {
+        $id = input("param.id", "");
+        $mid = check_login();
+        $m = new ChannelSetModel();
+        $list = $m->get_user_av_room_list($id, $mid);
+        $this->assign("id", $id);
+        $this->assign("list", $list);
+        $this->assign("type", "set_look");
+        return $this->fetch();
+    }
+    /** 付费直播 */
+    public function record_unit_price(){
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $data = [
+            'unit_price' => $post['money'],
+            'update_time' => NOW_TIME,
+            'type' => 2,
+        ];
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $data);
+        if (empty($list)) {
+            wrong_return('提交失败');
+        } else {
+            ok_return('提交成功');
+        }
+    }
+
+    /** 私密直播 */
+    public function record_secret_key(){
+        $mid = check_login();
+        $post = input('post.', '');
+        extract($post);
+        $data = [
+            'secret_key' => $post['pwds'],
+            'update_time' => NOW_TIME,
+            'type' => 1,
+        ];
+        $id = $post['id'];
+        $m = new ChannelSetModel();
+        $list = $m->up_map_guide($mid, $id, $data);
+        if (empty($list)) {
+            wrong_return('提交失败');
+        } else {
+            ok_return('提交成功');
+        }
+    }
+
+    /** 微信分享设置 */
+    public function set_weixin_share()
+    {
+        $id = input("param.id", "");
+        $this->assign("id", $id);
+
+        $this->assign("type", "set_weixin_share");
+        return $this->fetch();
+    }
+
+    /** 嵌入地址 */
+    public function set_embed_address()
+    {
+        $id = input("param.id", "");
+        $this->assign("id", $id);
+        $this->assign("type", "set_embed_address");
+        return $this->fetch();
+    }
+
+    /** 视频回放 */
+    public function video_back_play()
+    {
+        $id = input("param.id", "");
+        $this->assign("id", $id);
+        $this->assign("type", "video_back_play");
+        return $this->fetch();
+    }
+}

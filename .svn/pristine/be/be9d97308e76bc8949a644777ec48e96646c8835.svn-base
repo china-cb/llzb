@@ -1,0 +1,668 @@
+@charset "UTF-8";
+.preview .pv-warp .pv-top .info, .preview .pv-warp .pv-object, .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain, .preview .pv-warp .pv-object .pv-message .pv-send {
+  *zoom: 1; }
+  .preview .pv-warp .pv-top .info:before, .preview .pv-warp .pv-object:before, .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain:before, .preview .pv-warp .pv-object .pv-message .pv-send:before, .preview .pv-warp .pv-top .info:after, .preview .pv-warp .pv-object:after, .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain:after, .preview .pv-warp .pv-object .pv-message .pv-send:after {
+    content: "";
+    display: table; }
+  .preview .pv-warp .pv-top .info:after, .preview .pv-warp .pv-object:after, .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain:after, .preview .pv-warp .pv-object .pv-message .pv-send:after {
+    clear: both; }
+
+.preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-main > span:after, .boardBox {
+  -moz-user-select: none;
+  /*火狐*/
+  -webkit-user-select: none;
+  /*webkit浏览器*/
+  -ms-user-select: none;
+  /*IE10*/
+  -khtml-user-select: none;
+  /*早期浏览器*/
+  user-select: none; }
+
+.preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-main > span:after {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+.preview {
+  width: 100%;
+  position: relative;
+  background: url("../img/preview/video-view-bg.jpg") center bottom no-repeat;
+  background-size: cover; }
+  .preview .pv-warp {
+    width: 1200px;
+    margin: auto;
+    box-sizing: border-box;
+    padding: 35px 0 100px; }
+    .preview .pv-warp .pv-top {
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      height: 65px;
+      padding: 0 0 0 100px; }
+      .preview .pv-warp .pv-top .user {
+        width: 65px;
+        height: 65px;
+        display: block;
+        position: absolute;
+        border-radius: 6px;
+        left: 20px;
+        top: 0px;
+        background: #fff;
+        overflow: hidden;
+        cursor: pointer; }
+        .preview .pv-warp .pv-top .user > img {
+          position: relative;
+          width: 100%;
+          height: 100%; }
+      .preview .pv-warp .pv-top .pv-title {
+        display: block;
+        line-height: 34px;
+        color: #fff;
+        font-size: 16px;
+        letter-spacing: 1px;
+        font-weight: normal;
+        text-align: left; }
+      .preview .pv-warp .pv-top .info {
+        width: 100%;
+        display: block;
+        color: #fff;
+        font-size: 14px;
+        font-weight: normal;
+        height: 32px;
+        line-height: 32px; }
+        .preview .pv-warp .pv-top .info .item {
+          float: left;
+          box-sizing: border-box;
+          padding: 0 10px 0 30px;
+          position: relative;
+          text-align: left;
+          margin: 0 10px 0 0; }
+          .preview .pv-warp .pv-top .info .item > i {
+            font-size: 18px;
+            position: absolute;
+            left: 4px; }
+        .preview .pv-warp .pv-top .info .btn {
+          float: left;
+          padding: 0 10px 0 28px;
+          margin: 0 10px 0 0;
+          cursor: pointer;
+          position: relative;
+          color: #fff;
+          line-height: 32px;
+          box-sizing: border-box;
+          height: 32px;
+          border: 1px solid transparent;
+          -webkit-transition: all 0.3s ease;
+          -ms-transition: all 0.3s ease;
+          -moz-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
+          .preview .pv-warp .pv-top .info .btn > i {
+            position: absolute;
+            left: 3px;
+            font-size: 18px;
+            top: 1px; }
+          .preview .pv-warp .pv-top .info .btn:hover {
+            color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #fff; }
+    .preview .pv-warp .pv-object {
+      width: 100%;
+      margin-top: 20px;
+      position: relative;
+      box-sizing: border-box;
+      padding-right: 300px; }
+      .preview .pv-warp .pv-object.white-board {
+        padding-right: 280px; }
+        .preview .pv-warp .pv-object.white-board .pvo-contain {
+          width: 920px; }
+        .preview .pv-warp .pv-object.white-board .pv-message {
+          padding: calc(32px + 54px + 180px) 0 60px 0;
+          width: 278px; }
+          .preview .pv-warp .pv-object.white-board .pv-message .videoBox {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            background: #e4e4e4; }
+          .preview .pv-warp .pv-object.white-board .pv-message .displayBox {
+            height: 180px; }
+          .preview .pv-warp .pv-object.white-board .pv-message .total {
+            top: calc(54px + 180px); }
+          .preview .pv-warp .pv-object.white-board .pv-message .displayCtrlBar {
+            overflow: hidden;
+            padding: 10px; }
+      .preview .pv-warp .pv-object .pvo-contain {
+        height: auto;
+        width: 830px;
+        float: left;
+        position: relative; }
+        .preview .pv-warp .pv-object .pvo-contain .view-object {
+          position: relative;
+          width: 100%;
+          height: auto;
+          z-index: 1;
+          min-height: 360px;
+          background: #000; }
+          .preview .pv-warp .pv-object .pvo-contain .view-object > img {
+            position: relative;
+            width: 100%;
+            height: auto;
+            display: block; }
+        .preview .pv-warp .pv-object .pvo-contain .view-con-panel {
+          position: absolute;
+          right: 0;
+          bottom: 10px;
+          z-index: 2; }
+          .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch {
+            width: 100px;
+            height: 20px;
+            display: block;
+            margin: 0 10px 10px 0;
+            position: relative;
+            box-sizing: border-box;
+            padding-left: 50px;
+            cursor: pointer; }
+            .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch:hover .vs-main > span {
+              background: #8dbac1; }
+            .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch input {
+              display: none; }
+              .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch input:checked ~ .vs-text.on {
+                display: block; }
+              .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch input:checked ~ .vs-text.off {
+                display: none; }
+              .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch input:checked ~ .vs-main {
+                background: #c1e5ea; }
+                .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch input:checked ~ .vs-main > span {
+                  left: calc(100% - 15px); }
+            .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-text {
+              position: absolute;
+              left: 0;
+              width: 50px;
+              color: #e7f5f7;
+              font-size: 12px;
+              height: 20px;
+              line-height: 20px;
+              text-align: center;
+              display: none; }
+              .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-text.off {
+                display: block; }
+            .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-main {
+              position: relative;
+              width: 100%;
+              height: 100%;
+              background: #e7f5f7;
+              display: block;
+              cursor: pointer;
+              -webkit-transition: all 0.3s ease;
+              -ms-transition: all 0.3s ease;
+              -moz-transition: all 0.3s ease;
+              transition: all 0.3s ease; }
+              .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-main > span {
+                height: 24px;
+                width: 13px;
+                display: block;
+                position: absolute;
+                left: 2px;
+                top: -2px;
+                background: #aeced3;
+                line-height: 24px;
+                text-align: center;
+                -webkit-transition: all 0.3s ease;
+                -ms-transition: all 0.3s ease;
+                -moz-transition: all 0.3s ease;
+                transition: all 0.3s ease;
+                overflow: hidden; }
+                .preview .pv-warp .pv-object .pvo-contain .view-con-panel > .v-switch .vs-main > span:after {
+                  content: "\e63e";
+                  color: #fff;
+                  font-weight: 300;
+                  font-size: 16px;
+                  position: absolute;
+                  width: 24px;
+                  height: 24px;
+                  display: block;
+                  text-align: center;
+                  line-height: 24px;
+                  left: -5px;
+                  top: 0; }
+        .preview .pv-warp .pv-object .pvo-contain .cus-logo {
+          position: absolute;
+          z-index: 10;
+          top: 10px;
+          left: 10px; }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-tl {
+            top: 10px;
+            left: 10px;
+            bottom: auto;
+            right: auto;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -moz-transform: translate(0, 0);
+            transform: translate(0, 0); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-tc {
+            top: 10px;
+            left: 50%;
+            bottom: auto;
+            right: auto;
+            -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            transform: translate(-50%, 0); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-tr {
+            top: 10px;
+            left: auto;
+            bottom: auto;
+            right: 10px;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -moz-transform: translate(0, 0);
+            transform: translate(0, 0); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-cl {
+            top: 50%;
+            left: 10px;
+            bottom: auto;
+            right: auto;
+            -webkit-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-c {
+            top: 50%;
+            left: 50%;
+            bottom: auto;
+            right: auto;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-cr {
+            top: 50%;
+            left: auto;
+            bottom: auto;
+            right: 10px;
+            -webkit-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            -moz-transform: translate(0, -50%);
+            transform: translate(0, -50%); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-bl {
+            top: auto;
+            left: 10px;
+            bottom: 10px;
+            right: auto;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -moz-transform: translate(0, 0);
+            transform: translate(0, 0); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-bc {
+            top: auto;
+            left: 50%;
+            bottom: 10px;
+            right: auto;
+            -webkit-transform: translate(-50%, 0);
+            -ms-transform: translate(-50%, 0);
+            -moz-transform: translate(-50%, 0);
+            transform: translate(-50%, 0); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.pos-br {
+            top: auto;
+            left: auto;
+            bottom: 10px;
+            right: 10px;
+            -webkit-transform: translate(0, 0);
+            -ms-transform: translate(0, 0);
+            -moz-transform: translate(0, 0);
+            transform: translate(0, 0); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.opc-25 {
+            opacity: 0.25;
+            filter: alpha(opacity=25); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.opc-50 {
+            opacity: 0.5;
+            filter: alpha(opacity=50); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.opc-75 {
+            opacity: 0.75;
+            filter: alpha(opacity=75); }
+          .preview .pv-warp .pv-object .pvo-contain .cus-logo.opc-100 {
+            opacity: 1;
+            filter: alpha(opacity=100); }
+      .preview .pv-warp .pv-object .pv-message {
+        position: absolute;
+        width: 360px;
+        height: 100%;
+        right: 0;
+        top: 0;
+        box-sizing: border-box;
+        padding: 32px 0 60px 0;
+        background: rgba(0, 0, 0, 0.48);
+        word-break: break-all; }
+        .preview .pv-warp .pv-object .pv-message.has-top .message:hover .set-top {
+          display: none; }
+        .preview .pv-warp .pv-object .pv-message.has-top .message .set-top {
+          display: none; }
+        .preview .pv-warp .pv-object .pv-message .total {
+          position: absolute;
+          width: 100%;
+          height: 32px;
+          line-height: 32px;
+          background: rgba(0, 0, 0, 0.48);
+          box-sizing: border-box;
+          padding: 0 20px;
+          color: #fff;
+          text-align: left;
+          top: 0;
+          left: 0;
+          font-weight: normal;
+          letter-spacing: 1px; }
+          .preview .pv-warp .pv-object .pv-message .total > span {
+            margin: 0 4px; }
+        .preview .pv-warp .pv-object .pv-message .psm-warp {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          overflow: hidden; }
+          .preview .pv-warp .pv-object .pv-message .psm-warp .psm-contain {
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0;
+            text-align: center; }
+            .preview .pv-warp .pv-object .pv-message .psm-warp .psm-contain .time-flag {
+              display: inline-block;
+              padding: 0 20px;
+              line-height: 22px;
+              margin: 6px 0 0 0;
+              position: relative;
+              top: 5px;
+              background: rgba(0, 0, 0, 0.2);
+              border-radius: 20px;
+              color: #fff;
+              font-size: 12px; }
+        .preview .pv-warp .pv-object .pv-message .pv-send {
+          position: absolute;
+          background: rgba(0, 0, 0, 0.5);
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 60px;
+          box-sizing: border-box;
+          padding: 10px 15px; }
+          .preview .pv-warp .pv-object .pv-message .pv-send .face-block {
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            height: 0;
+            position: absolute;
+            width: 100%;
+            display: none;
+            box-sizing: border-box;
+            padding: 0px 5px;
+            bottom: 100%;
+            left: 0;
+            background: rgba(255, 255, 255, 0.8);
+            border: 0px solid #eee; }
+            .preview .pv-warp .pv-object .pv-message .pv-send .face-block.active {
+              padding: 5px 5px;
+              height: 96px;
+              border: 2px solid #eee; }
+            .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain {
+              position: relative;
+              width: 100%; }
+              .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain .face-item {
+                width: 30px;
+                height: 26px;
+                display: block;
+                float: left;
+                margin: 1px 2px;
+                cursor: pointer;
+                position: relative;
+                border-radius: 3px; }
+                .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain .face-item img {
+                  width: 24px;
+                  height: 24px;
+                  margin: 1px auto; }
+                .preview .pv-warp .pv-object .pv-message .pv-send .face-block .face-contain .face-item:hover {
+                  background: rgba(0, 195, 239, 0.2); }
+          .preview .pv-warp .pv-object .pv-message .pv-send > label {
+            width: 100%;
+            position: relative;
+            box-sizing: border-box;
+            display: block;
+            height: 40px;
+            line-height: 40px;
+            padding: 0 110px 0 15px;
+            background: #e7f5f7; }
+            .preview .pv-warp .pv-object .pv-message .pv-send > label > input {
+              width: 100%;
+              height: 40px;
+              position: relative;
+              background: none;
+              outline: none;
+              display: block;
+              line-height: 40px;
+              border: 0;
+              box-sizing: border-box; }
+          .preview .pv-warp .pv-object .pv-message .pv-send .face-btn {
+            width: 50px;
+            position: absolute;
+            height: 40px;
+            display: block;
+            color: #00c4e3;
+            text-align: center;
+            line-height: 44px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            top: 0;
+            right: 65px;
+            z-index: 9; }
+            .preview .pv-warp .pv-object .pv-message .pv-send .face-btn > i {
+              font-size: 28px; }
+          .preview .pv-warp .pv-object .pv-message .pv-send .psv-submit {
+            width: 60px;
+            height: 40px;
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #00c4e3;
+            color: #fff;
+            text-align: center;
+            letter-spacing: 1px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            transition: all 0.3s ease; }
+            .preview .pv-warp .pv-object .pv-message .pv-send .psv-submit:hover {
+              background: #0098b0; }
+        .preview .pv-warp .pv-object .pv-message .message {
+          position: relative;
+          width: 100%;
+          display: block;
+          box-sizing: border-box;
+          padding: 5px 60px 5px 72px;
+          margin-top: 2px;
+          text-align: left;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.1);
+          -webkit-transition: all 0.3s ease;
+          -ms-transition: all 0.3s ease;
+          -moz-transition: all 0.3s ease;
+          transition: all 0.3s ease; }
+          .preview .pv-warp .pv-object .pv-message .message.self {
+            padding-left: 0;
+            padding-right: 65px;
+            text-align: right; }
+            .preview .pv-warp .pv-object .pv-message .message.self .avatar {
+              left: auto;
+              right: 0; }
+            .preview .pv-warp .pv-object .pv-message .message.self .name {
+              text-align: right; }
+            .preview .pv-warp .pv-object .pv-message .message.self p {
+              text-align: left; }
+              .preview .pv-warp .pv-object .pv-message .message.self p img {
+                margin: 0 1px;
+                position: relative;
+                top: -2px;
+                max-width: 30px;
+                height: auto; }
+              .preview .pv-warp .pv-object .pv-message .message.self p:after {
+                border-top: 10px solid #fff;
+                border-right: 10px solid transparent;
+                border-left: 0;
+                content: "";
+                display: block;
+                position: absolute;
+                right: auto;
+                left: 100%;
+                top: 10px; }
+          .preview .pv-warp .pv-object .pv-message .message .avatar {
+            width: 40px;
+            height: 40px;
+            display: block;
+            position: absolute;
+            border-radius: 100%;
+            left: 12px;
+            top: 10px; }
+          .preview .pv-warp .pv-object .pv-message .message.hide {
+            height: 0;
+            padding: 0;
+            margin: 0; }
+          .preview .pv-warp .pv-object .pv-message .message:hover .set-top {
+            opacity: 1;
+            filter: alpha(opacity=100); }
+          .preview .pv-warp .pv-object .pv-message .message:hover .cancel-top {
+            opacity: 1;
+            filter: alpha(opacity=100); }
+          .preview .pv-warp .pv-object .pv-message .message > h4 {
+            line-height: 24px;
+            color: #00c1df;
+            font-size: 14px;
+            text-align: left;
+            box-sizing: border-box;
+            padding: 0 10px 0 5px;
+            display: block;
+            font-weight: bold;
+            letter-spacing: 1px; }
+          .preview .pv-warp .pv-object .pv-message .message .time {
+            font-size: 12px;
+            color: #fff;
+            display: inline-block;
+            margin: 0 4px;
+            line-height: 16px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 0 15px;
+            border-radius: 20px;
+            font-weight: normal;
+            letter-spacing: 0; }
+          .preview .pv-warp .pv-object .pv-message .message p {
+            position: relative;
+            display: inline-block;
+            box-sizing: border-box;
+            padding: 2px 5px;
+            line-height: 24px;
+            color: #fff;
+            font-weight: normal;
+            border-radius: 5px;
+            text-align: left; }
+          .preview .pv-warp .pv-object .pv-message .message .set-top {
+            width: 20px;
+            height: 20px;
+            display: block;
+            text-align: center;
+            line-height: 20px;
+            background: #00c1df;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border-radius: 3px;
+            cursor: pointer;
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            opacity: 0;
+            filter: alpha(opacity=0); }
+            .preview .pv-warp .pv-object .pv-message .message .set-top i {
+              font-size: 14px;
+              position: relative;
+              top: 1px; }
+          .preview .pv-warp .pv-object .pv-message .message .cancel-top {
+            display: none;
+            width: 72px;
+            height: 36px;
+            position: absolute;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+            border: 1px solid #00c1df;
+            cursor: pointer;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            -moz-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            line-height: 36px;
+            text-align: center;
+            color: #00c1df;
+            box-sizing: border-box;
+            top: 12px;
+            right: 10px; }
+            .preview .pv-warp .pv-object .pv-message .message .cancel-top:hover {
+              background: rgba(0, 0, 0, 0.8);
+              color: #13dfff; }
+          .preview .pv-warp .pv-object .pv-message .message.top {
+            position: absolute;
+            z-index: 2;
+            top: 28px;
+            left: 0;
+            background: rgba(255, 255, 255, 0.2); }
+            .preview .pv-warp .pv-object .pv-message .message.top .set-top {
+              display: none; }
+            .preview .pv-warp .pv-object .pv-message .message.top .cancel-top {
+              display: block; }
+
+.boardBox {
+  background: #000 no-repeat center;
+  background-size: 100% 100%; }
+  .boardBox > div {
+    background-size: 100% 100%; }
+
+.videoBox {
+  background-color: gray;
+  height: 234px;
+  box-sizing: border-box; }
+  .videoBox .displayBox {
+    background: #000; }
+
+.playerView_big {
+  margin-left: -871px;
+  width: 861px;
+  height: 608px; }
+
+.displayCtrlBar {
+  height: 35px;
+  background-color: #e4e4e4;
+  padding: 9px 10px 10px 10px; }
+  .displayCtrlBar .switchBtn {
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    cursor: pointer;
+    float: left;
+    background: #3f7de0 url("../img/wis/switchView.png") center no-repeat;
+    line-height: 35px;
+    border-radius: 5px;
+    color: white;
+    font-size: 15px;
+    text-align: center;
+    margin: 0 10px 0 15px; }
+  .displayCtrlBar .adjustBtn {
+    background: url("../img/wis/amAdjust.png") no-repeat 0px -5px;
+    display: inline-block;
+    float: right;
+    height: 35px;
+    width: 113px;
+    cursor: pointer; }

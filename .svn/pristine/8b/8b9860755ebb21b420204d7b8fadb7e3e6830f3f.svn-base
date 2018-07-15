@@ -1,0 +1,12 @@
+
+{css href="__hui__/css/H-ui.min.css" /}
+{css href="__hui_admin__/css/H-ui.admin.css" /}
+{css href="__plugin__/Hui-iconfont/1.0.7/iconfont.css" /}
+{css href="__plugin__/font-awesome/css/font-awesome.min.css" /}
+{css href="__plugin__/icheck/icheck.css" /}
+{css href="__hui_admin__/skin/default/skin.css" id="skin" /}
+{css href="__hui_admin__/css/style.css" /}
+{css href="__static__/hui/admin/css/style.css" /}
+{css href="__plugin__/zTree/css/zTreeStyle/zTreeStyle.css"}
+
+{css href="__static__/admin/css/public.css" /}

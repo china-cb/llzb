@@ -1,0 +1,63 @@
+<!--//此处应该加载下面图片上传工具，如果base已经加载，此处可以忽略-->
+<input type="hidden" id="upload_img_url_system" value='{:Url("core/api/up_img")}'/><!--上传图片调用-->
+    <!--<form action="{:url('upload/getUpload')}" enctype="multipart/form-data" class="form form-horizontal" method="post">-->
+        <!--<input type="file" name="image" />-->
+        <!--<input type="submit" value="上传" />-->
+    <!--</form>-->
+
+    <!--<label class="col-sm-3 control-label no-padding-right"> 头像 </label>-->
+    <!--<div class="col-sm-6">-->
+        <!--<input type="hidden" name="user_pic" value="{$info.user_pic|default=''}" class="pic_id"/>-->
+
+        <!--<img alt="150x150" src="" style="width: 150px;height: 150px;display: none;" class="pic_img">-->
+        <!--<div>-->
+            <!--<button class="btn btn-lg btn-success upload">上传头像</button>-->
+        <!--</div>-->
+
+
+
+    <!--</div>-->
+
+<div class="col-sm-6">
+    <input type="hidden" name="user_pic" value="{$info.user_pic|default=''}" class="pic_id"/>
+    {if !empty($type)}
+    {switch name='type'}
+    {case value='add'}
+    <img alt="150x150" src="" style="width: 150px;height: 150px;display: none;" class="pic_img">
+    <div>
+        <button class="btn btn-lg btn-success upload" >上传头像</button>
+    </div>
+    {/case}
+    {case value='edit'}
+    <img alt="150x150" src="{$info.user_face|default=''}" style="width: 150px;height: 150px;" class="pic_img">
+    <div>
+        <button class="btn btn-lg btn-success upload">修改头像</button>
+    </div>
+    {/case}
+
+    {default /}
+    <img alt="150x150" src="{$info.user_face|default=''}" style="width: 150px;height: 150px;" class="pic_img">
+    {/switch}
+    {else}
+    <img alt="200x200" src="" style="width: 150px;height: 150px;display: none;" class="pic_img">
+    <div>
+        <button class="btn btn-lg btn-success " id="upload">上传图片</button>
+    </div>
+    {/if}
+
+</div>
+
+<script>
+    $(function(){
+        $("#upload").click(function () {
+//            ev.preventDefault();
+            var upload_url = $('#upload_img_url_system').val();
+
+            alert(upload_url);
+
+            common.ajax_post(upload_url,false,true,function(rt){
+                alert(rt);
+            });
+        });
+    })
+</script>

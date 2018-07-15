@@ -1,0 +1,98 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}审核管理{/block}
+{block name="site_nav_2"}主播认证{/block}
+{block name='content'}
+<title>主播认证</title>
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c">
+            <a type="submit" class="btn btn-success all_audit l"> 一键审核</a>
+            名称搜索：
+            <input type="text" class="input-text" style="width:250px" placeholder="输入梦蝶id"  value="{:input('get.search_word')}" name="search_word">
+            &nbsp; &nbsp; &nbsp; &nbsp;
+                  <select class="select" size="1" name="type"  style="width: 200px;">
+                      <option value="" selected>请选择用戶类型</option>
+                      <option value="1" {eq name="type" value="1"}selected{/eq}>个人</option>
+                      <option value="2" {eq name="type" value="2"}selected{/eq}>企业</option>
+                  </select>
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  name=""><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total}</strong> 条</span>
+        </div>
+    </form>
+</div>
+
+<div class="mt-20">
+<table class="table table-border table-bordered table-bg">
+    <thead>
+    <tr>
+        <th scope="col" colspan="11">审核列表</th>
+    </tr>
+    <tr class="text-c">
+        <th>ID</th>
+        <th>玲珑ID</th>
+        <th>登录账号</th>
+        <th>真实姓名</th>
+        <th>身份证号码</th>
+        <th>所属行业</th>
+        <th>所在地区</th>
+        <th>详细地址</th>
+        <th>认证状态</th>
+        <th width="20%">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {empty name='list'}
+    <tr>
+        <td class="text-c" colspan="12">暂无数据..</td>
+    </tr>
+    {else/}
+    {volist name="list" id='item'}
+    <tr class="text-c">
+        <td><input class="check" type="checkbox" data-id="{$item.id}" ></td>
+        <td>{$item['id']|default='--'}</td>
+        <td>{$item['phone']|default='--'}</td>
+        <td>{$item['nick_name']|default='--'}</td>
+        <td>{$item['identity_card']|default='--'}</td>
+        <td>{$item['industry']|default=''}</td>
+        <td>{$item['vocation']|default='--'}　{$item['province']|default='--'}</td>
+        <td>{$item['detailed_address']|default=''}</td>
+        <td>
+            {switch name="item.status"}
+                {case value="0"}<span class="label label-warning radius">待审核</span>{/case}
+                {case value="1"}<span class="label label-success radius">已认证</span>{/case}
+                {case value="-1"}<span class="label label-danger radius">未通过</span>{/case}
+                {default /}<span class="label label-warning radius">待审核</span>
+            {/switch}
+        </td>
+        <td class="td-manage">
+            <a title="查看详情" href="javascript:;" data-url="{:url('audit_edit',['id'=>$item['id'],'type'=>$type])}" class="btn btn-primary ml-5 open_form radius" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;&nbsp;查看详情</i></a>
+            {eq name="item.status" value="0"}
+            <a title="审核" href="javascript:;" data-url="{:url('verify_user')}" data-id="{$item['id']|default=''}" class="btn btn-secondary ml-5 radius verify_btn" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e0;&nbsp;&nbsp;审核&nbsp;&nbsp;</i></a>
+            {else/}
+            <a title="已审核" href="javascript:;" class="btn btn-default ml-5 radius" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e0;&nbsp;已审核</i></a>
+            {/eq}
+        </td>
+    </tr>
+    {/volist}
+    {/empty}
+    </tbody>
+</table>
+</div>
+<nav class="page_admin">
+    {$page|default=""}
+</nav>
+<input type="hidden" id="del_url" value="{:Url('audit_del')}">
+<input type="hidden" id="all_audit_change" value="{:Url('all_audit_change')}">
+{/block}
+{block name='js'}
+{js href="__static__/admin/js/index/index.js"/}
+{js href="__static__/admin/js/users/audit_edit.js" /}
+{/block}
+
+
+
+
+

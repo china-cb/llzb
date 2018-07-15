@@ -1,0 +1,618 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin_account.css"/}
+{css file="__static__/index/src/css/mCustomScrollbar.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<!-- inject:admin_header:html -->
+<!-- endinject -->
+<div class="main admin">
+    <div class="container">
+        <!-- inject:account_menu:html -->
+        <ul class="menu">
+            <li class="menu-item account">
+                <h4 class="mi-text">
+                    <i class="iconfont">&#xe615;</i>
+                    账户信息
+                </h4>
+                <ul class="item-group">
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe737;</i>
+                        修改手机号
+                    </li>
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe62f;</i>
+                        修改邮箱
+                    </li>
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe62c;</i>
+                        修改密码
+                    </li>
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe61d;</i>
+                        实名认证
+                        {eq name="list.state" value="1"}
+                        <span class="auth ing">审核中</span>
+                        {/eq}
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item bill">
+                <a class="mi-text">
+                    <i class="iconfont">&#xe729;</i>
+                    账单详情
+                </a>
+            </li>
+            <li class="menu-item balance">
+                <a class="mi-text">
+                    <i class="iconfont">&#xe610;</i>
+                    余额充值
+                </a>
+            </li>
+            <li class="menu-item recharge">
+                <a class="mi-text">
+                    <i class="iconfont">&#xe656;</i>
+                    充值订单
+                </a>
+            </li>
+        </ul>
+        <!-- endinject -->
+        <div class="content account-msg content_act">
+            <div class="block block1s block_act">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">基本信息</span>
+                    <span class="reg_time">注册时间<span>{$list.create_time|default="0"}</span></span>
+                    <a class="modify modify-msg modify_act">修改信息</a>
+                    <!-- 修改激活 -->
+                    <a class="modify save-msg">保存</a>
+                </h1>
+                <section class="basic_content">
+                    <img src="__static__/index/src/img/temp/user_ava.png" class="head_img"/>
+                    <ul class="basic_info basic-modify basic_info_act" >
+                        <li>
+                            <span>登录账号</span>
+                            <span>{$list.account|default="0"}</span>
+                        </li>
+                        <li>
+                            <span>行业</span>
+                            <span>{$list.vocation|default="/(ㄒoㄒ)/~~"}</span>
+                        </li>
+
+                        <li>
+                            <span>企业名称</span>
+                            <span>{$list.enterprise_name|default="/(ㄒoㄒ)/~~"}</span>
+                        </li>
+                        <li>
+                            <span>手机号</span>
+                            <span>{$list.phone|default="0"}</span>
+                        </li>
+                        <li>
+                            <span>邮箱</span>
+                            {empty name="list.email"}
+                              <span>
+                                 <span class="not_bound">未绑定</span>
+                                 绑定邮箱用于用户找回密码
+                                <a href="" class="go_bound">去绑定</a>
+                             </span>
+                            {else/}
+                            <span>{$list.empty|default="0"}</span>
+                            {/empty}
+                        </li>
+                    </ul>
+                    <!-- 修改激活 -->
+                    <ul class="basic_info basic-save">
+                        <li>
+                            <span>登录账号</span>
+                            <span>{$list.account|default=""}</span>
+                        </li>
+                        <li>
+                            <span>行业</span>
+                             <span class="industry industrys">
+                                <span class="industry_inner">{$list.vocation|default="/(ㄒoㄒ)/~~"}</span>
+                                <span class="triangle_up"></span>
+                             </span>
+                            <ul class="industry_ul">
+                                <li class="vocation">网络视频电台1</li>
+                                <li class="vocation">网络视频电台2</li>
+                                <li class="vocation">网络视频电台3</li>
+                                <li class="vocation">网络视频电台4</li>
+                                <li class="vocation">网络视频电台5</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <span>企业名称</span>
+                            <input type="" name="industry" class="industry" value="{$list.enterprise_name|default='/(ㄒoㄒ)/~~'}">
+                        </li>
+                        <li>
+                            <span>手机号</span>
+                             <span class="x_modify">
+                                {$list.phone|default="/(ㄒoㄒ)/~~"}
+                                <a href="" class="go_bound">修改</a>
+                             </span>
+
+                        </li>
+                        <li>
+                            <span>邮箱</span>
+                             <span class="x_modify">
+                                 {$list.empty|default="0"}
+                                 <a href="" class="go_bound">修改</a>
+                             </span>
+                        </li>
+                    </ul>
+                </section>
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">安全信息</span>
+                </h1>
+                <ul class="security">
+                    <li>
+                        <span class="security_ico">
+                            <i class="iconfont">&#xe655;</i>
+                            <i class="i_img"></i>
+                        </span>
+                        <span class="real_1">实名认证</span>
+                        <span class="real_2">未认证</span>
+                        <span class="real_3">您还没有进行实名认证，为保障您的权益最大化，请进行实名认证。</span>
+                        <a href="" class="go_real">去认证</a>
+                    </li>
+                    <li>
+                        <span class="security_ico">
+                            <i class="iconfont">&#xe622;</i>
+                            <i class="i_img i_img2"></i>
+                        </span>
+                        <span class="real_1">登录密码</span>
+                        <span class="real_2 psd_1">安全等级：中</span>
+                        <span class="real_3 real_3s">安全性高的密码可以使账户更安全，建议您定期修改密码。</span>
+                        <a href="" class="go_real go_modify">修改密码</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="contents">
+                <!-- 修改手机号码 -->
+                <!-- 验证码填写有误 .password_no_act -->
+                <div class="block block2s">
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">更换安全手机号</span>
+                        <a href="" class="other_verification">选择其他验证方式</a>
+                    </h1>
+                    <div class="login_reg">
+                        <h1 class="sent_to">请发送验证码到手机{$list.phone|default=''}</h1 >
+                        <form id="change-phone"  method="post">
+                            <label class="login_reg_lable">
+                                <input type="hidden" name="phone_Verify" value="{$list.phone|default=''}">
+                                <input type="hidden" name="phone_Verify_type" value="modify_phone">
+
+                                <input type="text" name="phone_Verify_code" placeholder="请输入验证码" class="login_reg_inpit1"/>
+                                <input type="button"  value="发送验证码"  class="login_reg_free get_phone_Verify verify_phone"/>
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="text" name="phone_change" placeholder="请输入手机号" class="login_reg_inpit1" />
+                                <input type="hidden" name="phone_change_type" value="other">
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="text" name="phone_change_code" placeholder="请输入验证码" class="login_reg_inpit1"/>
+                                <input type="button" id="btn" value="发送验证码"  class="login_reg_free get_phone_change change_phone"/>
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="button" id="Submit-change-phone" class="login_reg_inpit3" value="下一步" />
+                            </label>
+                            <div type="hidden" style="display: none;" id="error_message" class="password_no password_no_act">验证码填写有误！</div>
+                        </form>
+                    </div>
+                    <h2 class="prompts">温馨提示：安全手机是找回密码的凭证，登录时请使用注册时填写的手机号</h2>
+
+                    <!-- 验证码成功之后 -->
+                    <!-- <div class="succes_mb">
+                        <span class="succes_mb_img"></span>
+                        <h1 class="prompt2s">绑定安全手机号才做成功，<span>5s</span>后自动返回账户信息</h1>
+                        <a href="">返回账户信息</a>
+                    </div> -->
+                </div>
+                <!-- 修改邮箱 -->
+                <div class="block block2s ">
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">更换邮箱</span>
+                    </h1>
+                    <!-- 修改邮箱1 -->
+                    <div class="login_reg">
+                        <h1 class="sent_to">请发送验证码到手机139＊＊＊＊8902</h1 >
+                        <form action="" method="get">
+                            <label class="login_reg_lable">
+                                <input type="text" name="" placeholder="请输入验证码" class="login_reg_inpit1"/>
+                                <input type="button" id="btn" value="发送验证码" onclick="settime(this)" class="login_reg_free"/>
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="text" name="" placeholder="请输入邮箱" class="login_reg_inpit1" />
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="submit" name="" class="login_reg_inpit3" value="下一步" />
+                            </label>
+                            <div class="password_no password_no_act">验证码填写有误！</div>
+                        </form>
+                    </div>
+                    <!-- 修改邮箱成功后 -->
+                    <!--  <div class="email_succes">
+                         <span class="email_succes_img"></span>
+                         <p class="email_succes_p1">邮件发送成功</p>
+                         <p class="email_succes_p1">绑定密保邮箱已经成功发送到2234590989@qq.com邮箱，请在6小时内登录邮箱点击链接完成操作</p>
+                         <ul class="email_list">
+                             <li>没有收到邮件怎么办？</li>
+                             <li class="email_list2">尝试在广告邮件、垃圾邮件目录下查找</li>
+                             <li><a href="">重新发送</a>邮件</li>
+                         </ul>
+                     </div>  -->
+                </div>
+                <!-- 修改密码 -->
+                <div class="block block2s">
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">更换密码</span>
+                    </h1>
+                    <div class="login_reg">
+                        <h1 class="sent_to">请发送验证码到手机139＊＊＊＊8902</h1 >
+                        <form action="" method="get">
+                            <label class="login_reg_lable">
+                                <input type="text" name="" placeholder="请输入验证码" class="login_reg_inpit1"/>
+                                <input type="button" id="btn" value="发送验证码" onclick="settime(this)" class="login_reg_free"/>
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="password" name="" placeholder="6～16位密码" class="login_reg_inpit2" />
+                                <span class="login_reg_span1">设置密码</span>
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="password" name="" placeholder="6～16位密码" class="login_reg_inpit2"/>
+                                <span class="login_reg_span1">确认密码</span>
+                            </label>
+                            <label class="login_reg_lable">
+                                <input type="submit" name="" class="login_reg_inpit3" value="下一步" />
+                            </label>
+                            <div class="password_no password_no_act">验证码填写有误！</div>
+                        </form>
+                    </div>
+                    <!-- 修改密码 -->
+                    <!--  <div class="succes_mb">
+                         <span class="pwd_mb_img"></span>
+                         <h1 class="prompt2s">更换密码操作成功，<span>5s</span>后自动返回账户信息</h1>
+                         <a href="">返回账户信息</a>
+                     </div> -->
+                </div>
+                <!-- 实名认证 -->
+                <div class="block block2s">
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">更换安全手机号</span>
+                        <a class="other_ver2">＊实名认证填写真实有效的信息</a>
+                    </h1>
+                    <div class="select_type">
+                        <h1>选择类型</h1>
+                        <div class="login_agreement">
+                            <label for="types">个人</label>
+                            <input name="radios" type="radio" name="" id="types" />
+                            <i></i>
+                            <p class="login_checkeds"></p>
+                        </div>
+                        <div class="login_agreement">
+                            <label for="types2">企业</label>
+                            <input name="radios" type="radio" name="" id="types2" />
+                            <i></i>
+                            <p class="login_checkeds"></p>
+                        </div>
+                    </div>
+
+                    <div class="select_type">
+                        <h1>填写信息</h1>
+                        <label class="l_write">真实姓名<input type="text/css" name="" value=""></label>
+                        <label class="l_write">身份证号<input type="text/css" name="" value=""></label>
+                        <div class="local_area">
+                            <label class="l_write">所属行业<input type="text/css" name="" value="请选择" class="local_input3" readonly></label>
+                            <ul class="addres_ul1s addres_ul3s">
+                                <li class="addres_li3">1</li>
+                                <li class="addres_li3">3</li>
+                                <li class="addres_li3">4</li>
+                                <li class="addres_li3">5</li>
+                                <li class="addres_li3">6</li>
+                            </ul>
+                        </div>
+                        <div class="local_area">
+                            <label class="l_write">所属地区<input type="text/css" name="" value="请选择" class="local_input1" readonly></label>
+                            <label class="l_write">所属地区<input type="text/css" name="" value="请选择" class="local_input2" readonly></label>
+                            <ul class="addres_ul1s addres_ul1">
+                                <li class="addres_li">1</li>
+                                <li class="addres_li">3</li>
+                                <li class="addres_li">4</li>
+                                <li class="addres_li">5</li>
+                                <li class="addres_li">6</li>
+                            </ul>
+                            <ul class="addres_ul1s addres_ul2s">
+                                <li class="addres_li2">1</li>
+                                <li class="addres_li2">3</li>
+                                <li class="addres_li2">4</li>
+                                <li class="addres_li2">5</li>
+                                <li class="addres_li2">6</li>
+                            </ul>
+                        </div>
+                        <label class="l_write">详细地址<input type="text/css" name="" value="" placeholder="填写详细地址" class="w_addres"></label>
+                    </div>
+
+                    <div class="select_type">
+                        <h1>提交资料</h1>
+                        <a class="prompts_left">支持jpg、png格式图片，大小不超过5M</a>
+                        <h3 class="positive">身份证正面照</h3>
+                        <ul class="upload_positive">
+                            <li>
+                                <label><span></span>上传文件<input class="file_upload box_img" type="file" value="1" /></label>
+                                <img class="preview" width="60" height="60" src="__static__/index/src/img/admin/sitives.png">
+                            </li>
+                            <li>
+                                示例照片
+                                <i></i>
+                            </li>
+                            <li>
+                                <img src="__static__/index/src/img/admin/positive.png" alt="">
+                            </li>
+                        </ul>
+
+                        <h3 class="positive">身份证正面照</h3>
+                        <ul class="upload_positive">
+                            <li>
+                                <label><span></span>上传文件<input class="file_upload box_img" type="file" value="1" /></label>
+                                <img class="preview" width="60" height="60" src="__static__/index/src/img/admin/sitives.png">
+                            </li>
+                            <li>
+                                示例照片
+                                <i></i>
+                            </li>
+                            <li>
+                                <img src="__static__/index/src/img/admin/positive.png" alt="">
+                            </li>
+                        </ul>
+                        <!-- 正在审核 sub_as-->
+                        <a href="" class="sub_go">提交</a>
+                    </div>
+
+                    <!-- 审核中显示遮罩层 -->
+                    <div class="types_ad"></div>
+
+                </div>
+            </div>
+        </div>
+        <div class="content ">
+            <div class="block block_act">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">账单详情</span>
+                </h1>
+                <div class="statistics">
+                    <ul>
+                        <li>当月累计消费总计</li>
+                        <li><i class="iconfont">&#xe644;</i>0.00</li>
+                    </ul>
+
+                    <ul>
+                        <li>累计消费总计</li>
+                        <li><i class="iconfont">&#xe644;</i>1000.00</li>
+                        <li><a title="">查看详细</a></li>
+                    </ul>
+                </div>
+                <div style="clear: both;"></div>
+                <ul class="years_days">
+                    <li>
+                        <span class="li_text li_text1"><span class="li_texts li_text1s">2016年</span><i class="icon icon1"></i></span>
+                        <ul class="years_list years_list1">
+                            <li class="years_li">2016年</li>
+                            <li class="years_li">2015年</li>
+                            <li class="years_li">2013年</li>
+                            <li class="years_li">2012年</li>
+                            <li class="years_li">2011年</li>
+                            <li class="years_li">2000年</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="li_text li_text2"><span class="li_texts li_text2s">6月</span><i class="icon icon2"></i></span>
+                        <ul class="years_list years_list2">
+                            <li class="years_li2">6月</li>
+                            <li class="years_li2">5月</li>
+                            <li class="years_li2">4月</li>
+                            <li class="years_li2">3月</li>
+                            <li class="years_li2">2月</li>
+                            <li class="years_li2">1月</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="statis_list">
+                    <li><i class="iconfont">&#xe62b;</i>时间</li>
+                    <li><i class="iconfont">&#xe633;</i>服务类型</li>
+                    <li><i class="iconfont">&#xe62b;</i>计费方式</li>
+                    <li><i class="iconfont">&#xe624;</i>消耗</li>
+                    <li><i class="iconfont">&#xe618;</i>扣费(元)</li>
+                </ul>
+                <!-- 无数据 -->
+                <!-- <div class="statis_list_no">
+                    <span></span>
+                    无数据
+                </div> -->
+                <!-- 有数据 -->
+                <ul class="statis_ul">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                </ul>
+                <ul class="statis_ul">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                </ul>
+                <ul class="statis_ul">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                </ul>
+                <ul class="statis_ul">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                </ul>
+                <ul class="statis_ul">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="content ">
+            <div class="block block_act">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">余额充值</span>
+                </h1>
+                <div class="balance">
+                    <span>账户余额</span>
+                    <span>1045.30</span>
+                </div>
+                <div class="balance">
+                    <span>充值金额</span>
+                    <ul class="amount_money">
+                        <li class="labels">1万元</li>
+                        <li class="labels">2万元</li>
+                        <li class="labels">3万元</li>
+                        <li class="labels">5万元</li>
+                        <label  class="labels">
+                            <input type="text" name="" value="" placeholder="其他金额" />
+                            元
+                        </label>
+                    </ul>
+                </div>
+                <div class="balance">
+                    <span>账户余额</span>
+                    <div class="login_agreement">
+                        <label for="types1s"><i class="iconfont zfb">&#xe60f;</i>支付宝</label>
+                        <input name="radios" type="radio" name="" id="types1s" />
+                        <i></i>
+                        <p class="login_checkeds"></p>
+                    </div>
+                    <div class="login_agreement">
+                        <label for="types2s"><i class="iconfont wx">&#xe639;</i>微信</label>
+                        <input name="radios" type="radio" name="" id="types2s" />
+                        <i></i>
+                        <p class="login_checkeds"></p>
+                    </div>
+                </div>
+                <a href="" class="at_recharges">立即充值</a>
+                <div style="clear: both"></div>
+                <div class="point_out">
+                    <h1>温馨提示</h1>
+                    <ul>
+                        <li>1.支持支付宝，微信方式充值</li>
+                        <li>2.充值成功的金额不支持提现</li>
+                        <li>3.若充值未到账或有其他疑问请致电客户热线：0516-83994999</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="block block_act">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">充值订单</span>
+                </h1>
+                <ul class="date_choice">
+                    <i class="icon_date1"></i>
+                    <i class="icon_date1"></i>
+                    <li class="laydate-icon" id="start">开始日期</li>
+                    <li class="laydate-icon" id="end">结束日期</li>
+                    <span class="date_span1"></span>
+                    <!-- <span class="date_span1 date_span1_act"></span> -->
+                </ul>
+                <ul class="statis_list statis_list2">
+                    <li><i class="iconfont">&#xe661;</i>流水单号</li>
+                    <li><i class="iconfont">&#xe61a;</i>充值时间</li>
+                    <li><i class="iconfont">&#xe618;</i>金额（元）</li>
+                    <li><i class="iconfont">&#xe643;</i>状态</li>
+                    <li><i class="iconfont">&#xe62d;</i>支付方式</li>
+                    <li><i class="iconfont">&#xe6e8;</i>支付方式</li>
+                </ul>
+                <ul class="statis_ul statis_ul2">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                    <li><a href="" title="" class="at_buys">立即支付</a></li>
+                </ul>
+                <ul class="statis_ul statis_ul2">
+                    <li>2016.9.7 10:09:23</li>
+                    <li>直播</li>
+                    <li>按流量</li>
+                    <li>100G</li>
+                    <li>100.00</li>
+                    <li>--</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="item_type" value="{$type|default=''}">
+<input type="hidden" id="vocation_val" value="{$list.vocation|default=''}">
+<input type="hidden" id="change_message" value="{:url('index/user_center/change_message')}">
+<input type="hidden" id="get_phone_code" value="{:url('index/user_center/send_phone')}"><!--发送手机验证码-->
+<input type="hidden" id="change_user_phone_url" value="{:url('index/user_center/change_phone')}"><!--更换手机号-->
+{/block}
+{block name="js"}
+<script>
+    //  $("#start").on("click",function() {
+    //     $(".date_span1").addClass("date_span1_act");
+    // });
+    // $("td").each(function(){
+    $(".laydate_click").on("click",function() {
+        console.log('123');
+    })
+    // });
+    $("table").on("click","td",function(){
+        console.log('123');
+    });
+</script>
+<script>
+    $(function(){
+        var type = $("input[name='item_type']").val();
+        if(type == 1){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.account').addClass('active');
+            $('.account-msg').addClass('content_act');
+            $('.item-group').addClass('active');
+        }
+        if(type == 2){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.bill').addClass('active');
+            $('.bill-msg').addClass('content_act');
+        }
+        if(type == 3){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.balance').addClass('active');
+            $('.balance-msg').addClass('content_act');
+        }
+        if(type == 4){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.recharge').addClass('active');
+            $('.recharge-msg').addClass('content_act');
+        }
+    });
+    $(document).on("click",".vocation",function(){
+        var val = $(this).html();
+        $('#vocation_val').val(val);
+    });
+</script>
+{js href="__static__/index/src/js/mCustomScrollbar.js"/}
+{js href="__static__/index/src/js/admin_account.js"/}
+{js href="__static__/index/js/account/account.js"/}
+{/block}

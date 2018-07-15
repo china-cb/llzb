@@ -1,0 +1,72 @@
+
+$(function(){
+	applications.swipers();
+	applications.cilck_animate();
+	applications.hiddens();
+	applications.scrolls();
+	applications.analysis();
+})
+var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        direction: 'vertical',
+        slidesPerView: 1,
+        paginationClickable: true,
+        mousewheelControl: true,
+        onInit: function(swiper){ 
+		    swiperAnimateCache(swiper); 
+		    swiperAnimate(swiper); 
+		  }, 
+		  onSlideChangeEnd: function(swiper){ 
+		    swiperAnimate(swiper); 
+		  } 
+});
+var applications = {
+	swipers:function (argument) {
+		var no0 = '<h1 class="bullet_title">大型活动直播保障</h1><p class="bullet_contet">高并发稳定承载，保障网络直播活动额画面清晰度，传输稳定性</p><img class="blacks" src="/static/index/src/img/applications/ico_small_1.png"/>',
+			no1 = '<h1 class="bullet_title">企业专属频道</h1><p class="bullet_contet">现成的视频托管、直播工具，自定义控制台的标签服务，低成本让您拥有企业专属直播工作平台。</p><img class="blacks" src="/static/index/src/img/applications/ico_small_2.png"/>',
+			no2 = '<h1 class="bullet_title">跨平台合作直播</h1><p class="bullet_contet">以合作形式在网站、手机H5页面开启直播，与三方视频网站协议直播，实现多平台同步直播。</p><img class="blacks" src="/static/index/src/img/applications/ico_small_3.png"/>',
+			no3 = '<h1 class="bullet_title">微信视频直播</h1><p class="bullet_contet">自助式发起，开放接入微信、微信公众号，以及基于微信的分享、互动。</p><img class="blacks" src="/static/index/src/img/applications/ico_small_4.jpg"/>';
+			no4 = '<span class="blacks"></span>';
+			$(".swiper-pagination-bullet").eq(0).append(no0);
+			$(".swiper-pagination-bullet").eq(1).append(no1);
+			$(".swiper-pagination-bullet").eq(2).append(no2);
+			$(".swiper-pagination-bullet").eq(3).append(no3);
+	},
+	cilck_animate:function () {
+		 $(".nav li").on("click",function(){
+		 	var a = $(this).index(".nav li");
+		 	$(".nav li").eq(a).addClass("active").siblings().removeClass("active");
+		 	$(".list_table").eq(a).addClass("active").siblings().removeClass("active");
+		 })
+	},
+	hiddens:function() {
+		$(".img_h2").each(function(i){
+		    var divH = $(this).height();
+		    var $p = $(".h2_inner", $(this)).eq(0);
+		    while ($p.outerHeight() > divH) {
+		        $p.text($p.text().replace(/(\s)*([a-zA-Z0-9]+|\W)(\.\.\.)?$/, "..."));
+		    };
+		})
+	},
+	scrolls:function() {
+		  $(window).scroll(function () {
+	        var a = $(window).scrollTop();
+	        if (a > 200) {
+	            $(".fhdb").fadeIn(1000);
+	        } else {
+	            $(".fhdb").fadeOut(1000);
+	        }
+	    });
+	    $(".fhdb").on("click", function () {
+	        $("body,html").animate({scrollTop: 0}, 300);
+	        return false;
+	    });
+	},
+	analysis:function() {
+		 $(".cont_ul li").mouseenter(function(){
+		 	var a = $(this).index(".cont_ul li");
+		 	$(".cont_ul li").eq(a).addClass("active").siblings().removeClass("active");
+		 	$(".cont_img_ul>li").eq(a).fadeIn().siblings().fadeOut()
+		 })
+	}
+}

@@ -1,0 +1,257 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/live-center2s.css"/}
+{/block}
+{block name="title"}数据统计 - 玲珑直播{/block}
+{block name="content"}
+<div class="statistics">
+    <!-- endinject -->
+    <div class="channel-title">
+        直播监控
+        <div class="drop-sel channel-change">
+            <div class="dp-content">
+                <span class="dp-text now_channel">{$count.channel_title|default='--'}</span>
+                <button class="dp-icon"></button>
+                <input type="hidden" value="2010-01-01">
+                <ul class="dp-group">
+                    {volist name="channel_list" id="vo" }
+                        <li class="dp-item" data-val="{$vo.id|default=''}">
+                            <a href="{:url('index/admin/channel_count_data',['id'=>$vo['id']])}">{$vo.title|default=''}</a>
+                        </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="main admin">
+        <div class="container">
+            <!-- inject:admin_menu:html -->
+            <ul class="menu">
+                <li class="menu-item ">
+                    <a class="mi-text" href="{:url('index/admin/channel',['id'=>$channel_id])}">
+                        <i class="iconfont">&#xe615;</i>
+                        直播监控
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="mi-text" href="{:url('index/admin/channel_setting',['id'=>$channel_id])}">
+                        <i class="iconfont">&#xe729;</i>
+                        频道设置
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a class="mi-text" href="{:url('index/admin/channel_count',['id'=>$channel_id])}">
+                        <i class="iconfont">&#xe610;</i>
+                        用户管理
+                    </a>
+                </li>
+                <li class="menu-item active">
+                    <a class="mi-text" href="{:url('index/admin/channel_count_data',['id'=>$channel_id])}">
+                        <i class="iconfont">&#xe656;</i>
+                        数据统计
+                    </a>
+                </li>
+            </ul>
+            <!-- endinject -->
+            <div class="content channel_content">
+                <div class="block">
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">直播概况</span>
+                    </h1>
+                    <ul class="view_content count_channel_data">
+                        <li>观看人次（PV）：<span>{$count.visit_count|default='0'}</span>人次</li>
+                        <li>用户量（UV）：<span>{$count.people|default='0'}</span>人</li>
+                        <li>IP数：<span>{$count.ip|default='0'}</span>个</li>
+                        <li>观看时长：<span>{$count['watch_count']/60|ceil}</span>分钟</li>
+                        <li>目前直播时长：<span>{$count['online_time']/60|ceil}</span>分钟</li>
+                        <li>最高在线：<span>{$count['max_online_time']/60|ceil}</span>分钟</li>
+                    </ul>
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">在线人数分布曲线</span>
+                        <div class="panel-body">
+                            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                            <div id="main1" style="width: 800px;height:450px;"></div>
+                        </div>
+                    </h1>
+                    <div class="curve"></div>
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">观看用户地域分布</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="channel_count" value="{:url('index/admin/ajax_channel_count')}">
+<input type="hidden" id="channel_id" value="{$channel_id|default=''}">
+<input type="hidden" id="count_url" value="{:url('index/admin/count_text')}">
+{/block}
+{block name="js"}
+{js href="__static__/index/js/echarts.min.js"/}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/channel_manager.js"/}
+{js href="__static__/index/js/admin/channel.js"/}
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('main1'));
+//    var myChart2 = echarts.init(document.getElementById('main2'));
+    myChart1.showLoading();
+////    myChart2.showLoading();
+    myChart1.setOption(
+            option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data:['新增人数']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: []
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name:'新增人数',
+                        type:'line',
+                        stack: '总量',
+                        data:[]
+                    }
+                ]
+            }
+    );
+    // 异步加载数据
+    var url = $("#count_url").val();
+    var id = $("#channel_id").val();
+    common.ajax_post(url,{id:id},true,function(rt){
+        myChart1.hideLoading();
+        var obj = common.str2json(rt);
+        var cate1_1 = [];
+        var data1_1 = [];
+
+        for(var i in obj){
+            cate1_1.push(i+"月");
+            data1_1.push(obj[i]);
+        }
+        // 上个月人员完成工单数填入数据
+        myChart1.setOption({
+            xAxis: {
+                data: cate1_1
+            },
+            series: [
+                {
+                    data:data1_1
+                }
+            ]
+        });
+    });
+
+//    function 200 {
+//        return Math.round(Math.random()*10);
+//    }
+
+//    myChart2.setOption(
+//            option = {
+//        title: {
+//            text: 'iphone销量',
+//            subtext: '纯属虚构',
+//            left: 'center'
+//        },
+//        tooltip: {
+//            trigger: 'item'
+//        },
+//        legend: {
+//            orient: 'vertical',
+//            left: 'left',
+//            data:['iphone3']
+//        },
+//        visualMap: {
+//            min: 0,
+//            max: 10000,
+//            left: 'left',
+//            top: 'bottom',
+//            text: ['高','低'],           // 文本，默认为数值文本
+//            calculable: true
+//        },
+//        toolbox: {
+//            show: true,
+//            orient: 'vertical',
+//            left: 'right',
+//            top: 'center',
+//            feature: {
+//                dataView: {readOnly: false},
+//                restore: {},
+//                saveAsImage: {}
+//            }
+//        },
+//        series: [
+//            {
+//                name: 'iphone3',
+//                type: 'map',
+//                mapType: 'china',
+//                roam: false,
+//                label: {
+//                    normal: {
+//                        show: true
+//                    },
+//                    emphasis: {
+//                        show: true
+//                    }
+//                },
+//                data:[
+//                    {name: '北京',value: 10000 },
+//                    {name: '天津',value: 200 },
+//                    {name: '上海',value: 200 },
+//                    {name: '重庆',value: 200 },
+//                    {name: '河北',value: 200 },
+//                    {name: '河南',value: 200 },
+//                    {name: '云南',value: 200 },
+//                    {name: '辽宁',value: 200 },
+//                    {name: '黑龙江',value: 200 },
+//                    {name: '湖南',value: 200 },
+//                    {name: '安徽',value: 200 },
+//                    {name: '山东',value: 200 },
+//                    {name: '新疆',value: 200 },
+//                    {name: '江苏',value: 200 },
+//                    {name: '浙江',value: 200 },
+//                    {name: '江西',value: 200 },
+//                    {name: '湖北',value: 200 },
+//                    {name: '广西',value: 200 },
+//                    {name: '甘肃',value: 200 },
+//                    {name: '山西',value: 200 },
+//                    {name: '内蒙古',value: 200 },
+//                    {name: '陕西',value: 200 },
+//                    {name: '吉林',value: 200 },
+//                    {name: '福建',value: 200 },
+//                    {name: '贵州',value: 200 },
+//                    {name: '广东',value: 200 },
+//                    {name: '青海',value: 200 },
+//                    {name: '西藏',value: 200 },
+//                    {name: '四川',value: 200 },
+//                    {name: '宁夏',value: 200 },
+//                    {name: '海南',value: 1000 },
+//                    {name: '台湾',value: 200 },
+//                    {name: '香港',value: 200 },
+//                    {name: '澳门',value: 200 }
+//                ]
+//            }
+//        ]
+//    });
+
+</script>
+{/block}

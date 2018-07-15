@@ -1,0 +1,52 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2017/2/3
+ * Time: 9:51
+ */
+namespace app\index\model;
+
+use think\Model;
+class IndexModel extends Model
+{
+    public function get_package_info($id){
+        return db_func('recharge_conf','sp_')->where('id',$id)->field('money')->find();
+    }
+
+    /** 获取帮助中心分类 */
+    public function get_help_category(){
+        return db("help_category")->where(["fid"=>0,"status"=>1])->select();
+    }
+
+    /** 获取帮助中心二级分类 */
+    public function get_help_category_two(){
+        return db("help_category")->where("status",1)->where("fid","<>",0)->select();
+    }
+
+    /** 获取帮助中心分类详情 */
+    public function get_help_category_child(){
+        return db("help_category_child")->where("status",1)->select();
+    }
+
+    /** 获取帮助详细信息 */
+    public function get_help_info_by_id($id){
+        return db("help_category_child c")
+            ->join("help_category h","c.pid = h.id","LEFT")
+            ->where(["c.status"=>1,"c.id"=>$id])
+            ->field("c.*,h.title,h.type,h.id as hid")
+            ->find();
+    }
+
+    /** 获取帮助菜单列表 */
+    public function get_help_list_do($id){
+        return db("help_category_child c")
+            ->join("help_category h","c.pid = h.id","LEFT")
+            ->field("c.*,h.type,h.title")
+            ->where(['c.status'=>1,'c.pid'=>$id])->select();
+    }
+    /** 获取支付完成信息*/
+    public function get_buy_order($order_id){
+        return db_func('buy_orders','sp_')->where('order_id',$order_id)->find();
+    }
+}

@@ -1,0 +1,15 @@
+<?php
+namespace app\index\controller;
+use app\lib\TisApi;
+use app\lib\WisApi;
+use think\Controller;
+
+class Preview extends Controller
+{
+
+    /** 玲珑TV首页 */
+    public function index()
+    {
+        return $this->fetch();
+    }
+}

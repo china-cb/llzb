@@ -1,0 +1,26 @@
+<div class="block">
+    <div class="help_docs">
+        <h1 class="title_path">
+            <a>
+                {switch name="help_info.type"}
+                    {case value="1"}入门指南{/case}
+                    {case value="2"}如何直播{/case}
+                    {case value="3"}产品说明{/case}
+                    {default /}入门指南
+                {/switch}
+            </a>>>
+            <a class="top-category" data-id="{$help_info.hid|default=''}">{$help_info.title|default='--'}</a>>>
+            <span>{$help_info.name|default='--'}</span>
+        </h1>
+        <div style="clear: both;">
+
+        </div>
+        <h2 class="title_h2">
+            {$help_info.name|default='--'}
+        </h2>
+        <section class="docs_main">
+            {$help_info.content|default='--'}
+        </section>
+    </div>
+</div>
+

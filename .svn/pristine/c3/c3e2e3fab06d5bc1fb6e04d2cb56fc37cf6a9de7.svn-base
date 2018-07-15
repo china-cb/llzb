@@ -1,0 +1,45 @@
+ (function($){
+      $(document).ready(function(){
+          $(".industry_ul").mCustomScrollbar();
+      });
+  })(jQuery);
+  var account_index = {
+  	industry:function() {
+  		$(".industrys,.industry_ul li").click(function(){
+		  $(".industry_ul").toggleClass("industry_ul_act");
+		});
+		$(".industry_ul li").on("click",function() {
+			var a = $(this).index();
+			var industry_text = $(".industry_ul li").eq(a).text();
+			$(".industry_inner").text(industry_text);
+		})
+  	},
+  	modify:function () {
+  		$(".modify").click(function(){
+		  $(".basic_info").toggleClass("basic_info_act");
+		  $(".modify").toggleClass("modify_act");
+		  $(".industry_ul").removeClass("industry_ul_act");
+		});
+  	},
+  	blocks:function() {
+  		$(".ig-item").on("click",function() {
+  			var a = $(this).index(".ig-item");
+  			$(".block1s").removeClass("block_act");
+  			$(".block2s").eq(a).addClass("block_act").siblings(".block2s").removeClass("block_act");
+  		})
+
+  		$(".menu-item").on("click",function() {
+  			var a = $(this).index();
+  			$(".content").eq(a).addClass("content_act").siblings(".content").removeClass("content_act");
+  		})
+  	},
+
+
+  	
+  }
+// 下拉框
+account_index.industry();
+// 修改信息
+account_index.modify();
+// 右边选项卡
+account_index.blocks();

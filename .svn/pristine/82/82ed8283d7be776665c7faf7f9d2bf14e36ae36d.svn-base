@@ -1,0 +1,275 @@
+﻿var pageNum = 0;
+var drawLocked = false;
+var clientId = "demo";
+var docObject;
+/****************WIS相关*****************/
+var accessId = "038510768257";
+var accessKey = "Hm7S7LHTlni47D2hwE8r5O47Fr6tEH24";
+var wisId = $("#wisId").val();
+if(!wisId){
+    wisId = $("#wisId").val();
+}
+//获取文档列表
+function getList(option){
+   $.ajax({
+        type:"POST",
+        timeout:8000,
+        url:$("#interface_url").val(),
+        dataType:"json",
+        data:{method:'DocList',skip:option.skip,num:option.num,accessId:accessId,accessKey:accessKey},
+        success: function(data){
+            if(data.Flag == 100){
+                //if(option.success)option.success(data.Info);
+            }else{
+                //if(option.failure)option.failure(data.FlagString);
+            }
+        },
+        error:option.failure
+    });
+}
+function loadDocList(  err ) {
+    //if (err != null) {
+    //    alert(err);
+    //}
+    //$(".docUploader img").remove();
+    //$(".docUploader a").show();
+    ////$("#uploadForm").attr("src","uploadForm.html");
+    //getList({
+    //    skip:0,
+    //    num:100,
+    //    success: function (data) {
+    //        console.log(data.list);
+    //        var list = data.list;
+    //        $("#docList").html("");
+    //        for (var i = 0; i < list.length; i++) {
+    //            var itemHtml = "<div docId='" + list[i]["id"] + "'><img src='" + list[i].pdfUrl + "?page/1/density/150/quality/80/resize/300' /><span>" +
+    //                jQuery('<div />').text(decodeURIComponent(list[i].fileName)).html() + "</span><a>删除</a></div>";
+    //            $("#docList").append(itemHtml);
+    //        }
+    //        if (!!docObject) {
+    //            $("#docList div[docId=" + docObject["id"] + "]").addClass("selectDoc");
+    //            $("#docList div[docId=" + docObject["id"] + "]").siblings().removeClass("selectDoc");
+    //        }
+    //        $("#docList div img,#docList div span").live("click",function () {
+    //            WIS.ChoseDoc({
+    //                docId: $(this).parent().attr("docId"),
+    //                failure: function () {
+    //                    //alert("文档不存在!");
+    //                    loadDocList();
+    //                }
+    //            });
+    //        });
+    //        $("#docList div a").live("click",function () {
+    //            //alert("Demo中的文档不能删除!");
+    //        });
+    //    },
+    //    failure: function (errStr) {
+    //        if (typeof str != "string") {
+    //            alert("文档列表获取失败")
+    //        } else {
+    //            alert(errStr);
+    //        }
+    //    }
+    //});
+}
+//
+//function getQueryStr(str) {
+//    var LocString = String(window.document.location.href);
+//    var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+//    if (tmp = rs) {
+//        return tmp[2];
+//    }
+//    return "";
+//}
+$(function () {
+    //$(".colorList .toolItem").live("click", function () {
+    //    WIS.Color($(this).attr("data-color"));
+    //});
+    //$(".lineList .toolItem").live("click", function () {
+    //    WIS.LineWidth($(this).attr("data-line"));
+    //});
+    //$(".toolList .toolItem").live("click", function () {
+    //    if ($(this).attr("data-cmd") == "Clear") {
+    //        WIS.Clear();
+    //    } else if ($(this).attr("data-cmd") == "Lock") {
+    //        drawLocked = !drawLocked;
+    //        WIS.AllowDraw({ ballow: false });
+    //    } else {
+    //        WIS.SetDrawType($(this).attr("data-type")+"");
+    //    }
+    //});
+    //$("#pageList").change(function (val) {
+    //    WIS.ToPage($("#pageList").val());
+    //});
+    var api = WISAPI.New($("#interface_url").val(), { accessId: accessId, accessKey: accessKey });
+    WIS.Init({
+        wisId: wisId,
+        api: api,
+        container: 'wis_context_inner',
+        width: 784,
+        height: 550,
+        success:function(){
+            var uid = $("#uid").val();
+            var cid = $("#cid").val();
+            if(uid !== "" && cid !== ""){
+                var index = setTimeout(function(){
+                    clearTimeout(index);
+                    var url = $("#live_cost_url").val();
+                    var chat_num = $("#chat_num").val();
+                    common.ajax_post(url,{uid:uid,cid:cid,chat_num:chat_num},true,function(rt){
+                        var obj = common.str2json(rt);
+                        if(obj.code == -1){
+                            common.post_tips(rt);
+                        }else{
+                            $("#chat_num").val('');
+                        }
+                    });
+                    var index2 = setInterval(function(){
+                        chat_num = $("#chat_num").val();
+                        common.ajax_post(url,{uid:uid,cid:cid,chat_num:chat_num},true,function(rt){
+                            var obj2 = common.str2json(rt);
+                            if(obj2.code == -1){
+                                common.post_tips(rt);
+                            }else{
+                                $("#chat_num").val('');
+                            }
+                        });
+                    },60000);
+                },10000);
+            }
+
+            //alert("init suc");
+            //WIS.Color("#FF8C00");
+            WIS.AllowDraw({ballow:false});
+            //if(WIS.GetCurrentDoc() == "" || WIS.GetCurrentDoc() == null){
+            //    //alert("请选择文档")
+            //}
+        },
+        failure:function(err){
+                //var index = setTimeout(function(){
+                //    clearTimeout(index);
+                //    var url = $("#live_cost_url").val();
+                //    var uid = $("#uid").val();
+                //    var cid = $("#cid").val();
+                //    alert(uid);
+                //    alert(cid);
+                //    common.ajax_post(url,{uid:uid,cid:cid},true,function(rt){
+                //        var obj = common.str2json(rt);
+                //        if(obj.code == 0){
+                //            common.post_tips(rt);
+                //        }
+                //    });
+                //    setInterval(function(){
+                //        common.ajax_post(url,{uid:uid,cid:cid},true,function(rt){
+                //            var obj2 = common.str2json(rt);
+                //            if(obj2.code == 0){
+                //                common.post_tips(rt);
+                //            }
+                //        });
+                //    },60000);
+                //},10000);
+            //alert("init fail:  "+err);
+        },
+        updateUser:function(total){
+            $(".rightLabel span").html(total);
+        },
+        onConnect:function(){
+
+        },
+        onReconnect:function(){
+
+        },
+        onConnectClose:function(){
+
+        },
+        onDocLoad: function (info) {
+            //console.log(info);
+            //docObject = info;
+            //$("#docList div[docId=" + docObject["id"] + "]").addClass("selectDoc");
+            //$("#docList div[docId=" + docObject["id"] + "]").siblings().removeClass("selectDoc");
+        },
+        onPageChange:function(page,total){
+            //pageNum = total;
+            //$("#pageList").html("");
+            //for (var i = 1; i <= total; i++) {
+            //    var option = $("<option>").val(i).text(i);
+            //    $("#pageList").append(option);
+            //}
+            //$("#pageList").val(page);
+        }
+    });
+
+    //loadDocList();
+});
+/****************DMS相关*****************/
+function GetQueryString(param) {
+    //var request = {
+    //    QueryString: function (val) {
+    //        var uri = window.location.search;
+    //        var re = new RegExp("" + val + "=([^&?]*)", "ig");
+    //        return ((uri.match(re)) ? (decodeURI(uri.match(re)[0].substr(val.length + 1))) : '');
+    //    }
+    //};
+    //return request.QueryString(param);
+}
+var userName = GetQueryString("name");
+if (userName == null || userName.length == 0) userName = "匿名网友";
+function AddMessage( name, msg, style) {
+    var faceMsg = msg;
+    for (var item in faceMap) {
+        faceMsg = faceMsg.replace(new RegExp("\\"+item, "g"), "<img src='images/faces/" + faceMap[item] + ".gif'/>");
+    }
+    var msgHtml = "<div><span class='" + style + "' >" + name + "：</span>" + faceMsg + "</div>";
+    $("#messageBox").html($("#messageBox").html() + msgHtml);
+    $("#messageBox").scrollTop(document.getElementById("messageBox").scrollHeight);
+};
+function Publish() {
+    var send = $("#msgSendTxt").val();
+    if (send == "") return;
+    send = jQuery('<div />').text(send).html();
+    ROP.Publish('{  "name":"'+ userName+'", "message": "'+send +'"}', "_wisdemo");
+    $("#msgSendTxt").val("");
+};
+ROP.On("enter_suc",
+function () {
+    AddMessage("系统消息", "连接成功", "sysSpan");
+});
+ROP.On("reconnect",
+function () {
+    AddMessage("系统消息", "重新连接", "sysSpan");
+});
+ROP.On("offline",
+function (err) {
+    AddMessage("系统消息", "连接已断开", "sysSpan");
+});
+ROP.On("enter_fail",
+function (err) {
+    AddMessage("系统消息", "连接失败", "sysSpan");
+});
+ROP.On("losed",
+function () {
+    AddMessage("系统消息", "连接已断开", "sysSpan");
+});
+ROP.On("publish_data",
+function (data, topic) {
+    console.log(data);
+    var d = eval('(' + data + ')');
+    var msg = d["message"];
+    if (msg != null) {
+        AddMessage( (!!d["name"]) ? d["name"] : "匿名网友", msg);
+    }
+});
+$(function () {
+    //DMS的pubkey和subKey
+    ROP.Enter("demo", "demo");
+    ROP.Subscribe("_wisdemo");
+    document.onkeydown = function (e) {
+        if (e == null || e.keyCode == null || e.ctrlKey == null) return;
+        if (e.keyCode == 13 && e.ctrlKey) {
+            document.getElementById("msgSendTxt").value += "\n";
+        } else if (e.keyCode == 13) {
+            e.preventDefault();
+            Publish();
+        }
+    };
+});

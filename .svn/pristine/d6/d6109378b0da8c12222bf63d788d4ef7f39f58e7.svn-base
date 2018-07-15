@@ -1,0 +1,237 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/white/css/index.css"/}
+{css file="__static__/index/src/css/preview.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<div class="main preview">
+    <div class="pv-warp">
+        <div class="pv-top">
+            <a class="user">
+                {empty name="channel_info.cover"}
+                <img src="__static__/index/src/img/temp/user_ava.png">
+                {else/}
+                <img src="{$Think.config.CONFIG_CDN_URL}{$channel_info.cover|default=''}" alt="">
+                {/empty}
+            </a>
+            <h4 class="pv-title">
+                {$channel_info.title|default="玲珑直播"}
+            </h4>
+            <div class="info">
+                <span class="item"><i class="iconfont">&#xe63a;</i><a class="watch_count">0</a></span>
+                <a class="btn share_btn"><i class="iconfont">&#xe654;</i>分享</a>
+                <a class="btn phone_watch_btn"><i class="iconfont">&#xe659;</i>手机观看</a>
+            </div>
+        </div>
+        <div class="pv-object">
+            <table class="centerHolder">
+                <tr>
+                    <td>
+                        <div class="content" id="content">
+                            <div class="leftBox" id="leftBox" >
+                                <div class="boardView" id="boardView">
+                                    <div class="boardBox" id="boardBox">
+                                        <div id="wis_context">
+                                            <div id="wis_context_inner">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="boardBottom">
+
+                                    </div>
+                                </div>
+                                <div style="display:none;" class="videoView" id="videoView"></div>
+                            </div>
+                            <div class="rightBox">
+                                <div class="videoBox">
+                                    <div class="displayBox" id="displayBox">
+                                        <div id="playerView"></div>
+                                        <!--<div id="playerView"></div>-->
+                                    </div>
+                                    <div class="displayCtrlBar">
+                                        <a class="switchBtn" onclick="switchView()"></a>
+                                        <a class="adjustBtn"></a>
+                                    </div>
+                                </div>
+                                <div class="tabsBox">
+                                    <div class="tabsHeader">
+                                        <a onclick="switchTab(this,'#tabBody1');" class="selectTab">聊天</a>
+                                    </div>
+                                    <div class="tabBody">
+                                        <div id="tabBody1" class="chatWindow">
+                                            <div class="messageBox" id="messageBox" onclick="$('#faceBox').hide()">
+                                            </div>
+                                            <div class="faceBox" id="faceBox" style="display:none;">
+                                                <div class="faceList" id="faceList">
+                                                    <div class="facePage" id="facePage1"></div>
+                                                    <div class="facePage" id="facePage2"></div>
+                                                    <div class="facePage" id="facePage3"></div>
+                                                </div>
+                                                <div class="pageholder">
+                                                    <div style="background-color:#808080;" onclick="facePageSelect(0)"></div>
+                                                    <div style="background-color:white;" onclick="facePageSelect(1)"></div>
+                                                    <div style="background-color:white;" onclick="facePageSelect(2)"></div>
+                                                </div>
+                                            </div>
+                                            <div class="chatToolsBar">
+                                                <a class="chatToolItem" style="background-image:url(images/face.png)" onclick="showFaceList();"></a>
+                                            </div>
+                                            <div class="msgSendBar" onclick="$('#faceBox').hide()">
+                                                <textarea placeholder="发送消息" id="msgSendTxt"></textarea>
+                                                <a href="javascript:Publish()">发送</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="uid" value="{$channel_info.uid|default=''}">
+<input type="hidden" id="cid" value="{$channel_info.id|default=''}">
+<input type="hidden" id="live_id" value="{$live_record.id|default=''}">
+<input type="hidden" id="url_style" value="{$live_record.url_style|default=''}">
+<input type="hidden" id="wisId" value="{$channel_info.wisId|default=''}">
+<input type="hidden" id="interface_url" value="{:url('interface1')}">
+<input type="hidden" id="live_cost_url" value="{:url('core/business/watch_live_cost')}">
+<input type="hidden" id="check_url" value="{:url('core/business/check_live_url')}">
+<input type="hidden" id="first_live_url" value="{:url('index/admin/get_first_url')}">
+<input type="hidden" id="last_update_time" value="1">
+<input type="hidden" id="chat_num" value="0">
+<input type="hidden" id="wis_value" value="{$channel_info.wis_type|default='0'}">
+<!--分享链接-->
+<input type="hidden" id="space" value="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={:url('index/preview/index',['cid'=>$channel_info.id],false,true)}&pics=&summary=玲珑直播,你想要的都在这里,呼唤小伙伴前来围观吧...&title=">  <!--空间-->
+<input type="hidden" id="qq" value="http://connect.qq.com/widget/shareqq/index.html?url={:url('index/preview/index',['cid'=>$channel_info.id],false,true)}&pics=&summary=玲珑直播,你想要的都在这里,呼唤小伙伴前来围观吧...&title="> <!--QQ-->
+<input type="hidden" id="wechat" value="{:url('index/preview/index',['cid'=>$channel_info.id],false,true)}"> <!--微信-->
+<input type="hidden" id="sina" value="http://service.t.sina.com.cn/share/share.php?url={:url('index/preview/index',['cid'=>$channel_info.id],false,true)}&pics=&title=">  <!--新浪-->
+<input type="hidden" id="share_wechat" value="{:url('core/business/share_base64')}">
+{/block}
+{block name="js"}
+<script type="text/javascript" src="http://cdn.aodianyun.com/dms/rop_client.js"></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/jquery/jquery-1.7.2.min.js"></script>
+{js href="__static__/public/js/common.js"/}
+{js href="__plugin__/layer/2.1/layer.js" /}
+<script type="text/javascript" src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+<script src="__static__/index/white/js/mousewheel.js"></script>
+<script src="http://cdn.aodianyun.com/wis/app.js"></script>
+<script src="http://cdn.aodianyun.com/wis/api.js"></script>
+<script src="__static__/index/white/js/index-wis.js"></script>
+<script src="__static__/index/white/js/index-ui.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var url_style = $("#url_style").val();
+        var uid = $("#uid").val();
+        var cid = $("#cid").val();
+        var first_url = $("#first_live_url").val();  //第一次加载获取播放url
+        var check_url = $("#check_url").val(); //检测是否切换流
+        var wis_value = $("#wis_value").val();
+        if(cid != "" && uid != "") {
+            var conf = {
+                container: 'playerView',//播放器容器ID，必要参数
+                rtmpUrl: "",
+                hlsUrl:"",
+                width: '278',//播放器宽度，可用数字、百分比等
+                height: '180',//播放器高度，可用数字、百分比等
+                autostart: true,//是否自动播放，默认为false
+                bufferlength: '1',//视频缓冲时间，默认为3秒。hls不支持！手机端不支持
+                maxbufferlength: '2',//最大视频缓冲时间，默认为2秒。hls不支持！手机端不支持
+                stretching: '1',//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。hls初始设置不支持，手机端不支持
+                controlbardisplay: 'enable',//是否显示控制栏，值为：disable、enable默认为disable。
+                isclickplay: false,//是否单击播放，默认为false
+                isfullscreen: true//是否双击全屏，默认为false
+            };
+            var objectPlayer = new aodianPlayer(conf);
+            setTimeout(function(){
+                common.ajax_post(first_url,{uid:uid,cid:cid},false,function(rt){
+                    var obj = common.str2json(rt);
+                    if(obj.code == 1){
+                        $("#playerView").html('');
+                        var data = obj.ret_data;
+                        if(data['url_style'] == 1){
+                            conf.rtmpUrl = data['url'];
+                        }
+                        else{
+                            conf.hlsUrl = data['url'];
+                        }
+                        $("#last_update_time").val(data['last_time']);
+                        objectPlayer = new aodianPlayer(conf);
+                    }else{
+                        common.post_tips(rt);
+                    }
+                },true);
+
+                setInterval(function(){
+                    var last_time = $("#last_update_time").val();
+                    common.ajax_post(check_url,{uid:uid,cid:cid,last_time:last_time,wis_value:wis_value},false,function(re){
+                        var obs = common.str2json(re);
+                        if(obs.code == 1){
+                            $("#playerView").html('');
+                            var data = obs.ret_data;
+                            if(data['url_style'] == 1){
+                                conf.hlsUrl = '';
+                                conf.rtmpUrl = data['live_url'];
+                            }else{
+                                conf.rtmpUrl = '';
+                                conf.hlsUrl = data['live_url'];
+                            }
+                            $("#last_update_time").val(data['last_time']);
+                            objectPlayer = new aodianPlayer(conf);
+                        }else if(obs.code == 3){
+                            location.reload();
+                        }
+                    });
+                },10000);
+            },1000);
+        }
+        /* rtmpUrl与hlsUrl同时存在时播放器优先加载rtmp*/
+        /* 以下为Aodian Player支持的事件 */
+        //objectPlayer.startPlay();//播放
+        /* objectPlayer.pausePlay();//暂停 */
+        /* objectPlayer.stopPlay();//停止 hls不支持*/
+        /* objectPlayer.closeConnect();//断开连接 */
+        /* objectPlayer.setMute(true);//静音或恢复音量，参数为true|false */
+        /* objectPlayer.setVolume(volume);//设置音量，参数为0-100数字 */
+        /* objectPlayer.setFullScreenMode(1);//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。手机不支持 */
+    });
+    var share = _common.get_share();
+    $(".share_btn").click(function(){
+        share.open();
+    });
+    $(document).on("click",".sc-item",function(){
+        $(".sc-item").removeClass('active');
+        $(this).addClass('active');
+    });
+    function count_num(){
+        var num = $("#share_speak").val();
+        $("#share_num").html(num.length);
+    }
+    var address='';
+    $(document).on("click",".share-submit",function(){
+        var num = $("#share_speak").val();
+        var type = $(".sc-item.active").data('share');
+        address = $("#"+type).val()+num;
+        if(type == 'wechat' || type == 'friends'){
+            address = $(".sc-item.active").data('address');
+            var url = $("#share_wechat").val()+"?text="+address;
+            layer.confirm('打开微信,使用 “扫一扫”,分享到微信朋友圈<br /><img style="width: 200px;height: 200px;" src="' + url + '" />', {
+                title: false, btn: false, cancel: function () {
+                }
+            });
+        }else{
+            window.open(address);
+        }
+    });
+    var modal = _common.get_qr_mobile();
+    $(document).on("click",".phone_watch_btn",function(){
+        modal.open();
+        var phone_url = $("#share_wechat").val()+"?text="+$('#wechat').val();
+        $("#phone_qr").attr('src',phone_url);
+    });
+</script>
+{/block}
+

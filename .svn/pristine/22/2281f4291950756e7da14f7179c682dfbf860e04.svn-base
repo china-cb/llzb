@@ -1,0 +1,15 @@
+<div class="video-list">
+    {empty name="list.cover_img"}
+    <img class="mCS_img_loaded"  src="__static__/index/src/img/temp/cover-img.png" alt="">
+    {else/}
+    <img class="mCS_img_loaded" src="{$list.cover_img|default=''}" alt="">
+    {/empty}
+    <div class="info">
+        <h4><span>原片</span>{$list.name|default='暂无名称'}</h4>
+        <!--<div class="process" >-->
+        <!--<div class="axis"><span style="width:15.5%"></span></div>-->
+        <!--<span class="label">14.5%</span>-->
+        <!--</div>-->
+    </div>
+    <span>{$list.duration|default='0'}</span>
+</div>

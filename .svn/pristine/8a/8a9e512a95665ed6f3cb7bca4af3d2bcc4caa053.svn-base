@@ -1,0 +1,343 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 翟垒垒
+ * Date: 2016/12/5
+ * Time: 14:04
+ */
+namespace app\index\controller;
+
+
+use app\core\controller\Api;
+use app\core\controller\Upload;
+use app\index\model\UserCenterModel;
+use app\lib\Condition;
+use think\controller;
+class UserCenter extends Common
+{
+    public function index(){
+//        $mid = check_login();
+//        $mid = 1;
+//        $m = new UserCenterModel();
+//        $user_msg = $m->get_user_message($mid);
+//        $this ->assign('user_msg',$user_msg);
+        return $this->fetch();
+    }
+    /**用户中心 */
+    public function account(){
+        $mid = check_login();
+        $type = input('param.type','');
+        $m = new UserCenterModel();
+        $list = $m->get_user_message($mid);
+
+        $this ->assign('list',$list);
+        $this ->assign('type',$type);
+        return $this->fetch();
+    }
+    /** 用户修改信息 */
+    public function change_message(){
+        $mid = check_login();
+        $post = input('post.','');
+        extract($post);
+        $post['member_id'] = $mid;
+        $post['update_time'] = NOW_TIME;
+        $m = new UserCenterModel();
+        $list = $m->change_user_message($post);
+        (empty($list)) && wrong_return('修改失败');
+        ok_return('修改成功');
+    }
+
+    /**实名认证*/
+    public function my_audit(){
+        $post = input('post.','');
+        extract($post);
+        empty($type) && wrong_return('请选择用户类型');
+        empty($true_name) && wrong_return('请填写真实姓名');
+        empty($identity_card) && wrong_return('请填写身份证');
+        empty($industry) && wrong_return('请填写所属行业');
+        empty($province) && wrong_return('请填写所属地区：省');
+        empty($city) && wrong_return('请填写所属地区：市');
+        empty($detailed_address) && wrong_return('请详细地址');
+
+        if($type == 2){
+            empty($enterprise_name) && wrong_return('请填写企业名称');
+            empty($registration) && wrong_return('请填写营业执照注册号');
+        }
+
+        $files = request()->file('image');
+        if(!empty($files)){
+            foreach($files as $file){
+                // 移动到框架应用根目录/public/uploads/ 目录下
+                $info = $files->move(ROOT_PATH . 'public' . DS . 'uploads');
+                $version_path = $info->getRealPath();//获取文件的绝对路径
+                $version_name = $info->getFilename();//获取文件名
+                $rt = new Upload();
+                $res1 = $rt->server_oss_img($version_name,$version_path);
+
+                $post['version_name'][]=$version_name;
+            }
+
+            if(!empty($info)){
+                $id = check_login();
+                $m = new UserCenterModel();
+                $res = $m->judge_my_audit($id,$post);
+
+                if(!empty($res)){
+                    ok_return('修改成功');
+                }else{
+                    wrong_return('修改失败');
+                }
+            }
+        }else{
+            wrong_return('请上传手持身份证照片');
+        }
+    }
+    /**发送手机验证码*/
+    public function send_phone() {
+        $phone = input('post.phone','');
+        $type = input('post.type','');
+        $mid = check_login();
+        if(!checkPhone($phone) ){
+            wrong_return('手机号格式有问题');
+        }
+        $purpose = '重要操作';
+        switch ($type) {
+            case "other":
+                $Users = new UserCenterModel();
+                $user_id = $Users->judge_user_phone($phone);
+                if(!empty($user_id)){
+                    wrong_return('该手机已绑定,请更换');
+                }
+                break;
+            case "modify_phone":
+                $Users = new UserCenterModel();
+                $user_phone = $Users->get_use_phone($mid,$phone);
+                if(empty($user_phone)){
+                    wrong_return('输入的手机不是你绑定的手机号，请修改');
+                }
+                break;
+        }
+
+        //判断该手机号 同一类型在一分钟之内是否已经接受过验证码
+        $Users = new UserCenterModel();
+        $exist_code = $Users->get_code($phone,$type);
+        if($exist_code) {
+            if(time()- $exist_code['create_time'] < 60) {
+                wrong_return('用户验证码一分钟只能发一次');
+            }
+        }
+
+        $code = mt_rand(1000,9999);
+        $api = new Api();
+        $res = $api->get_phone_code_auto($phone,$code,$purpose);//发送过程 后期配置，验证注册否，验证需要外部做活
+
+        if($res == 1){
+            wrong_return('获取验证码过多,请稍后重试');
+        }
+        $this->add_code($code, $res, $phone, $type,$mid);
+    }
+    /**手机验证码入库*/
+    public function add_code($code,$res,$phone,$type,$mid) {
+        $PhoneCode = new UserCenterModel();
+        $session = md6($phone . $code . NOW_TIME);
+        $data['session'] = $session;
+        $data['uid'] = $mid;
+        $data['use_times'] = 0;
+        $data['phone_code'] = $code;
+        $data['data'] = json_encode($res['r']);
+        $data['plat'] = $res['plat'];
+        $data['phone'] = $phone;
+        $data['type'] = $type;
+        $data['enable'] = 'true';
+        $data['expire_time'] = time()+60*10;//008800可以改成配置常量。可以更改
+        $data['create_time'] = time();
+
+        $add_res = $PhoneCode->update_code($data);
+        if(!empty($add_res)){
+            ok_return('获取短信验证码成功');
+        }else{
+            wrong_return('获取短信验证码失败');
+        }
+    }
+    /** 绑定与修改手机号 */
+    public function change_phone(){
+        $mid = check_login();
+        $post = input("post.",'');
+        extract($post);
+        (empty($phone)) && wrong_return("手机号不能为空");
+        (empty($code)) && wrong_return("验证码不能为空");
+        //检验数据是否正确
+        (empty($phone) || !preg_match(config('regular_rule')['phone'], $phone)) && wrong_return("手机号格式不正确");
+        $m = new UserCenterModel();
+        if($type == 'modify_phone'){
+            //判断手机号是否已注册
+            $member_id = $m->get_user_info_by_phone($phone);
+            (!empty($member_id)) && wrong_return("该手机号已注册过了!");
+        }
+            //判断手机验证码是否存在
+            $map['phone'] = $phone;
+            $map['phone_code'] = $code;
+            $map['type'] = $type;
+            $code_info = $m->get_phone_code_by_phone($map);
+            (empty($code_info)) && wrong_return("手机验证码错误");
+        //判断手机验证码是否过期
+        $code_time = $code_info['expire_time'];
+        if (NOW_TIME - $code_time > 60 * 10 || $code_info['enable'] != true) {//默认10分钟
+            wrong_return("手机验证码已失效");
+        }
+
+        if($type != 'rst_pass'){
+            $list = $m->change_phone($mid,$phone);
+            (empty($list)) && wrong_return('绑定失败');
+            ok_return('绑定成功');
+        }
+
+        (empty($code_info)) && wrong_return('验证失败');
+        ok_return('验证成功');
+
+    }
+
+    /**修改密码*/
+    public function modify_pwd(){
+        $mid = check_login();
+
+        $new_password = input("post.new_password",'');
+        $re_password = input("post.re_password",'');
+
+        (empty($old_password) || !preg_match(config('regular_rule')['password'], $old_password)) && wrong_return("密码为6~30位任意字符的组合");
+        (empty($new_password) || !preg_match(config('regular_rule')['password'], $new_password)) && wrong_return("密码为6~30位任意字符的组合");
+        (empty($re_password)  || $re_password != $new_password) && wrong_return('重复密码不正确');
+
+        $m = new UserCenterModel();
+        $password = md5(trim($new_password) . self::PWD_SECRET);
+        $list = $m->change_pwd($mid,$password);
+        $list !== false && ok_return('修改成功');
+        wrong_return('修改失败');
+    }
+    /** 邮箱绑定 */
+    public function mailbox_verify(){
+        $mid = check_login();
+        $post = input('post.','');
+        $rt = new UserCenterModel();
+        $list = $rt->get_user_message($mid);
+        $code = rand_str('r',8);
+
+        $data['email'] = $email;
+        $data['code'] = $code;
+        $data['mid'] = $mid;
+        $data['create_time'] = NOW_TIME;
+        $data['expire_time'] = NOW_TIME + 3600*6;
+
+        $info = new UserCenterModel();
+        $info->insert_email($data);
+        $subject = '【玲珑TV】 邮箱绑定，请激活您的邮箱';
+        $body = "<br>尊敬的客户{$list['nickname']}您好:<br><br>您在玲珑TV的账户正在绑定邮箱
+<br><br>请您在6小时内点击以下链接进行邮箱激活，或将链接复制到游览器地址栏访问以激活邮箱：
+<br><a href='http://llzb.com/index.php/zb/user_center/judge_email?mid={$mid}&code={$code}'>http://llzb.com/index.php/zb/user_center/judge_email?id={$mid}&code={$code}</a>
+<br>激活邮箱后，您将更好体验玲珑TV的各种功能<br>
+<br>此邮箱为系统自动发出，请勿直接回复<br>";
+        $m = new Api();
+        $list = $m->send_mail($email, $subject, $body);
+        return $list;
+    }
+    /** 绑定邮箱 */
+    public function judge_email(){
+        $mid = input('param.mid','');
+        $code = input('param.code');
+        $m = new UserCenterModel();
+        $list =$m->mailbox_verify($mid,$code);
+        if(empty($list)){
+            wrong_return('绑定失败');
+        }else{
+            ok_return('绑定成功');
+        }
+    }
+    /**修改头像*/
+    public function up_img_data(){
+        $post = input('post.','');
+        extract($post);
+        // 获取表单上传文件 例如上传了001.jpg
+        $file = request()->file('image');
+
+        // 移动到框架应用根目录/public/uploads/ 目录下
+        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+        $version_path = $info->getRealPath();//获取文件的绝对路径
+        $version_name = $info->getFilename();//获取文件名
+
+        if(!empty($info)){
+            $rt = new Upload();
+            $res1 = $rt->server_oss_img($version_name,$version_path);//上传OSS图片
+            $id = check_login();
+
+            $m = new UserCenterModel();
+            $res = $m ->get_up_img_data($id,$version_name);//修改头像
+            if(!empty($res)){
+                ok_return('修改成功');
+            }else{
+                wrong_return('修改失败');
+            }
+        }else{
+            wrong_return('上传失败');
+        }
+    }
+
+    /** 账单详情 */
+    public function bill_details(){
+        $mid = check_login();
+        $post = input('post.','');
+        extract($post);
+        if(!empty($month)){
+            $max_month = array(1,3,5,7,8,11);
+            $min_month = array(4,6,9,12);
+
+            if(in_array($month, $max_month)) $this_month = 31;
+            if(in_array($month, $min_month)) $this_month = 30;
+
+            $leap_year  = fmod($year,4);
+            if($leap_year == 0){
+                if($month == 2) $this_month = 29;
+            }else{
+                if($month == 2) $this_month = 28;
+            }
+        }
+        $data1 = $year.'-'.$month.'-'.'1';
+        $data2 = $year.'-'.$month.'-'.$this_month;
+        $m = new UserCenterModel();
+        $info = $m->get_this_month_data($mid);
+        $list = $m->get_month_data($mid,$data1,$data2);
+
+        $this->assign('info',$info);
+        $this->assign('bill_page', $list->render());
+        $this->assign('bill_list', $list->all());
+        $this->assign('bill_total', $list->total());
+        return $this->fetch();
+    }
+    /** 充值订单 */
+    public function recharge_order(){
+        $page = input('param.page', 1);
+        $condition_rules = array(
+            array(
+                'field' => 'r.create_time',
+                'value' => strtotime(input('param.start_time', '')),
+                'operator' => '<='
+            ),
+            array(
+                'field' => 'r.create_time',
+                'value' => strtotime(input('param.end_time', '')),
+                'operator' => '>='
+            ),
+        );
+        $model = new Condition($condition_rules, $page);
+        $model->init();
+        $m = new UserCenterModel();
+        $r = $m->get_recharge_list($model);
+        $this->assign('recharge_page', $r->render());
+        $this->assign('recharge_list', $r->all());
+        $this->assign('recharge_total', $r->total());
+        return $this->fetch();
+    }
+    /** 支付宝同步回调地址 */
+    public function return_url(){
+       return $this->fetch();
+    }
+}

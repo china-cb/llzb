@@ -1,0 +1,71 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}日志管理{/block}
+{block name="site_nav_2"}登录日志{/block}
+{block name='content'}
+<title>主播认证</title>
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c">名称搜索：
+            <input type="text" class="input-text" style="width:250px" placeholder="输入注册手机号"  value="{:input('get.search_word')}" name="search_word">
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            日期范围：
+                <input type="text" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" id="datemin" name="start_time" value="{:input('get.start_time')}" class="input-text Wdate" style="width:250px;">
+                -
+                <input type="text"  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" id="datemax" name="end_time" value="{:input('get.end_time')}"class="input-text Wdate" style="width:250px;">
+            <select class="select" size="1" name="type"  style="width: 200px;">
+                <option value="" selected>请选择日志类型</option>
+                <option value="0" {eq name="type" value="0"}selected{/eq}>登录</option>
+                <option value="1" {eq name="type" value="1"}selected{/eq}>注册</option>
+            </select>
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  name=""><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total}</strong> 条</span>
+        </div>
+    </form>
+</div>
+
+<div class="mt-20">
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="9">登录日志</th>
+        </tr>
+        <tr class="text-c">
+            <th width="40">玲珑ID</th>
+            <th width="150">{eq name="type" value="0"}登录手机号{else/}注册手机号{/eq}</th>
+            {eq name="type" value="0"}<th width="150">登录方式</th>{/eq}
+            <th width="150">{eq name="type" value="0"}登录来源{else/}注册来源{/eq}</th>
+            <th width="100">{eq name="type" value="0"}登录日期{else/}注册日期{/eq}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='live_list' id='item'}
+        <tr class="text-c">
+            <td>{$item['num_id']|default='--'}</td>
+            <td>{$item['phone']|default='--'}</td>
+            {eq name="type" value="0"}
+            <td>
+                {switch name="item.login_way"}
+                {case value="1"}pc{/case}
+                {case value="2"}app{/case}
+                {case value="3"}客户端{/case}
+                {default /}pc
+                {/switch}
+            </td>{/eq}
+            <td>{$item['source']|default='--'}</td>
+            <td>{eq name="type" value="0"}{$item['update_time']|date="Y-m-d H:i:s",###}{else/}{$item['create_time']|date="Y-m-d H:i:s",###}{/eq}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+<nav class="page_admin">
+    {$page|default=''}
+</nav>
+{/block}
+{block name='js'}
+{/block}
+
+

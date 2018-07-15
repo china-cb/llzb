@@ -1,0 +1,474 @@
+<?php
+namespace app\core\controller;
+
+use app\core\common\BusinessCommon;
+use app\core\model\BusinessModel;
+use think\Db;
+
+Class Business
+{
+    /**
+     * 统一下单接口
+     * @post int money 充值金额*
+     * @post int coin 充值币额*
+     * @post string pay_type 支付类型*
+     * @post string q 订单来源
+     * @return string order_id 返回订单id
+     */
+    public function order()
+    {
+        $post = remove_arr_xss(input('post.', []));
+        $m = new BusinessCommon();
+        $m->union_order($post);
+    }
+
+    /** 获取奥点云推流和拉流地址 */
+    public function get_push_url($stream){
+        empty($stream) && wrong_return("stream参数不能为空");
+        $config = [
+            'app_id'=>config("LIVE_APP_ID"),
+            'publish_token'=>config("LIVE_PUBLISH_TOKEN"),
+            'play_token'=>config("LIVE_PLAY_TOKEN"),
+            'hls_token'=>config("LIVE_HLS_TOKEN"),
+        ];
+        $publish_k = md5($config['publish_token'].$stream.$config['publish_token'].NOW_TIME); //推流加密防盗链
+        $play_k = md5($config['publish_token'].$stream.$config['play_token'].NOW_TIME); //推流加密防盗链
+        $hls_k = md5($config['publish_token'].$stream.$config['hls_token'].NOW_TIME); //推流加密防盗链
+
+        $address = [
+            'push_url'=>"rtmp://26836.lsspublish.aodianyun.com/".$config['app_id']."/".$stream."?k=".$publish_k,
+            'rtmp'=>"rtmp://26836.lssplay.aodianyun.com/".$config['app_id']."/".$stream."?k=".$play_k,  //仅用于PC
+            'hls'=>"rtmp://26836.lssplay.aodianyun.com/".$config['app_id']."/".$stream."?k=".$hls_k,   //可同时用于PC和移动端
+        ];
+        return $address;
+    }
+
+    /** 直播观看时间累加接口 */
+    public function watch_live_cost(){
+        $post = input('param.',[]);
+        extract($post);
+        (empty($uid) || empty($cid)) && wrong_return("缺少必要参数");
+        $mid = session("member_id");
+        $m = new BusinessModel();
+        //检测该频道是否正在直播
+        $channel_status = $m->get_channel_live_status($uid,$cid);
+        if(empty($channel_status) || ($channel_status['status'] != 1)) wrong_return("直播已结束",-2);
+        //获取基本信息
+        $ip = get_client_ip();
+        $province = get_province_by_ip($ip);
+        $city = get_city_by_ip($ip);
+        $login_type = get_user_browser();
+        if(!empty($mid)){//说明是本站会员
+            //根据mid获取该用户是否观看过该频道
+            $record = $m->get_channel_record_by_mid($uid,$cid,$mid);
+            $user_info = $m->get_user_info_by_mid($mid);
+            if(empty($record)){ //说明该会员第一次观看该频道
+                $data = [
+                    "uid"=>$uid,
+                    "cid"=>$cid,
+                    "mid"=>$mid,
+                    "nick_name"=>$user_info['nick_name'],
+                    "address"=>(empty($province) && empty($city))?"未知地区":$province.$city,
+                    "watch_count"=>1,
+                    "ip"=>$ip,
+                    "visit_count"=>1,
+                    "chat_count"=>$chat_num,
+                    "create_time"=>NOW_TIME,
+                    "last_login_device"=>"电脑端",
+                    "last_login_type"=>$login_type
+                ];
+                $res = $m->add_channel_record($data);
+            }else{//更新会员观看记录
+                    $data = [
+                        "id"=>$record["id"],
+                        "uid"=>$uid,
+                        "cid"=>$cid,
+                        "mid"=>$mid,
+                        "nick_name"=>$user_info['nick_name'],
+                        "watch_count"=>$record['watch_count']+1,
+                        "ip"=>$ip,
+                        "visit_count"=>$record['visit_count']+1,
+                        "chat_count"=>$record['chat_count']+$chat_num,
+                        "last_login_type"=>$login_type,
+                        "update_time"=>NOW_TIME
+                    ];
+                    $res = $m->update_channel_record($data);
+            }
+        }else{// 说明是游客
+            //根据ip获取该用户是否观看过该频道
+            $record = $m->get_channel_record_by_ip($uid,$cid,$ip);
+            if(empty($record)){//说明该游客第一次观看该频道
+                $data = [
+                    "uid"=>$uid,
+                    "cid"=>$cid,
+                    "uniond"=>create_order_num(),
+                    "nick_name"=>empty($province)?"匿名网友":$province."网友",
+                    "address"=>(empty($province) && empty($city))?"未知地区":$province.$city,
+                    "watch_count"=>1,
+                    "ip"=>$ip,
+                    "visit_count"=>1,
+                    "chat_count"=>$chat_num,
+                    "create_time"=>NOW_TIME,
+                    "last_login_device"=>"电脑端",
+                    "last_login_type"=>$login_type
+                ];
+                $res = $m->add_channel_record($data);
+            }else{ //更新游客观看记录
+                    $data = [
+                        "id"=>$record['id'],
+                        "uid"=>$uid,
+                        "cid"=>$cid,
+                        "nick_name"=>empty($province)?"匿名网友":$province."网友",
+                        "watch_count"=>$record['watch_count']+1,
+                        "ip"=>$ip,
+                        "visit_count"=>$record['visit_count']+1,
+                        "chat_count"=>$record['chat_count']+$chat_num,
+                        "last_login_type"=>$login_type,
+                        "update_time"=>NOW_TIME
+                    ];
+                    $res = $m->update_channel_record($data);
+            }
+        }
+        //往redis中添加时时观看时间
+        $redis = new  \Redis();
+        $redis->connect('127.0.0.1', 6379) or die('连接redis失败');
+        $channel_info = [
+            'uid'=>$uid,
+            'cid'=>$cid,
+            'watch_time'=>intval(1),
+        ];
+        $result = $redis->Rpush('channel_live_'.$uid."_".$cid,json_encode($channel_info));
+        ($res > 0 && $result > 0) && ok_return("success",1,$cid);
+        wrong_return("failure");
+    }
+
+    /** 频道直播扣费接口 */
+    public function channel_live_cost(){
+        $redis = new  \Redis();
+        $redis->connect('127.0.0.1', 6379) or die('连接redis失败');
+        $arr = $redis->keys('channel_live_'.'*');
+//      $redis->flushAll();
+        foreach($arr as $k=>$v){
+            $length = $redis->Llen($v); //获取redis列表长度
+            if($length > 0){
+                $channel_info = $redis->Lpop($v); //弹出列表中第一个元素的值
+                for($i=1;$i<=$length;$i++){
+                    $redis->Lpop($v);  //移除并返回列表的第一个元素。
+                }
+                $channel_info = json_decode($channel_info,true);
+                extract($channel_info);
+                $m = new BusinessModel();
+                //检测频道信息
+                $channel_info = $m->get_user_av_room($cid,$uid);
+                if(empty($channel_info))  continue;
+                $cost_min = intval($length); //需要扣除的时长
+                //检测用户套餐信息
+                $package_info = db("user_package")->where(['uid'=>$uid,'status'=>1])->where('balance','>',0)->find();
+                if(empty($package_info) || ($package_info['balance'] < $cost_min) || ($package_info['expire_time'] < NOW_TIME)){
+                    $new_package = db("user_package")->where(['uid'=>$uid,'status'=>-1])->order("id")->limit(1)->find();
+                    if(!empty($new_package)){
+                        Db::startTrans(); //开启事务
+                        try {
+                            $res1 = db("user_package")->where(['uid'=>$uid,'status'=>-1])->setField("status",1); //将套餐标记为已使用
+                            if($res1 <= 0) throw new \Exception($new_package['id']."号套餐标记为已使用失败");
+                            if($package_info['expire_time'] > NOW_TIME){ //说明套餐未过期
+                                //将上一个套餐余额清零并设置为已用完状态
+                                $res2 = db("user_package")->where('id',$package_info['id'])->where('balance','>',0)->update(['status'=>2,'balance'=>0]);
+                                if($res2 <= 0) throw new \Exception($package_info['id']."号套餐余额清零失败");
+                                $cost_mins = intval($length) - intval($package_info['balance']);  //新套餐应扣时长
+                                $cost_money = ($package_info['unit_price']*$package_info['balance'] + $new_package['unit_price']*($cost_min));
+                            }else{  //套餐已过期
+                                $res2 = db("user_package")->where('id',$package_info['id'])->where('balance','>',0)->update(['status'=>-2]);
+                                if($res2 <= 0) throw new \Exception($package_info['id']."号套餐过期状态设置失败");
+                                $cost_mins = intval($length);  //新套餐应扣时长
+                                $cost_money = $new_package['unit_price']*($cost_min);
+                            }
+                            $package_rest = intval($res2['balance'] - $cost_mins);
+                            //生成消费订单信息
+                            $data = [
+                                "order_id"=>create_order_num(),
+                                "uid"=>$uid,
+                                "cid"=>$cid,
+                                "ser_type"=>1,
+                                "char_type"=>1,
+                                "consume"=>$cost_mins,
+                                "cost_money"=>$cost_money,
+                                "package_rest"=>$package_rest,
+                                "status"=>1,
+                                "create_time"=>NOW_TIME
+                            ];
+                            $res = db("cost_orders")->insert($data);
+                            if($res <= 0) throw new \Exception("订单插入失败");
+                            //扣除套餐余额
+                            $result = db("user_package")->where("id",$new_package['id'])->setDec("balance",$cost_mins);
+                            if($result <= 0) throw new \Exception($new_package['id']."号套餐消费时长扣除失败");
+                            Db::commit(); //提交事务
+                        } catch (Exception $e) {
+                            log_w($uid."的".$cid."号频道:".$e->getMessage());
+                            for($i=1;$i<=$length;$i++){
+                                $redis->Lpush($v,$channel_info);
+                            }
+                            Db::rollback();//回滚
+                        }
+                    }else{
+                        //余额不足,请及时充值,同时杀死该直播发布
+                        $arr = [
+                            'access_id' => config("LIVE_ACCESS_ID"), //填入access_id
+                            'access_key' => config("LIVE_ACCESS_KEY"),//填入access_key
+                            'appid'=>config("LIVE_APP_ID"),
+                            'stream'=>$v['uid']."_".$v['cid'],
+                            'type'=>"mic"
+                        ];
+                        $result = $this->curl("http://openapi.aodianyun.com/v2/LSS.ReplayOp",'parameter=' . json_encode($arr));//判断是否在直播接口
+                        $result = json_decode($result,true);
+                        if($result['Flag'] != 100){
+                            log_w($uid."_".$cid."用户已欠费,停止发布失败,失败原因:".$result['FlagString']);
+                        }
+                        //同时将该直播记录结束
+                        $res = $m->update_live_record($cid);
+                        //并将该套餐
+                        if($res > 0){
+                            continue;
+                        }
+                        log_w($uid."_".$cid."用户已欠费,但未将live_record杀死");
+                    }
+                }else{
+                    Db::startTrans(); //开启事务
+                    try {
+                        //生成消费订单信息
+                        $data = [
+                            "order_id"=>create_order_num(),
+                            "uid"=>$uid,
+                            "cid"=>$cid,
+                            "ser_type"=>1,
+                            "char_type"=>1,
+                            "consume"=>$cost_min,
+                            "cost_money"=>$package_info['unit_price']*$cost_min,
+                            "status"=>1,
+                            "create_time"=>NOW_TIME
+                        ];
+                        $res = db("cost_orders")->insert($data);
+                        if($res <= 0) throw new \Exception("订单插入失败");
+                        //扣除余额
+                        $result = db("user_package")->where("id",$package_info['id'])->setDec("balance",$cost_min);
+                        if($result <= 0) throw new \Exception($new_package['id']."号套餐消费时长扣除失败");
+                        Db::commit(); //提交事务
+                    } catch (Exception $e) {
+                        log_w($uid."的".$cid."号频道:".$e->getMessage());
+                        for($i=1;$i<=$length;$i++){
+                            $redis->Lpush($v,$channel_info);
+                        }
+                        Db::rollback();//回滚
+                    }
+                }
+            }
+        }
+    }
+    /** 直播第一次加载获取播放的url */
+    public function get_first_url(){
+        $post = input("param.",[]);
+        extract($post);
+        (empty($cid) || empty($uid)) && wrong_return("缺少参数");
+        $m = new BusinessModel();
+        $live_record = $m->get_live_record_last($uid,$cid);
+        if(!empty($live_record)){
+            switch($live_record['url_style']){
+                case 1:
+                    $data['url'] = $live_record['rtmp_url'];
+                    break;
+                case 2:
+                    $data['url'] = $live_record['hls_url'];
+                    break;
+                default:
+                    $data['url'] = $live_record['hls_url'];
+            }
+            $data['url_style'] = $live_record['url_style'];
+            $data['last_time'] = $live_record['url_time'];
+            ok_return("获取成功",1,$data);
+        }else {
+            $channel_info = $m->get_channel_info($cid);
+            (empty($channel_info)) && wrong_return("频道信息不存在");
+            if ($channel_info['push_switch'] == 1 && $channel_info['live_type'] == 1) {
+                //检测obs是否在推流
+                $arr = [
+                    'access_id' => config("LIVE_ACCESS_ID"),//填入access_id
+                    'access_key' => config("LIVE_ACCESS_KEY"),//填入access_key
+                    'appid' => config("LIVE_APP_ID"),//填入live_app_id,
+                    'stream' => $uid . "_" . $cid
+                ];
+                $result = $this->curl("http://openapi.aodianyun.com/v2/LSS.GetAppLiveStatus", 'parameter=' . json_encode($arr));//判断是否在直播接口
+                $result = json_decode($result, true);
+                if ($result['Flag'] == 100 && $result['Living'] == 1) { //说明该obs正在推流,当上一次直播结束时,新建一条直播记录
+                    $array = [
+                        "uid" => $uid,
+                        "cid" => $cid,
+                        "status" => 1,
+                        "url_style" => 1,
+                        "url_time" => NOW_TIME,
+                        "rtmp_url" => $channel_info['rtmp'],
+                        "hls_url" => $channel_info['hls'],
+                        "create_time" => NOW_TIME
+                    ];
+                    $res = $m->add_live_record_do($array);
+                    ($res > 0) && ok_return("获取直播推流成功", 1, ["live_url" => $channel_info['rtmp'], "url_style" => 1, "last_time" => $array['url_time']]);
+                }
+            }
+        }
+        wrong_return("该频道暂未直播,请观看其它频道吧");
+    }
+    /** 播放页面检测流是否改变 */
+    public function check_live_url()
+    {
+        $post = input("param.", []);  //手机播放页面的话请求需要多加一个参数
+        extract($post);
+        (empty($uid) || empty($cid) || empty($last_time) || !isset($wis_value)) && wrong_return("缺少参数");
+        $m = new BusinessModel();
+        //获取最后一次直播记录信息
+        $live_record = $m->get_live_record_last($uid, $cid);
+        if (empty($live_record)) wrong_return("直播信息不存在");
+        $channel_info = $m->get_user_av_room_config($uid, $cid);
+        (empty($channel_info)) && wrong_return("频道信息不存在");
+        if($wis_value != $channel_info['wis_type']) wrong_return("白板页面需要切换",3);
+        if ($live_record['status'] == 1 && ($last_time < $live_record['url_time']) && $channel_info['live_type'] !=1) {
+            //说明控制台流改变了
+            switch ($live_record['url_style']) {
+                case 1:
+                    $data = [
+                        "live_url" => $live_record['rtmp_url'],
+                    ];
+                    break;
+                case 2:
+                    $data = [
+                        "live_url" => $live_record['hls_url'],
+                    ];
+                    break;
+                default:
+                    $data = [
+                        "live_url" => $live_record['hls_url'],
+                    ];
+            }
+            $data["url_style"] = $live_record['url_style'];
+            $data["last_time"] = $live_record['url_time'];
+            ok_return("获取切换流成功", 1, $data);
+        }else if($channel_info['push_switch'] == 1 && $channel_info['live_type'] ==1 ){//说明允许推流
+                //检测obs是否在推流
+                $arr = [
+                    'access_id' => config("LIVE_ACCESS_ID"),//填入access_id
+                    'access_key' => config("LIVE_ACCESS_KEY"),//填入access_key
+                    'appid' => config("LIVE_APP_ID"),//填入live_app_id,
+                    'stream' => $uid . "_" . $cid
+                ];
+                $result = $this->curl("http://openapi.aodianyun.com/v2/LSS.GetAppLiveStatus", 'parameter=' . json_encode($arr));//判断是否在直播接口
+                $result = json_decode($result, true);
+                if ($result['Flag'] == 100 && $result['Living'] == 1 && $live_record['status'] == -1){ //说明该obs正在推流,当上一次直播结束时,新建一条直播记录
+                    $array = [
+                        "uid" => $uid,
+                        "cid" => $cid,
+                        "status" => 1,
+                        "url_style" => 1,
+                        "url_time" => NOW_TIME,
+                        "rtmp_url" => $channel_info['rtmp'],
+                        "hls_url" => $channel_info['hls'],
+                        "create_time" => NOW_TIME
+                    ];
+                    $res = $m->add_live_record_do($array);
+                    ($res > 0) && ok_return("获取直播推流成功", 1, ["live_url" => $channel_info['rtmp'], "url_style" => 1, "last_time" => $array['url_time']]);
+                    wrong_return("获取直播推流失败");
+                }else{
+                    ok_return("该频道未切换流或直播已结束", 2);
+                }
+            }else{
+               ok_return("该频道未切换流", 2);
+        }
+    }
+
+    /** 杀死不再推流的频道 */
+    public function check_push_channel(){
+        //获取所有正在推流的频道
+        $m = new BusinessModel();
+        $list = $m->get_all_push_channel();
+        if(!empty($list)){
+            $access_id =  config("LIVE_ACCESS_ID"); //填入access_id
+            $access_key = config("LIVE_ACCESS_KEY");//填入access_key
+            $appid = config("LIVE_APP_ID");//填入live_app_id
+            foreach($list as $k=>$v){
+                $arr = [
+                    'access_id' => $access_id,
+                    'access_key' => $access_key,
+                    'appid'=>$appid,
+                    'stream'=>$v['uid']."_".$v['cid']
+                ];
+                $result = $this->curl("http://openapi.aodianyun.com/v2/LSS.GetAppLiveStatus",'parameter=' . json_encode($arr));//判断是否在直播接口
+                $result = json_decode($result,true);
+                if($result['Flag'] == 100 && $result['Living'] == 0){ //说明该频道不在直播了,更新直播记录
+                    $res = $m->update_live_record($v['id']);
+                    ($res <= 0 ) && log_w("id为".$v['id']."的直播记录杀死失败!!!");
+                }
+            };
+        }
+    }
+
+    /** 奥点云curl接口请求 */
+    public function curl($url, $data)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        $return_str = curl_exec($curl);
+        curl_close($curl);
+        return $return_str;
+    }
+
+    /*code_url生成二维码*/
+    public function share_base64($text = '', $level = 0, $size = 3, $margin = 2)
+    {
+        Config('default_return_type', 'null');
+        import("app.lib.phpqrcode.phpqrcode", null, '.php');
+        ob_clean();
+        header('Content-Type:image/png');
+        $text = input('param.text', '', 'trim');
+        \QRcode::png($text, false, $level, $size, $margin);
+    }
+
+    /*code_url生成二维码*/
+    public function qr_base64($text = '', $level = 0, $size = 3, $margin = 2)
+    {
+        Config('default_return_type', 'null');
+        import("app.lib.phpqrcode.phpqrcode", null, '.php');
+        ob_clean();
+//        header('Content-Type:image/png');
+//        $text = input('param.text', '', 'trim,base64_decode');
+//        $QR = \QRcode::png($text, false, $level, $size, $margin);
+
+        $value = input('param.text', '', 'trim,base64_decode');//二维码内容
+        $errorCorrectionLevel = 'H';//容错级别
+        $matrixPointSize = 11;//生成图片大小
+       //生成二维码图片
+        \QRcode::png($value, 'qrcode.png', $errorCorrectionLevel, $matrixPointSize, 2);
+        $logo = '../public/static/img/linglong-logo.png';//准备好的logo图片
+        $QR = 'qrcode.png';//已经生成的原始二维码图
+
+        if ($logo !== FALSE) {
+            $QR = imagecreatefromstring(file_get_contents($QR));
+            $logo = imagecreatefromstring(file_get_contents($logo));
+            $QR_width = imagesx($QR);//二维码图片宽度
+            $QR_height = imagesy($QR);//二维码图片高度
+            $logo_width = imagesx($logo);//logo图片宽度
+            $logo_height = imagesy($logo);//logo图片高度
+            $logo_qr_width = $QR_width / 5;
+            $scale = $logo_width/$logo_qr_width;
+            $logo_qr_height = $logo_height/$scale;
+            $from_width = ($QR_width - $logo_qr_width) / 2;
+            //重新组合图片并调整大小
+            imagecopyresampled($QR, $logo, $from_width, $from_width, 0, 0, $logo_qr_width,
+                $logo_qr_height, $logo_width, $logo_height);
+        }
+       //输出图片
+        Header("Content-type: image/png");
+        ImagePng($QR);
+    }
+}

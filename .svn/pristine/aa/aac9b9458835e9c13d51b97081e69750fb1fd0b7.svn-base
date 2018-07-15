@@ -1,0 +1,114 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}审核管理{/block}
+{block name="site_nav_2"}主播认证{/block}
+{block name='content'}
+<body>
+<table class="table table-border table-bordered table-bg mt-30 table-hover radius">
+    <thead>
+    <tr>
+        <th colspan="2" scope="col" class="f-16">用户详细信息</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th width="15%" class="f-14">玲珑ID：</th>
+        <td class="f-14">{$audit_info.num_id|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">登录账号：</th>
+        <td class="f-14"> {$audit_info.account|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">认证状态：</th>
+        <td class="f-14">
+            {switch name="audit_info.status"}
+            {case value="0"}<span class="label label-warning radius">待审核</span>{/case}
+            {case value="1"}<span class="label label-primary radius">已审核</span>{/case}
+            {case value="-1"}<span class="label label-success radius">审核未通过</span>{/case}
+            {default /}<span class="label label-warning radius">待审核</span>
+            {/switch}
+        </td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">
+            {eq name="type" value="1"}
+            真实姓名：
+            {else/}
+            法人姓名：
+            {/eq}
+        </th>
+        <td class="f-14">{$audit_info.true_name|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">
+            {eq name="type" value="1"}
+            身份证号：
+            {else/}
+            法人身份证号：
+            {/eq}
+        </th>
+        <td class="f-14">{$audit_info.identity_card|default="无"}</td>
+    </tr>
+    {eq name="type" value="2"}
+    <tr>
+        <th width="15%" class="f-14">营业执照注册号：</th>
+        <td class="f-14">{$audit_info.registration|default="无"}</td>
+    </tr>
+    {/eq}
+
+    <tr>
+        <th width="15%" class="f-14">所属行业：</th>
+        <td class="f-14"> {$audit_info.industry|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">企业名称：</th>
+        <td class="f-14">{$audit_info.enterprise_name|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">所在地区：</th>
+        <td class="f-14"> {$audit_info.province|default="无"} {$audit_info.city|default=""}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">详细地址：</th>
+        <td class="f-14"> {$audit_info.detailed_address|default="无"}</td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">身份证正面：</th>
+        <td class="f-14"> </td>
+    </tr>
+    <tr>
+        <th width="15%" class="f-14">身份证反面：</th>
+        <td class="f-14"> </td>
+    </tr>
+    {eq name="type" value="2"}
+    <tr>
+        <th width="15%" class="f-14">营业执照：</th>
+        <td class="f-14"> </td>
+    </tr>
+    {/eq}
+    <tr>
+        <th width="15%" class="f-14">身份证反面：</th>
+        <td class="f-14"> </td>
+    </tr>
+    <tr>
+        <th class="f-14">操作:</th>
+        <td class="f-14">
+            <button  class="btn btn-primary radius Return" type="button">返回</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button  class="btn btn-primary radius through" type="button">审核通过</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button  class="btn btn-primary radius not_through" type="button">审核不通过</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<input type="hidden" id="submit_url" value="{:Url('audit_change')}">
+<input type="hidden" id="root_url" value="{:Url('users/audit_list')}">
+<input type="hidden" id="audit_id" value="{$audit_info.id}">
+</body>
+{/block}
+{block name='js'}
+{js href="__static__/admin/js/users/audit_edit.js" /}
+{/block}

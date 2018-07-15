@@ -1,0 +1,49 @@
+{extend name="base/login_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/login.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<header id="header" class="login-header">
+    <span class="logo"></span>
+    <span class="login-list">忘记密码</span>
+    <div class="login-main">
+        <a href="{:url('index/index/index')}">
+            玲珑直播首页
+            <i class="arrow-right"></i>
+        </a>
+    </div>
+</header>
+<div class="main login_reg">
+    <h2 class="login_name login_pass">验证码已发送到手机139＊＊＊＊8902</h2>
+    <form action="" method="get">
+        <label class="login_reg_lable">
+            <input type="text" id="phone_reg" name="phone" placeholder="请输入手机号" class="login_reg_inpit1" />
+        </label>
+        <label class="login_reg_lable">
+            <input type="text" id="phone_code_forget" name="phone_code" placeholder="请输入验证码" class="login_reg_inpit1"/>
+            <input type="button" id="btn" value="发送验证码" class="login_reg_free reg_get_code vacode"/>
+        </label>
+        <!-- 密码不一致添加 .password_no_act -->
+        <div class="password_no">密码输入不一致</div>
+        <label class="login_reg_lable">
+            <input type="password" id="password_forget" name="password" placeholder="6～16位密码" class="login_reg_inpit2" />
+            <span class="login_reg_span1">设置密码</span>
+        </label>
+        <label class="login_reg_lable">
+            <input type="password" id="re_password_forget" name="re_password" placeholder="6～16位密码" class="login_reg_inpit2"/>
+            <span class="login_reg_span1">确认密码</span>
+        </label>
+        <label class="login_reg_lable">
+            <input type="button" class="login_reg_inpit3 forget_paw_btn" value="确定" />
+        </label>
+    </form>
+</div>
+<input type="hidden" id="submit_forget_psw_url" value="{:url('index/login/reset_password_do')}">
+<input type="hidden" class="get_phone_code_type" value="rst_pass">
+<input type="hidden" id="login_url" value="{:url('index/login/index')}">
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/login/login.js"/}
+{js href="__static__/index/js/login/reg.js"/}
+{/block}

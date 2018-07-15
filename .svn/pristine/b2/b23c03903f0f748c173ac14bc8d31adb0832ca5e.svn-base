@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/help.css"/}
+{/block}
+{block name="title"}帮助中心{/block}
+{block name="content"}
+
+<nav class="help_nav">
+    <ul>
+        <li></li>
+        <li>
+            一站式提供“海量存储、高效分发、极速网络”等强大服务， 轻松坐享CCTV-5、新浪微博、知乎等量级的传播能力。广泛应用于 游戏直播、娱乐直播、泛生活直播、 教育类、 远程医疗、 企业远程视频会议等典型场景
+        </li>
+        <li>
+            <a href="{:url('index/index/package')}">套餐购买</a>
+            <a href="">联系我们</a>
+            <a href="{:url('index/index/package')}">套餐购买>></a>
+        </li>
+    </ul>
+</nav>
+<div class="statistics">
+    <!-- endinject -->
+    <div class="main admin ">
+        <div class="container">
+            <!-- inject:admin_menu:html -->
+            <ul class="menu">
+                <li class="menu-item">
+                    <h4 class="mi-text">
+                        <i class="iconfont">&#xe615;</i>
+                        入门指南
+                    </h4>
+                    <ul class="item-group">
+                        <li class="ig-item">
+                            新手入门
+                        </li>
+                        <li class="ig-item">
+                            常见问题
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <h4 class="mi-text">
+                        <i class="iconfont">&#xe729;</i>
+                        如何直播
+                    </h4>
+                    <ul class="item-group">
+                        <li class="ig-item">
+                            桌面直播工具
+                        </li>
+                        <li class="ig-item">
+                            编辑器使用帮助
+                        </li>
+                        <li class="ig-item">
+                            编辑器使用帮助
+                        </li>
+                        <li class="ig-item">
+                            平台功能使用帮助
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <h4 class="mi-text">
+                        <i class="iconfont">&#xe610;</i>
+                        产品说明
+                    </h4>
+                    <ul class="item-group">
+                        <li class="ig-item">
+                            直播频道
+                        </li>
+                        <li class="ig-item">
+                            频道管理
+                        </li>
+                        <li class="ig-item">
+                            我的账户
+                        </li>
+                        <li class="ig-item">
+                            媒体库
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- endinject -->
+            <div class="content">
+                <div class="block">
+                    <div class="helplist">
+                        <h1 class="list_title">入门指南</h1>
+                        <div>
+                            <h2 class="list_title2">新手入门</h2>
+                            <section class="list_content">
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                            </section>
+                            <a class="list_title3">
+                                <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+                            </a>
+                        </div>
+
+                        <div>
+                            <h2 class="list_title2">新手入门</h2>
+                            <section class="list_content">
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                            </section>
+                            <a class="list_title3">
+                                <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="helplist">
+                        <h1 class="list_title">如何直播</h1>
+                        <div>
+                            <h2 class="list_title2">新手入门</h2>
+                            <section class="list_content">
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                            </section>
+                            <a class="list_title3">
+                                <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+                            </a>
+                        </div>
+
+                        <div>
+                            <h2 class="list_title2">新手入门</h2>
+                            <section class="list_content">
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                                <div class="content_list">
+                                    <a href="">云服务器ECS</a>
+                                    <a href="">高性能计算</a>
+                                    <a href="">弹性伸缩</a>
+                                    <a href="">容器服务</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                    <a href="">批量计算</a>
+                                </div>
+                            </section>
+                            <a class="list_title3">
+                                <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/help.js"/}
+{/block}
+

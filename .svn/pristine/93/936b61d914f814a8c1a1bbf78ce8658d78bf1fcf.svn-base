@@ -1,0 +1,241 @@
+<?php
+namespace app\index\controller;
+use app\core\model\ExecModel;
+use app\core\model\PaymentModel;
+use app\core\model\PayModel;
+use app\index\model\IndexModel;
+use app\lib\TisApi;
+use app\lib\WisApi;
+use PHPMailer\PHPMailer\Exception;
+use think\Controller;
+use think\Db;
+
+//use Mts\Request\V20140618 as Mts;
+
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/5
+ * Time: 13:19
+ */
+class Index extends CommonIndex
+{
+    protected $partNum;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /** 玲珑TV首页 */
+    public function index()
+    {
+        return $this->fetch();
+    }
+
+    /** 套餐购买 */
+    public function package(){
+
+        $this->assign("nav_num","3");
+        return $this->fetch();
+    }
+
+    /** 购买套餐提交页面 */
+    public function package_buy(){
+        $this->assign("nav_num","3");
+        return $this->fetch();
+    }
+
+    /** 支付成功页面 */
+    public function return_url(){
+        $order_id = input('param.trade_no',null);
+        if (empty($order_id)) {
+            return $this->fetch('index/pay_fail');
+        }
+        $m = new IndexModel();
+
+        $list = $m->get_buy_order($order_id);
+
+        if ($list['pay_status'] == 3) {
+            return $this->fetch('pay_success');
+        } else {
+            return $this->fetch('pay_fail');
+        }
+    }
+
+    /** 获取套餐信息 */
+    public function pay_info(){
+        $id = input('post.b','');
+        $m = new IndexModel();
+        $list = $m->get_package_info($id);
+        (empty($list)) && wrong_return('套餐信息不正确');
+        ok_return('获取套餐成功',1,$list);
+    }
+
+    /** 余额支付 */
+    public function balance_pay(){
+        $order = input('post.order','');
+        /**获取父级订单信息*/
+        $order_m = new PayModel();
+        $info = $order_m->get_order_info_by_id($order);
+
+        if (empty($info)) {
+            wrong_return('无效订单');
+        }
+        $rt = $order_m->get_balance_info_by_id($order);
+        if(empty($rt)){
+            wrong_return('无效购买订单');
+        }
+        $k1 = $order_m->get_user_money($rt['uid']);
+
+        if($rt['money'] > $k1){
+            wrong_return('余额不足');
+        }
+        $k2 = $k1 - $rt['money'];
+
+        // 启动事务
+        Db::startTrans();
+        try{
+            log_w('余额支付开始。。。。。');
+            Db::table('sp_member')->where('member_id',$rt['uid'])->update(['balance' => $k2]);
+            /**标记支付成功*/
+            $m_exec = new ExecModel();
+            $res = $m_exec->set_order_status($order, "2", "1");
+            if ($res == 0) throw new Exception('支付失败');
+            // 提交事务
+            Db::commit();
+        } catch (\Exception $e) {
+            // 回滚事务
+            $e->getMessage();
+            Db::rollback();
+            wrong_return('支付失败，请重试');
+        }
+
+        $info = $order_m->get_order_info_by_id($order);
+        if (empty($info)) {
+            wrong_return("订单信息获取失败");
+        }
+        /**业务状态*/
+        $pay_status = $info["pay_status"];
+        if ($pay_status !== '2') {
+            wrong_return("订单状态不正确");
+        }
+        $m = new PaymentModel();
+        $list = $m->open($order);
+        if ($list['code'] == 1) {
+            ok_return('支付成功');
+        }else{
+            wrong_return('支付失败');
+        }
+    }
+
+    /** 帮助中心 */
+    public function help_center(){
+        $this->assign("nav_num","4");
+        $m = new IndexModel();
+        $help_category = $m->get_help_category();
+        $help_category_two = $m->get_help_category_two();
+        $help_category_child = $m->get_help_category_child();
+        foreach($help_category as $k=>$v){
+              $help_category[$k]['two'] = "";
+            foreach($help_category_two as $k2=>$v2){
+                if($v2['fid'] == $v['id']){
+                    $help_category[$k]['two'][] = $v2;
+//                  $help_category[$k]['two'][$k2]['child'] = '';
+//                    foreach($help_category_child as $k3=>$v3){
+//                        if($v3['pid'] == $v2['id']){
+//                            $help_category[$k]['two'][$k2]['child'][] = $v3;
+//                        }
+//                    }
+                }
+            }
+        };
+        foreach($help_category_two as $k=>$v){
+            $help_category_two[$k]['child'] = "";
+            foreach($help_category_child as $k2=>$v2){
+                if($v2['pid'] == $v['id']){
+                    $help_category_two[$k]['child'][] = $v2;
+                }
+            }
+        }
+        $this->assign('help_category',$help_category);
+        $this->assign('help_category_two',$help_category_two);
+        return $this->fetch();
+    }
+
+
+    /** 获取帮助菜单列表 */
+    public function get_help_menu_list(){
+        $id = input("param.id",'');
+        $title = input("param.value",'');
+        empty($id) && wrong_return("菜单ID不存在");
+        $m = new IndexModel();
+        $list = $m->get_help_list_do($id);
+        $this->assign('list',$list);
+        $this->assign('title',$title);
+        $data = [
+            'code'=>1,
+            'html'=>$this->fetch()
+        ];
+        die_json($data);
+    }
+
+    /** 获取帮助中心的详细内容 */
+    public function get_help_info(){
+        $id = input("param.id",'');
+        $title = input("param.value",'');
+        empty($id) && wrong_return("ID不能为空");
+        $m = new IndexModel();
+        $help_info = $m->get_help_info_by_id($id);
+        $this->assign('help_info',$help_info);
+        $this->assign('title',$title);
+        $data = [
+            'code'=>1,
+            'html'=>$this->fetch()
+        ];
+        die_json($data);
+    }
+
+    /** 应用场景 */
+    public function application(){
+        $this->assign("nav_num","2");
+        $m = new IndexModel();
+        $app_list = $m->get_app_category_list();
+        $app_child_list = $m->get_app_child_list();
+        if(!empty($app_list) && !empty($app_child_list)){
+            foreach($app_list as $k=>$v){
+                $app_list[$k]['child'] = "";
+                foreach($app_child_list as $k2=>$v2){
+                    if($v2['pid'] == $v['id']){
+                        $app_list[$k]['child'][] = $v2;
+                    }
+                }
+            }
+        }
+        $this->assign("app_list",$app_list);
+        $this->assign("app_child_list",$app_child_list);
+        return $this->fetch();
+    }
+
+    /** 获取文章的具体内容 */
+    public function app_article(){
+        $id = input("param.id","");
+        (empty($id)) && wrong_return("缺少条件");
+        $m = new IndexModel();
+        //获取文章内容
+        $article_info = $m->get_article_info($id);
+        //获取推荐文章
+        $recommend = $m->get_recommend_article();
+        $this->assign([
+            "info"=>$article_info,
+            "recommend"=>$recommend
+        ]);
+        return $this->fetch();
+    }
+
+    /** 产品体验 */
+    public function experience(){
+        $this->assign("nav_num","1");
+        return $this->fetch();
+    }
+}

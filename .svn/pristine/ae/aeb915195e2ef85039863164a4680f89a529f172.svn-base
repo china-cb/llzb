@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta content="chrome=1" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <style>
+        body{
+            position: relative;
+            padding:0;
+            margin:0;
+        }
+        .main{
+            position: relative;
+            display: block;
+        }
+        .main-warp{
+            position:absolute;
+            width:100%;
+            height:100%;
+        }
+
+        .frame-top{
+            width: calc(100% );
+            height: 100%;
+            position: absolute;
+            right:0;
+            top:0;
+            overflow-y: scroll;
+        }
+        .frame-bottom{
+            width: calc(100%);
+            height: 50%;
+            position: absolute;
+            right:0;
+            bottom:0;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="main-warp">
+        <iframe class="frame-top" src="{:url('edit',['path'=>$path])}"></iframe>
+        <!--<iframe class="frame-bottom" src="{:url('preview',['path'=>$path])}"></iframe>-->
+    </div>
+</div>
+</body>
+</html>
+{js href='__plugin__/jquery/1.9.1/jquery.min.js' /}
+<script>
+    function init_iframe(){
+        var wh=$(window).height(),
+                ww=$(window).width();
+        $(".main").width(ww);
+        $(".main").height(wh);
+    }
+    init_iframe();
+    $(window).on("resize",function(){
+        init_iframe();
+    })
+</script>
+

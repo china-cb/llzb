@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+    <script src="http://cdn.aodianyun.com/wis/exchange.js"></script>
+    <style>
+        .row {
+            margin-top:5px;
+            margin-bottom:5px;
+        }
+        #wisIframe {
+            height: 700px;
+            width: 900px;
+            margin:0 auto;
+        }
+        #playerView {
+            height:300px;
+            width:400px;
+            display:none;
+        }
+    </style>
+    <script>
+        var url = "http://web.wis.aodianyun.com/live.php?wisId=lc_fd8bc7344dbe52a32106ae20cdcffe7f&power=1&expire=1512151322&rand=9823&dmn=&sign=5Rh5J%2ByzpLolXnbSo19KYwR4QF4%3D";
+        url += "&tm=" + new Date().getTime();
+        var ready = false, initPlayer = false;
+        $(function () {
+            $("#wisIframe").attr("src", url);
+            $("#wisIframe").load(function () {
+                WISExchange.Init({
+                    iframe: "wisIframe",
+                    onSuccess: function (info) {
+                        console.log("onSuccess", info);
+                        ready = true;
+                        if (initPlayer) {
+                            WISExchange.InitPlayer({
+                                mode: "live",
+                                container: "playerView",
+                                width: $("#playerView").width(),
+                                height: $("#playerView").height()
+                            });
+                            $("#playerView").show();
+                        }
+                    },
+                    onDocLoad: function (info) {
+                        console.log("onDocLoad", info);
+                    },
+                    onPageChange: function (info) {
+                        console.log("onPageChange", info);
+                    },
+                    onFailure: function (info) {
+                        console.log("onFailure", info.error);
+                    }
+                });
+            });
+        });
+        function initVideo() {
+            ready = false, initPlayer = true;
+            //隐藏模版页面的视频栏
+            $("#wisIframe").attr("src", url + "&style=0");
+        }
+    </script>
+</head>
+<body>
+<div style="background-color:#eaeaea;margin-bottom:10px;padding:8px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-default" onclick='$("#wisIframe").attr("src", url + "&style=0"); $("#playerView").html("").hide();'>隐藏视频栏</button>
+            <button class="btn btn-default" onclick='WISExchange.Resize(780,600);'>改变大小</button>
+            <button class="btn btn-default" onclick='initVideo()'>外部播放器</button>
+        </div>
+    </div>
+</div>
+<div id="playerView"></div>
+<div>
+    <iframe id="wisIframe" frameborder="0"></iframe>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 翟垒垒
+ * Date: 2016/12/5
+ * Time: 14:06
+ */
+namespace app\index\controller;
+
+use think\Controller;
+class Common extends Controller{
+    public function __construct()
+    {
+        parent::__construct();
+
+        $mid = session("member_id");
+        if(!empty($mid)){
+//            $this->check_same_time_login();
+            $user_info = $this->get_user_base_info($mid);//获取用户的基本信息
+            $this->assign([
+                'user_info'=>$user_info,
+            ]);
+        }else{
+            $mid = cookie('member_id');
+            $cookie_code = cookie('cookie_code');
+            if(!empty($mid) && !empty($cookie_code)){
+                //检测用户免登录过期时间
+                $res = $this->check_cookie_login($mid,$cookie_code);
+                if($res == 1){
+                    $user_info = $this->get_user_base_info($mid);//获取用户的基本信息
+                    $this->assign([
+                        'user_info'=>$user_info,
+                    ]);
+                }else{
+                    $this->check_login();
+                }
+            }
+        }
+    }
+
+    /** 查询用户基本信息 */
+    public function get_user_base_info($mid){
+        //根据id查询用户信息
+        return $user_info = db("member m")
+            ->join("recharge_conf c","m.package_id = c.id","LEFT")
+            ->where(['m.status'=>1,'member_id'=>$mid])
+            ->field('m.member_id,m.num_id,m.nick_name,m.state,m.phone,m.email,m.account_type,m.balance,m.user_type,m.user_face,c.name')
+            ->cache(60)
+            ->find();
+    }
+
+    /** 检测用户是否已登录 */
+    public function check_login(){
+        $member_id = session("member_id");
+        if($member_id == NULL){
+            $this->redirect(Url('index/login/index'));
+        }
+    }
+
+    /** 检测是否同时登录(同一账号只允许一个地方登录) */
+    public function check_same_time_login(){
+        $session_id = session("session_id");
+        $member_id = session("member_id");
+        $re_session_id = db("session_pc")->where("uid",$member_id)->find()['session_id'];
+        if($session_id !== $re_session_id){
+            session(NULL);
+            $this->redirect(url("index/index/index"));
+        }
+    }
+
+    /** 检测用户cookie免登录过期时间 */
+    public function check_cookie_login($mid,$cookie_code){
+        $cookie_info = db('session_pc')->where(['uid'=>$mid,'cookie_code'=>$cookie_code])->find();
+        if(empty($cookie_info)){
+            return -1;
+        }else if($cookie_info['cookie_expire_time'] < NOW_TIME){
+            return -1;
+        }else{
+            return 1;
+        }
+    }
+}

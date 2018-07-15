@@ -1,0 +1,16 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2017/2/3
+ * Time: 9:51
+ */
+namespace app\index\model;
+
+use think\Model;
+class IndexModel extends Model
+{
+    public function get_package_info($id){
+        return db_func('recharge_conf','sp_')->where('id',$id)->field('money')->find();
+    }
+}

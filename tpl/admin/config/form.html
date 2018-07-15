@@ -1,0 +1,105 @@
+{extend name='base:base' /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}自定义配置{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加配置{/case}
+{case value='edit'}编辑配置{/case}
+{default /}查看配置
+{/switch}
+{/notempty}
+{/block}
+{block name='content'}
+<form class="form form-horizontal" id="form-article-add">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>配置标题：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="用于后台显示的配置标题" name="title" value="{$info.title|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>唯一标识：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="用于config函数调用，只能使用英文且不能重复" name="code"
+                   value="{$info.code|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>排序：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="用于分组显示的顺序" name="sort" value="{$info.sort|default='100'}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>配置类型：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select name="type" class="select">
+                {volist name='conf_type' id='vo'}
+                <option value="{$vo.code|default='--'}"
+                {if condition="!empty($info['type']) AND $info['type'] eq $vo['code']"}selected="selected"{/if}
+                >{$vo.name|default=''}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>配置分组：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select name="group" class="select">
+                {volist name='conf_group' id='vo'}
+                <option value="{$vo.code|default='--'}"
+                {if condition="!empty($info['group']) AND $info['group'] eq $vo['code']"}selected="selected"{/if}
+                >{$vo.name|default=''}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">配置值：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <textarea class="textarea" placeholder="请输入配置值" name="value" cols="30"
+                      rows="10">{$info.value|default=''}</textarea>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">配置项<span class="label label-warning config_extra" style="cursor:pointer;">?</span>：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <textarea class="textarea" placeholder="如果是枚举型 需要配置该项" name="extra" cols="30" rows="10">{$info.extra|default=''}</textarea>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">说明：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="配置详细说明" name="tips" value="{$info.tips|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            {notempty name='type'}
+            {switch name='type'}
+            {case value='add'}
+            <button class="btn btn-primary radius ok_submit" type="button" data-url="{:url('update')}">
+                <i class="Hui-iconfont">&#xe632;</i>确定
+            </button>
+            {/case}
+            {case value='edit'}
+            <button class="btn btn-warning radius ok_submit" type="button" data-url="{:url('update')}">
+                <i class="Hui-iconfont">&#xe632;</i>保存
+            </button>
+            {/case}
+            {default /}查看配置
+            {/switch}
+            {/notempty}
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id|default=''}">
+</form>
+<script>
+    //弹出介绍
+    $(document).on("click",".config_extra",function(){
+        layer.confirm('枚举显示格式:[值1:显示内容1|值2:显示内容2]',{"title":false,"closeBtn":false,"btn":['我知道了']});
+    });
+</script>
+{/block}

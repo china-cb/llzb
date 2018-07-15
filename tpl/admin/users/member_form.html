@@ -1,0 +1,133 @@
+{extend name="base/base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}会员管理{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加会员{/case}
+{case value='edit'}编辑会员{/case}
+{default /}查看会员
+{/switch}
+{/notempty}
+{/block}
+{block name='content'}
+
+<form action="" method="post" class="form form-horizontal" id="form-member-add">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>用户类型：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <div class="radio-box">
+                {empty name="user_info"}
+                <input  type="radio" id="state-0" name="user_type" value="1" checked >
+                <label for="state-0">个人</label>
+                {else/}
+                <input  type="radio" id="state-2" name="user_type" value="1" {if !empty($user_info['user_type']) && $user_info['user_type'] eq 1 }checked{/if} >
+                <label for="state-2">个人</label>
+                {/empty}
+            </div>
+            <div class="radio-box">
+                <input  type="radio" id="state-1" name="user_type" value="2" {if  !empty($user_info['user_type']) && $user_info['user_type'] eq 2 }checked{/if} >
+                <label for="state-1">企业</label>
+            </div>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登录账号：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" value="{$user_info['account']|default=''}" placeholder="" name="account">
+        </div>
+    </div>
+    {empty name="user_info"}
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>登录密码：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" placeholder="" id="password" name="password" >
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>确认登录密码：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" placeholder="" id="re_password" name="re_password" >
+        </div>
+    </div>
+    {else/}
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>更改密码：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" placeholder="不填默认为原密码" id="password" name="password" >
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>确认登录密码：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" placeholder="不填默认为原密码" id="re_password" name="re_password" >
+        </div>
+    </div>
+    {/empty}
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>手机号：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" value="{$user_info['phone']|default=''}" placeholder="" id="phone" name="phone">
+        </div>
+    </div>
+
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>邮箱：</label>
+        <div class="formControls col-xs-8 col-sm-5">
+            <input type="text" class="input-text" value="{$user_info['email']|default=''}" placeholder=""  name="email">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>用户状态：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <div class="radio-box">
+                {empty name="user_info"}
+                <input  type="radio" id="state-10" name="status" value="1" checked >
+                <label for="state-10">正常</label>
+                {else/}
+                <input  type="radio" id="state-11" name="status" value="1" {if !empty($user_info['user_type']) && $user_info['user_type'] eq 1 }checked{/if} >
+                <label for="state-11">正常</label>
+                {/empty}
+            </div>
+            <div class="radio-box">
+                <input  type="radio" id="state-12" name="status" value="-1" {if  !empty($user_info['user_type']) && $user_info['user_type'] eq 2 }checked{/if} >
+                <label for="state-12">禁用</label>
+            </div>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"></label>
+        <div class="formControls col-xs-8 col-sm-9">
+            {notempty name='type'}
+            {switch name='type'}
+            {case value='add'}
+            <button  class="btn btn-primary radius ok_submit" type="button" data-url="{:url('member_update')}">
+                <i class="Hui-iconfont">&#xe632;</i>确定
+            </button>
+            {/case}
+            {case value='edit'}
+            <button  class="btn btn-warning radius ok_submit" type="button" data-url="{:url('member_update')}">
+                <i class="Hui-iconfont">&#xe632;</i>保存
+            </button>
+            {/case}
+            {default /}查看会员
+            {/switch}
+            {/notempty}
+            &nbsp;&nbsp;&nbsp;
+            <button onClick="reset();" class="btn btn-primary radius" type="button">重置</button>
+            &nbsp;&nbsp;&nbsp;
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">返回</button>
+        </div>
+    </div>
+    <input type="hidden" name="member_id" value="{$user_info.member_id|default=''}">
+</form>
+
+{/block}
+{block  name='js'}
+<script>
+    //清空表单
+    function reset(){
+        $("#form-member-add :input").not(":button, :submit, :reset, :hidden").val("").removeAttr("checked").remove("selected");//核心
+    }
+</script>
+{/block}

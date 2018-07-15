@@ -1,0 +1,115 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}视频水印 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="statistics">
+
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">视频LOGO</span>
+                </h1>
+                <div class="guide">
+                    <div class="guide_title">
+                        视频窗口Logo显示
+                        <span class="on_off
+                         {switch name='list.logo_type'}
+                            {case value='0'}logon_on{/case}
+                            {case value='1'}logon_off{/case}
+                            {default /}guide_off
+                         {/switch}
+                        ">
+                            <i class="
+                            {switch name='list.logo_type'}
+                                {case value='0'}off_act{/case}
+                                {case value='1'}{/case}
+                                {default /}
+                            {/switch}
+
+                            "></i>
+                        </span>
+                    </div>
+                    <!-- <div class="box"> -->
+                        <div class="logo_location">
+                                <p class="login_agreement">
+                                   logo位置
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_top_left">左上角</label>
+                                    <input name="radios"  data-val="0" type="radio" class="logo_val" id="types_top_left" {eq name='list.logo_position' value='0'}checked{/eq}>
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_right_left">右上角</label>
+                                    <input name="radios" data-val="1" type="radio" class="logo_val" id="types_right_left" {eq name='list.logo_position' value='1'}checked{/eq}>
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_bottom_left">左下角</label>
+                                    <input name="radios" data-val="2" type="radio" class="logo_val" id="types_bottom_left" {eq name='list.logo_position' value='2'}checked{/eq}>
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                                <p class="login_agreement">
+                                    <label for="types_bottom_right">右上角</label>
+                                    <input name="radios" data-val="3" type="radio" class="logo_val" id="types_bottom_right" {eq name='list.logo_position' value='3'}checked{/eq}>
+                                    <i></i>
+                                    <span class="login_checkeds"></span>
+                                </p>
+                            <div style="clear: both"></div>
+                            <form id="logo_up">
+                            <label class="guide_label">上传图片<input class="file_upload box_img" name="logo_url" type="file" value="1" /></label>
+                            </form>
+                            <p class="guide_p">片大小为2M以内；建议尺寸：144*36px、72*18px;支持PNG、JPG、JPEG格式</p>
+                            <p class="guide_p guide_p2">预览：</p>
+                            <div class="win_preview4">
+                                {empty name='list.map_guide'}
+                                <img class="preview" src="__static__/index/src/img/admin/win_preview.png"/>
+                                {else/}
+                                <img class="preview" src="{$Think.config.CONFIG_CDN_URL}{$list.logo|default=''}"/>
+                                {/empty}
+                            </div>
+                            <div style="clear: both"></div>
+                            <!-- 正在审核  preview_sub添加 guide_layer_act，guide_layer显示-->
+                           
+                            <input type="submit" name="" value="提交" class="preview_sub "/>
+                        </div>
+                         <div class="guide_layer guide_layer2
+                         {switch name='list.logo_type'}
+                                {case value='0'}guide_layer2_act{/case}
+                                {case value='1'}{/case}
+                                {default /}
+                          {/switch}
+                         "></div>
+                    <!-- </div> -->
+                </div>
+
+            </div>
+
+        </div>
+</div>
+    </div>
+</div>
+<input type="hidden" id="logo_id" value="{$id}"><!--当前房间ID-->
+<input type="hidden" id="logo_type" value=""><!--LOGO位置写入-->
+<input type="hidden" id="map_logo" value=""><!--LOGO值写入-->
+<input type="hidden" id="up_logo_url" value="{:url('index/channel_set/up_logo')}"><!--LOGO上传-->
+<input type="hidden" id="map_logo_url" value="{:url('index/channel_set/map_logo_list')}"><!--LOGO提交-->
+<input type="hidden" id="logo_switch_url" value="{:url('index/channel_set/logo_switch')}"><!--LOGO开关-->
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

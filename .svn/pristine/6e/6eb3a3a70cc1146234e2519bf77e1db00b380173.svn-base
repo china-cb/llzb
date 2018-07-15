@@ -1,0 +1,22 @@
+<?php
+namespace app\core\controller;
+
+use app\core\common\BusinessCommon;
+Class Business
+{
+    /**
+     * 统一下单接口
+     * @post int money 充值金额*
+     * @post int coin 充值币额*
+     * @post string pay_type 支付类型*
+     * @post string q 订单来源
+     * @return string order_id 返回订单id
+     */
+    public function order()
+    {
+        $post = remove_arr_xss(input('post.', []));
+        $m = new BusinessCommon();
+        $m->union_order($post);
+    }
+
+}

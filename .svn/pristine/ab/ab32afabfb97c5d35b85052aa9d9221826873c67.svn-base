@@ -1,0 +1,61 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}直播设置 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="statistics">
+
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">直播引导图</span>
+                    <a class="guide_h1_left">＊实名认证填写真实有效的信息</a>
+                </h1>
+                <div class="guide">
+                    <div class="guide_title">
+                        直播引导图
+                        <span class="on_off">
+                            <i class=""></i>
+                        </span>
+                    </div>
+                    <label class="guide_label">上传图片<input class="file_upload box_img" type="file" value="1" /></label>
+                    <p class="guide_p">图片大小为5M以内；图片分辨率1080*1740像素;支持PNG、JPG、JPEG格式</p>
+                    <span class="preview2">
+                        <span>二维码区域</span>
+                        <span class="preview2_t">
+                            <p>上传成功后</p>
+                            <p>手机扫一扫查看效果</p>
+                        </span>
+                        <img src="__static__/index/src/img/temp/666.png" alt="" />
+                    </span>
+                    <div class="preview3">
+                        <i class="p_radius"></i>
+                        <i class="p_lines"></i>
+                        <i class="p_radiu2s"></i>
+                        <img class="preview preview3s" src="__static__/index/src/img/admin/preview.png"/>
+                        <span class="preview_p1">手机预览图：</span>
+                    </div>
+                    <div style="clear: both"></div>
+                    <!-- 正在审核  preview_sub添加 guide_layer_act，guide_layer显示-->
+                    <div class="guide_layer guide_layer2 "></div>
+                    <input type="submit" name="" value="提交" class="preview_sub "/>
+                </div>
+            </div>
+        </div>
+</div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

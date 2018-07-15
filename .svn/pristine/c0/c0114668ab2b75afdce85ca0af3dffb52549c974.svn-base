@@ -1,0 +1,49 @@
+/**
+ * Created by deloo on 2016/12/23.
+ */
+var monitor=(function(){
+    var nav,
+        block,
+        v_list,
+        v_con;
+    function init(){
+        init_view_menu();
+        init_view_list();
+        init_doc_list();
+        init_list_view();
+    }
+    function init_view_menu(){
+        nav=$(".view-top .info .nav a");
+        block=$(".view-top .info .content");
+        set_index();
+        function set_index(i) {
+            if(!i){
+                i=0;
+            }
+            nav.removeClass("active").eq(i).addClass("active");
+            block.removeClass("active").eq(i).addClass("active");
+        }
+        nav.on("click",function(){
+            set_index($(this).index());
+        })
+    }
+    function init_view_list(){
+        v_list=$(".view-list-menu");
+    }
+
+    function init_doc_list(){
+        var list=$(".doc-list>.container");
+        list.mCustomScrollbar({theme:"llzb-common"});
+    }
+
+    /*初始化列表直播*/
+    function init_list_view(){
+        var menu=$(".view-list-menu");
+        menu.mCustomScrollbar({theme:"llzb-common"});
+    }
+    return init;
+})();
+
+$(function(){
+    monitor();
+});

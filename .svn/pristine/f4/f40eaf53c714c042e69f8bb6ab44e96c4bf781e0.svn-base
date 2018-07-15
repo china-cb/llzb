@@ -1,0 +1,112 @@
+{extend name="base/base"/}
+{block name="css"}{/block}
+{block name="site_nav_1"}充值配置{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加套餐配置{/case}
+{case value='edit'}编辑套餐配置{/case}
+{default /}查看套餐配置
+{/switch}
+{/notempty}
+{/block}
+{block name='content'}
+
+<form class="form form-horizontal" id="form_content" method="post" action="" >
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐配置类型：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select package_type" size="1" name="type" style="" >
+                <option value="" {if condition="empty($info.type)"}selected{/if}>请选择套餐配置类型</option>
+                <option value="1" {if condition="!empty($info.type) AND $info.type eq 1"}selected{/if}>权限开通套餐</option>
+                <option value="2" {if condition="!empty($info.type) AND $info.type eq 2"}selected{/if}>计时收费套餐</option>
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐名称：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text"  name="name" placeholder="请填写套餐名称" class="input-text" value="{$info.name|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐价格：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text"  name="money" placeholder="请填写套餐价格" class="input-text money" value="{$info.money|default=''}">
+        </div>
+    </div>
+    <div class="row cl all_time" {if condition="empty($info.type) OR $info.type eq '1'"}style="display: none"{/if}>
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐总时长(单位:分钟)：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text"  name="all_time" placeholder="请填写套餐总时长(单位:分钟)" class="input-text money" value="{$info.all_time|default=''}">
+        </div>
+    </div>
+    <div class="row cl unit">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐单位：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select" size="1" name="unit" >
+                <option value="" {if condition="empty($info.unit)"}selected{/if}>请选择套餐单位</option>
+                <option value="天" {if condition="!empty($info.unit) AND $info.unit eq '天'"}selected{/if}>天</option>
+                <option value="周" {if condition="!empty($info.unit) AND $info.unit eq '周'"}selected{/if}>周</option>
+                <option value="月" {if condition="!empty($info.unit) AND $info.unit eq '月'"}selected{/if}>月</option>
+                <option value="年" {if condition="!empty($info.unit) AND $info.unit eq '年'"}selected{/if}>年</option>
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>额外赠送：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text"  name="extra" class="input-text extra" value="{$info.extra|default='0'}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐配置状态：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select" size="1" name="status" style="" >
+                <option value="1" {if condition="!empty($info.status) AND $info.status eq 1"}selected{/if}>可用</option>
+                <option value="-1" {if condition="!empty($info.status) AND $info.status eq -1"}selected{/if}>禁用</option>
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>套餐描述：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <textarea name="desc" cols="" rows="" class="textarea radius" placeholder="请填写套餐描述">{$info.desc|default=''}</textarea>
+        </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            {notempty name='type'}
+            {switch name='type'}
+            {case value='add'}
+            <button class="btn btn-primary radius ok_submit" type="button" data-url="{:url('update')}">
+                <i class="Hui-iconfont">&#xe632;</i>&nbsp;确定
+            </button>
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+            {/case}
+            {case value='edit'}
+            <button class="btn btn-secondary radius ok_submit" type="button" data-url="{:url('update')}">
+                <i class="Hui-iconfont">&#xe632;</i>&nbsp;保存
+            </button>
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+            {/case}
+            {default /}<button onClick="layer_close();" class="btn btn-primary radius" type="button">返回</button>
+            {/switch}
+            {/notempty}
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id|default=''}">
+</form>
+{/block}
+{block name="js"}
+<script>
+    $(".package_type").change(function(){
+        var value = $(this).val();
+        if(value == 2){
+            $(".all_time").show();
+        }else{
+            $(".all_time").hide();
+        }
+    });
+</script>
+{/block}

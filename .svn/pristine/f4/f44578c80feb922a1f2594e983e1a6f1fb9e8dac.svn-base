@@ -1,0 +1,460 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/5
+ * Time: 14:04
+ */
+
+namespace app\index\controller;
+
+use app\core\plugin\UnionLogin;
+use app\index\model\LoginModel;
+use org\Verify;
+use org\Crypt;
+use think\Controller;
+use think\Log;
+
+class Login extends Controller
+{
+     /** 登录界面 */
+     public function index(){
+         return $this->fetch();
+     }
+
+    /** 获取验证码 */
+    public function verify()//验证码
+    {
+        ob_clean();//清缓存
+        $config = [
+            'seKey' => '', // 验证码加密密钥
+            'codeSet' => '23456789', // 验证码字符集合
+            'expire' => 1800, // 验证码过期时间（s）
+            'useZh' => false, // 使用中文验证码
+            'useImgBg' => false, // 使用背景图片
+            'fontSize' => 30, // 验证码字体大小(px)
+            'useCurve' => false, // 是否画混淆曲线
+            'useNoise' => false, // 是否添加杂点
+            'imageH' => 0, // 验证码图片高度
+            'imageW' => 0, // 验证码图片宽度
+            'length' => 4, // 验证码位数
+            'fontttf' => '', // 验证码字体，不设置随机获取
+        ];
+        $verify = new Verify($config);
+        $verify->entry();//输出保存session
+        die();
+    }
+
+    /** 登录执行 */
+    public function login_do(){
+        $post = input("post.",[]);
+        $free_login = "false";
+        extract($post);
+        (empty($account)) && wrong_return("账号不能为空");
+        (empty($password)) && wrong_return("密码不能为空");
+//        (empty($verify)) && wrong_return("验证码不能为空");
+        (!isset($agreement)) && wrong_return("请先点击同意'玲珑TV'服务协议");
+
+        //检验账号是否正确
+         (empty($account) || !preg_match(config('regular_rule')['phone'], $account)) && wrong_return("手机号格式不正确");
+        (empty($password) || !preg_match(config('regular_rule')['password'], $password)) && wrong_return("密码为6~30位任意字符的组合");
+//        !sp_check_verify_code() && wrong_return('验证码错误');
+
+        //根据账号查询用户密码
+        $m = new LoginModel();
+        $user_info = $m->get_user_info_by_account($account);
+        (empty($user_info)) && wrong_return("用户不存在");
+        ($user_info['status'] == -1) && wrong_return("该用户已被禁用");
+
+        if(md6($password) == $user_info['password']){
+            $this->com_login($user_info['member_id'],$free_login);
+        }else{
+            wrong_return("密码错误");
+        }
+    }
+
+    /** 公共登录接口 */
+    public function com_login($mid,$free_login='false'){
+        $m = new LoginModel();
+        $user_info = $m->get_user_info_by_mid($mid);
+        (empty($user_info)) && wrong_return("用户不存在");
+        ($user_info['status'] == -1) && wrong_return("该用户已被禁用");
+
+        //更新用户信息
+        $user_map['member_id'] = $user_info['member_id'];
+
+        $user_data['last_login_ip'] =get_client_ip();
+        $user_data['last_login_time'] = NOW_TIME;
+        $user_data['login_count'] = $user_info['login_count']+1;
+
+        $user_up = db('member')->where($user_map)->update($user_data);
+        ($user_up <= 0) && wrong_return("用户信息更新错误");
+
+        //记录用户登录信息日志
+        $m->set_login_info($user_info);
+
+        //检测session和cookie信息
+        $session_info = $m->get_session_info($mid);
+        //插入用户session表
+        $randsal = createNumber(4);
+        $session_data['uid'] = $user_info['member_id'];
+        $session_data['session_id'] = md5(NOW_TIME.$user_info['member_id'].$randsal);
+        $session_data['enable'] = 'true';
+        $session_data['create_time'] = NOW_TIME;
+        $session_data['session_expire_time'] = NOW_TIME + config('session_expire'); //1天session过期
+        $session_data['randsal'] = $randsal;
+        //判断是否需要更新cookie信息
+        if($session_info['cookie_expire_time'] < NOW_TIME && $free_login){
+            $session_data['cookie_code'] = create_order_num();
+            $session_data['cookie_expire_time'] = NOW_TIME + 86400*15;
+            cookie(null);
+            cookie('member_id', $mid,86400*15);
+            cookie("cookie_code",$session_data['cookie_code'],86400*15);
+        }else{
+            cookie(null);
+            cookie('member_id', $mid,86400*15);
+            cookie("cookie_code",$session_info['cookie_code'],86400*15);
+        }
+        //有就更新，没就增加
+        if($session_info){
+            $res = db('session_pc')->where('uid',$user_info['member_id'])->update($session_data);
+        }else{
+            $res = db('session_pc')->insert($session_data);
+        }
+        if($res !== false){
+            session(null);
+            session("session_id",$session_data['session_id']);
+            session("member_id",$mid);
+            ok_return("登录成功!");
+        }else{
+            wrong_return("session写入失败");
+        }
+    }
+
+    /** 注册界面 */
+    public function register(){
+        return $this->fetch();
+    }
+
+    /** 注册执行 */
+    public function register_do(){
+        $post = input("post.",[]);
+        extract($post);
+        (empty($phone)) && wrong_return("手机号不能为空");
+        (empty($phone_code)) && wrong_return("手机验证码不能为空");
+        (empty($password)) && wrong_return("密码不能为空");
+        (empty($re_password)) && wrong_return("重复密码不能为空");
+
+        //检验数据是否正确
+        (empty($phone) || !preg_match(config('regular_rule')['phone'], $phone)) && wrong_return("手机号格式不正确");
+        ($password !== $re_password) && wrong_return("两次输入的密码不一致");
+        (empty($password) || !preg_match(config('regular_rule')['password'], $password)) && wrong_return("密码为6~30位任意字符的组合");
+
+        $m = new LoginModel();
+        //判断手机号是否已注册
+        $member_id = $m->get_user_info_by_phone($phone);
+        (!empty($member_id)) && wrong_return("该手机号已注册过了!");
+        $this->check_phone_code($phone,$phone_code,"reg");//检测手机验证码的其他信息
+        //密码强度验证
+        if((preg_match('/^\d*$/',$password)) == 1){
+            $post['pwd_grade'] = '弱';
+        }
+        if((preg_match("/^[a-zA-Z]*$/",$password)) == 1){
+            $post['pwd_grade'] = '中';
+        }
+        if((preg_match('/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]*$/',$password)) == 1){
+            $post['pwd_grade'] = '高';
+        }
+        //开始注册
+        $mid = $m->reg_do($post);
+        if($mid > 0){
+            //更新玲珑ID号
+            $num_id = INIT_LIVE_NUM + $mid;
+            $result = $m->update_user_info($mid,"num_id",$num_id);
+            ($result <= 0) && wrong_return("注册失败");
+        }else{
+            wrong_return("注册失败");
+        }
+
+        //插入注册记录表
+        $data = [
+            'uid'=>$mid,
+            'type'=>1,  //注册
+            'phone'=>$phone,
+            'source'=>get_user_browser(),
+            'login_way'=>1, //pc
+            'ip'=>get_client_ip(),//获取登录ip
+            'create_time'=>NOW_TIME
+        ];
+        $resu = $m->insert_log_manager($data);
+        ($resu <= 0) && wrong_return("记录插入失败");
+        //插入用户session表
+        $randsal = createNumber(4);
+        $session_data['uid'] = $mid;
+        $session_data['session_id'] = md5(time().$mid.$randsal);
+        $session_data['enable'] = 'true';
+        $session_data['create_time'] = time();
+        $session_data['session_expire_time'] = time() + config('session_expire');
+        $session_data['randsal'] = $randsal;
+//        $session_data['cookie_code'] = create_order_num();
+//        $session_data['cookie_expire_time'] = NOW_TIME + 86400*15;
+        $res = $m->add_user_session($session_data);
+
+        if($res > 0){
+            session(null);
+            session("session_id",$session_data['session_id']);
+            session("member_id",$mid);
+//            cookie(null);
+//            cookie('member_id', $mid,86400*15);
+//            cookie("cookie_code",$post["cookie_code"],86400*15);
+            ok_return("注册成功");
+        }
+        wrong_return("注册失败");
+    }
+
+    /** 忘记密码界面 */
+    public function forget_password(){
+        return $this->fetch();
+    }
+
+    /** 忘记密码执行 */
+    public function reset_password_do(){
+        $post = input('param.',[]);
+        $post = remove_arr_xss($post);
+        extract($post);
+
+        (empty($phone)) && wrong_return("手机号不能为空");
+        (empty($phone_code)) && wrong_return("手机验证码不能为空");
+        (empty($password)) && wrong_return("设置密码不能为空");
+        (empty($re_password)) && wrong_return("确认密码不能为空");
+
+        //检测提交信息
+        (empty($phone) || !preg_match(config('regular_rule')['phone'], $phone)) && wrong_return("手机号格式不正确");
+        (empty($password) || !preg_match(config('regular_rule')['password'], $password)) && wrong_return("密码为6~30位任意字符的组合");
+        ($password !== $re_password) && wrong_return("两次输入的密码不一致");
+
+        //手机验证码是否正确
+        $m = new LoginModel();
+        //判断手机号是否已注册
+        $member_id = $m->get_user_info_by_phone($phone);
+        (empty($member_id)) && wrong_return("该手机尚未注册!");
+        $this->check_phone_code($phone,$phone_code,"rst_pass");//检测手机验证码的其他信息
+
+
+        //根据用户账户信息
+        $user_info = $m->get_user_info_by_account($phone);
+        ($user_info['status'] == -1) && wrong_return("该用户已被禁用");
+
+        //修改密码
+        $password = md6($password);
+        $res = $m->modify_user_info_do($user_info['member_id'],$type="password",$password);
+        $res !== false && ok_return('修改成功');
+        wrong_return('修改失败');
+    }
+
+    /** 绑定手机号界面 */
+    public function bind_phone(){
+        return $this->fetch();
+    }
+
+    /** 绑定手机号执行 */
+    public function bind_phone_do(){
+        $post = input('param.',[]);
+        $post = remove_arr_xss($post);
+        extract($post);
+
+        //检测提交信息
+        (empty($phone)) && wrong_return("手机号不能为空");
+        (empty($phone_code)) && wrong_return("手机验证码不能为空");
+        (empty($phone) || !preg_match(config('regular_rule')['phone'], $phone)) && wrong_return("手机号格式不正确");
+        (empty($password)) && wrong_return("设置密码不能为空");
+        (empty($re_password)) && wrong_return("确认密码不能为空");
+        (empty($password) || !preg_match(config('regular_rule')['password'], $password)) && wrong_return("密码为6~30位任意字符的组合");
+        ($password !== $re_password) && wrong_return("两次输入的密码不一致");
+
+        //判断手机号是否已被绑定
+        $m = new LoginModel();
+        $member_id = $m->get_user_info_by_phone($phone);
+        (!empty($member_id)) && wrong_return("该手机已被绑定,请更换其它手机!");
+        $this->check_phone_code($phone,$phone_code,"bind");//检测手机验证码的其他信息
+
+        //绑定手机号并设置密码
+        $data = [
+            'member_id' => $member_id,
+            'phone' => $phone,
+            'password' => md6($password)
+        ];
+        $res = $m->update_user_info_do($data);
+        ($res !== false) && ok_return('绑定成功');
+        wrong_return('绑定失败');
+    }
+
+    /** 检测手机验证码接口 */
+    public function check_phone_code($phone,$phone_code,$type){
+        (empty($phone)) && wrong_return("手机号不能为空");
+        (empty($phone_code)) && wrong_return("手机验证码不能为空");
+        (empty($type)) && wrong_return("手机验证码类型不能为空");
+        $m = new LoginModel();
+        //判断手机验证码是否存在
+        $map['phone'] = $phone;
+        $map['phone_code'] = $phone_code;
+        $map['type'] = $type;
+        $code_info = $m->get_phone_code_by_phone($map);
+        (empty($code_info)) && wrong_return("手机验证码错误");
+
+        //判断手机验证码是否过期
+        $code_time = $code_info['expire_time'];
+        if (NOW_TIME - $code_time > 60 * 10 || $code_info['enable'] != true) {//默认10分钟
+            wrong_return("手机验证码已失效");
+        }
+    }
+
+    /** 退出 */
+    public function quit(){
+        session(null);
+        cookie('member_id', null);
+        cookie('cookie_code', null);
+        ok_return("退出成功");
+    }
+
+    /** 第三方登录接口 */
+    public function union_login()
+    {
+        $plat = input('param.plat', '');
+        empty($plat) && wrong_return('平台参数错误');
+        switch ($plat) {
+            case "qq":
+                $this->qq_login();
+                break;
+            case "wechat":
+                $this->wechat_login();
+                break;
+            default:
+                ;
+        }
+    }
+    /** QQ登录 */
+    private function qq_login()
+    {
+        $conf = [
+            'appid' => config('QQ_LOGIN_APPID'),
+            'appkey' => config('QQ_LOGIN_APPKEY'),
+            'callback' => config('QQ_LOGIN_CALLBACK'),
+//            'appid' => '101352840',
+//            'appkey' => '625d1cef59833e1d93342580c53cd850',
+//            'callback' => 'http://live.mengdie.com/index.php/zb/user/zb_login_callback/plat/qq.html',
+            'scope' => 'get_user_info',
+            'errorReport' => true,
+        ];
+        $qc = new UnionLogin();
+        $r = $qc->qq_conn($conf);//返回请求地址url
+        jump_url($r);
+    }
+
+    /** 微信登录 */
+    private function wechat_login()
+    {
+        $conf = [
+            'appid' => config('WECHAT_LOGIN_APPID'),
+            'appkey' => config('WECHAT_LOGIN_APPKEY'),
+            'appsecret' => config('WECHAT_LOGIN_APPSECRET'),
+            'redirect_uri' => urlencode(config('WECHAT_LOGIN_CALLBACK')),
+            'scope' => 'snsapi_login',
+            'errorReport' => true,
+        ];
+
+        $qc = new  UnionLogin();
+        $r = $qc->pc_wechat_conn($conf);
+        jump_url($r);
+    }
+
+    /** 第三方登录回调 */
+    public function zb_login_callback()
+    {
+        $plat = input('param.plat', null);
+        $state = input('param.state', null);
+        empty($plat) && wrong_return('平台参数错误');
+        $res = [];
+        $data = [];
+        switch ($plat) {
+            case 'qq':
+                $code = input('code', '');
+                empty($code) && wrong_return('必要参数获取失败[code]');
+                empty($state) && wrong_return('必要参数获取失败[state]');
+                $code = [
+                    'grant_type'=>'authorization_code',
+                    'client_id'=>config('QQ_LOGIN_APPID'),
+                    'client_secret'=>config('QQ_LOGIN_APPKEY'),
+                    'code'=>$code,
+                    'redirect_uri' => config('QQ_LOGIN_CALLBACK'),
+//                    'redirect_uri' => 'http://live.mengdie.com/index.php/zb/user/zb_login_callback/plat/qq.html',
+                ];
+                $qc = new  UnionLogin();
+                $info = $qc->qq_callback($code);
+                $data = [
+                    "type"=>"qq",
+                    "unionid"=>$info["openid"],
+                    "source"=>'2',
+                    "nick_name"=>$info["nickname"],
+                    "pic_path_name"=>$info["figureurl"],
+                    "longitude"=>"",
+                    "latitude"=>""
+                ];
+                $m = new LoginModel();
+                $res = $m-> thirdlogin($data);
+                break;
+            case 'wechat':
+                $code = input('param.code');
+                empty($code) && wrong_return('必要参数获取失败[code]');
+                empty($state) && wrong_return('必要参数获取失败[state]');
+                $qc = new  UnionLogin();
+                $info = $qc->pc_wechat_callback($code, $state);
+                $data = [
+                    "type"=>"weixin",
+                    "unionid"=>$info["unionid"],
+                    "source"=>'2',
+                    "nick_name"=>$info["nickname"],
+                    "pic_path_name"=>$info["headimgurl"],
+                    "longitude"=>"",
+                    "latitude"=>""
+                ];
+
+                $m = new LoginModel();
+                $res = $m->thirdlogin($data);
+                break;
+        }
+        if($res == 1){
+            $this->redirect(url('index/admin/index'));
+        }
+//        $user_info = $res['data'];
+//        session('user_id',$user_info['member_id']);
+//        session('session_id',$user_info['session_id']);
+//        if($res['code'] == 0 && $user_info['flag'] == 1){
+//            //未绑定过手机号,跳转绑定手机号
+//            session('wechat_info',$data);
+//            switch($plat){
+//                case ('wechat'):
+//                    $this->redirect(url("wap/user/bind_phone_by_plat",['plat'=>'wechat']));
+//                    break;
+//            }
+//        }else{
+//            $this->redirect(url('zb/index/index'));
+//        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

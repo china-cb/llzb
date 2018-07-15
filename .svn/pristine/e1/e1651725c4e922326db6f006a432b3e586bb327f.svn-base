@@ -1,0 +1,214 @@
+<?php
+namespace app\core\controller;
+
+use app\core\model\OrderModel;
+use think\Controller;
+
+Class Unionpay extends Controller
+{
+    private $o_info;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**获取支付订单信息
+     * @param order_id 订单号id
+     */
+    private function init_order()
+    {
+        header("Content-type:text/html;charset=utf-8");
+        $post = input('request.', []);
+        (empty($post["order"]) || !is_numeric($post["order"])) && wrong_return('订单id错误');
+        $order_id = $post["order"];
+        //获取订单信息
+        $m_radius = new OrderModel();
+        $info = $m_radius->get_info_by_order($order_id);
+        empty($info) && wrong_return('订单信息获取失败');
+        $this->o_info = $info;
+    }
+
+    /** 支付接口入口
+     * @param order_id 订单号id
+     */
+    public function alipay()
+    {
+        $this->init_order();
+
+        $arr = $this->construct_alipay_info($this->o_info);
+        empty($arr) && wrong_return('订单开通信息获取失败');
+        $this->construct_alipay($arr);
+    }
+
+    //从数据库中获取的订单信息中提取有用的信息
+    public function construct_alipay_info($info)
+    {
+        extract($info);
+        $data = array(
+            "out_trade_no" => $info['order_id'],
+            "subject" => (string)$info['name'],
+            "payment_type" => '1',
+            "total_fee" => round(floatval($info['price']), 2),
+            "seller_id" => config('ALI_PAY_SELLER_ID'),
+//            "origin" => $info['origin'] //判断类型此时先注释掉
+        );
+        return $data;
+    }
+
+    /** 构建提交参数信息
+     * @param $post 业务参数信息
+     */
+    private function construct_alipay($post)
+    {
+        extract($post);
+        empty($out_trade_no) && wrong_return('外部订单参数错误');
+        $data = array(
+            //基本参数
+
+            "service" => 'create_direct_pay_by_user',//支付宝pc支付
+            "partner" => config('ALI_PAY_PARTNER'),//合作者身份ID****
+            "_input_charset" => 'utf-8',//参数编码字符集****
+            "notify_url" => url('core/payment/ali_notify',null,true,true),//服务器异步通知页面路径
+            "return_url" => url('zb/user_center/return_url',null,true,true),//页面跳转同步通知页面路径
+//            "error_notify_url" => config("ALIPAY_ERROR_NOTIFY_URL"),//请求出错时的通知页面路径
+            //业务参数
+            "out_trade_no" => $post['out_trade_no'],//商户网站唯一订单号****
+            "subject" => $post['subject'],//商品名称****
+            "payment_type" => empty($post['payment_type']) ? "1" : $post['payment_type'],//支付类型****
+            "total_fee" => empty($post['total_fee']) ? "1000.00" : $post['total_fee'],//交易金额精确到小数点后两位。****
+            "seller_id" => $post['seller_id'],//卖家支付宝用户号****
+//            "seller_email" => config('ALIPAY_SELLER_EMAIL'),//卖家支付宝账号****
+            "body" => $post['subject'],//商品描述****
+            "it_b_pay" => '2h',//超时时间
+//            "qr_pay_mode" => empty($qr_pay_mode) ? '3' : C('QR_PAY_MODE'),//扫码支付方式
+        );
+        $url = $this->create_pay_url($data);
+//        dump($url);die();
+        header("Content-type:text/html;charset=utf-8");
+        $this->post_jump($url);
+    }
+
+    /**md5加密签名参数*/
+    private function md5_sign($post)
+    {
+        $data = paraFilter($post);//除去数组中的空值和签名参数
+        $data = argSort($data);//对数组排序
+        $str = createLinkstring($data);//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
+        $str = trim($str, '&') . config("ALI_PAY_MD5_SECRET");//尾部加上 MD5签名密钥
+        $rt = array(
+            'param' => $data,
+            'sign' => md5($str)
+        );
+        return $rt;
+    }
+
+    //生成付款链接
+    private function create_pay_url($post)
+    {
+        $arr = $this->md5_sign($post);
+        $data = $arr["param"];
+        $data["sign"] = $arr['sign'];
+        $data['sign_type'] = 'MD5';
+        // 升序排列数组
+        argSort($data);
+        $url = 'https://mapi.alipay.com/gateway.do?' . createLinkstring($data);
+        return $url;
+    }
+
+    //跳转到支付宝
+    private function post_jump($url)
+    {
+
+        $data = explode("?", $url);
+
+        $url = $data[0];
+        $param = $data[1];
+        //构造form表单的数组
+        $param = explode("&", $param);
+
+        $param_const = array();
+        foreach ($param as $k => $v) {
+            $arr = explode("=", $v);
+            $param_const[$arr[0]] = $arr[1];
+        }
+        $this->assign("url", $url);
+        $this->assign("list", $param_const);
+        die($this->fetch('form_submit'));
+    }
+
+    /*********微信支付*****************************************************/
+    //从数据库中获取的订单信息中提取有用的信息
+    public function construct_wechat_info($info)
+    {
+        extract($info);
+
+        $data = array(
+            "body" => (string)$info['name'],
+            "attach" => 'mengdie',
+            "out_trade_no" => $info['order_id'],
+            "total_fee" => round($info['price'] * 100, 0),
+            "time_start" => date("YmdHis"),
+            "time_expire" => date("YmdHis", strtotime("+2 hours")),
+            "goods_tag" => $info['order_id'],
+            "notify_url" => url('core/payment/notify',null,true,true),
+            "trade_type" => "NATIVE",
+            "product_id" => $info['id']
+        );
+        return $data;
+    }
+
+    /**
+     * 生成二维码,返回二维码url,格式为jsonp
+     */
+    public function get_qrcode_url()
+    {
+        $this->init_order();
+        $arr = $this->construct_wechat_info($this->o_info);
+        empty($arr) && wrong_return('订单开通信息获取失败');
+        $data = $this->construct_wechat($arr);
+        (empty($data)) && wrong_return('生成url失败');
+        if ($data["param"]) {
+            $param = $data["param"];
+            ok_return('success', 1, ["url" => 'http://paysdk.weixin.qq.com/example/qrcode.php?data='.urlencode($param)]);
+        } else {
+            wrong_return("生成失败");
+        }
+    }
+
+    /** 构建提交参数信息
+     * @ param $post 业务参数信息
+     */
+    private function construct_wechat($post)
+    {
+        require "../extend/org/weichat/WxPay.Api.php";
+        require "../extend/org/weichat/WxPay.NativePay.php";
+
+        $input = new \WxPayUnifiedOrder();
+        $notify = new \NativePay();
+        $input->SetBody($post['body']);
+        $input->SetAttach($post['attach']);
+        $input->SetOut_trade_no($post['out_trade_no']);
+        $input->SetTotal_fee($post['total_fee']);
+        $input->SetTime_start($post['time_start']);
+        $input->SetTime_expire($post['time_expire']);
+        $input->SetGoods_tag($post['goods_tag']);
+        $input->SetNotify_url($post['notify_url']);
+        $input->SetTrade_type($post['trade_type']);
+        $input->SetProduct_id($post['product_id']);
+
+        $result = $notify->GetPayUrl($input);
+        
+        if($result['return_code'] == 'FAIL'){
+            wrong_return($result['return_msg']);
+        }
+
+        $param = $result["code_url"];
+        $data = array(
+            "code" => "1",
+            "param" => $param
+        );
+
+        return $data;
+    }
+}

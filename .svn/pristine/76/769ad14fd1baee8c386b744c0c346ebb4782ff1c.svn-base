@@ -1,0 +1,20 @@
+<div class="block">
+    <h1 class="basic_h1">
+        <span class="basic_h1_left">直播概况</span>
+    </h1>
+    <ul class="view_content count_channel_data">
+        <li>观看人次（PV）：<span>{$count.visit_count|default='0'}</span>人次</li>
+        <li>用户量（UV）：<span>{$count.people|default='0'}</span>人</li>
+        <li>IP数：<span>{$count.ip|default='0'}</span>个</li>
+        <li>观看时长：<span>{$count['watch_count']/60|ceil}</span>分钟</li>
+        <li>目前直播时长：<span>{$count['online_time']/60|ceil}</span>分钟</li>
+        <li>最高在线：<span>{$count['max_online_time']/60|ceil}</span>分钟</li>
+    </ul>
+    <h1 class="basic_h1">
+        <span class="basic_h1_left">在线人数分布曲线</span>
+    </h1>
+    <div class="curve"></div>
+    <h1 class="basic_h1">
+        <span class="basic_h1_left">观看用户地域分布</span>
+    </h1>
+</div>

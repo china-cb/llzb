@@ -1,0 +1,88 @@
+{extend name='base:base' /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}自定义配置{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加配置{/case}
+{case value='edit'}编辑配置{/case}
+{default /}查看配置
+{/switch}
+{/notempty}
+{/block}
+{block name='css'}
+{/block}
+
+{block name='content'}
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <span class="l">
+    <a class="btn btn-primary radius refresh_config"  href="javascript:;">
+        <i class="fa fa-refresh"></i>更新配置缓存</a>
+    </span>
+</div>
+<div class="mt-20">
+    <form class="form form-horizontal" id="form-article-add">
+        <div id="tab-system" class="HuiTab">
+            <div class="tabBar cl">
+                {volist name='cate_list' id='vo'}
+                <span>{$vo.name|default=''}</span>
+                {/volist}
+            </div>
+            {foreach name='conf_list' item='item' key='k'}
+            <div class="tabCon">
+                {volist name='item' id='vo'}
+                <div class="row cl config_one">
+                    <img class="status_img" src="__static__/public/img/loading.gif" style="width: 20px;height: 20px;display: none;">
+                    <label class="form-label col-xs-4 col-sm-2"><span
+                            class="c-red">*</span>{$vo.title|default=''}：</label>
+                    <div class="formControls col-xs-8 col-sm-9">
+                        {switch name='vo.type'}
+                        {case value='CONFIG_TYPE_NUMBER'}
+                        <input name="{$vo.code|default=''}" type="text" placeholder="{$vo.tips|default='请输入'}" value="{$vo.value|default=''}" class="input-text conf_one">
+                        {/case}
+                        {case value='CONFIG_TYPE_STRING'}
+                        <input name="{$vo.code|default=''}" type="text" placeholder="{$vo.tips|default='请输入'}" value="{$vo.value|default=''}" class="input-text conf_one">
+                        {/case}
+                        {case value='CONFIG_TYPE_TEXT'}
+                        <textarea name="{$vo.code|default=''}"  class="textarea conf_one">{$vo.value|default=''}</textarea>
+                        {/case}
+                        {case value='CONFIG_TYPE_ARRAY'}
+                        <textarea name="{$vo.code|default=''}"  class="textarea conf_one">{$vo.value|default=''}</textarea>
+                        {/case}
+                        {case value='CONFIG_TYPE_ENUM'}
+                        <?php
+                            $tmp_arr = json_decode($vo['extra'],true);
+                        ?>
+                        <select class="select conf_one" name="{$vo.code|default=''}" >
+                            {foreach name='tmp_arr' item='t_vo' key='k_1'}
+                            <option {if condition="$vo['value'] eq $t_vo"}selected="selected"{/if} value="{$t_vo}">{$k_1}</option>
+                            {/foreach}
+                        </select>
+                        {/case}
+                        {/switch}
+                    </div>
+                </div>
+                {/volist}
+            </div>
+            {/foreach}
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $.Huitab("#tab-system .tabBar span", "#tab-system .tabCon", "current", "click", "0");
+    });
+</script>
+
+<input type="hidden" id="refresh_config" value="{:url('refresh_config')}">
+<input type="hidden" id="save_url" value="{:url('save_config')}">
+<input type="hidden" id="img_loading" value="__static__/public/img/loading.gif">
+<input type="hidden" id="img_ok" value="__static__/public/img/ok.png">
+<input type="hidden" id="img_times" value="__static__/public/img/times.png">
+
+{/block}
+
+{block name='js'}
+{js href="__static__/admin/js/config/setting.js" /}
+{/block}

@@ -1,0 +1,173 @@
+<?php
+namespace app\index\model;
+
+
+use think\cache\driver\Redis;
+use think\Db;
+use think\Model;
+
+class ChannelSetModel extends Model
+{
+    /** 获取user_av_room 值 */
+    public function get_user_av_room_list($id,$mid){
+        return db_func('user_av_room','sp_')
+            ->where(['id' => $id,'uid' => $mid])
+            ->field('cover,reward_data,phone_data,secret_key,unit_price,map_guide,guide_type,type,window,logo,logo_type,logo_position,reward_switch,phone_switch')
+            ->find();
+    }
+    /** 直播间设置 */
+    public function up_map_guide($mid,$id,$data){
+        return db_func('user_av_room','sp_')
+            ->where(['id' => $id,'uid' => $mid])
+            ->update($data);
+    }
+    /** 获取打赏信息 */
+    public function get_reward_list($id, $mid){
+        return db_func('gift_manage','sp_')
+            ->where(['rid' => $id,'give_id' => $mid])
+            ->find();
+    }
+    /** 获取打赏信息 */
+    public function get_red_list($id, $mid){
+        return db_func('bonus','sp_')
+            ->where(['rid' => $id,'mid' => $mid,'status' => 0])
+            ->find();
+    }
+    /** 更新礼物打赏配置 */
+    public function up_gift_list($mid,$rid,$rt){
+        $list = db_func('gift_manage','sp_')->where(['rid' => $rid,'give_id' => $mid])->find();
+        if(empty($list)){
+            $rt['create_time'] = NOW_TIME;
+            $rt['give_id'] = $mid;
+            $rt['rid'] = $rid;
+            return db_func('gift_manage','sp_')->insert($rt);
+        }else{
+            $rt['update_time'] = NOW_TIME;
+            return db_func('gift_manage','sp_')
+                ->where(['rid' => $rid,'give_id' => $mid])
+                ->update($rt);
+        }
+    }
+    /** 红包存入redis */
+    public function send_red_new($mid,$post){
+        $gift_list = [
+            'reward_data' => $post['reward_name'],
+            'phone_data' => $post['phone_prompt'],
+            'update_time' => NOW_TIME,
+        ];
+        $rt = $this->up_map_guide($mid, $post['rid'], $gift_list);
+        (empty($rt)) && wrong_return('缺少数据，请重新添加');
+
+        $total = $post['red_price'];
+        $user_list = db_func('member','sp_')->where('member_id',$mid)->find();//获取登录着信息
+        if($user_list['balance'] < $post['red_price']){
+            wrong_return('金额不足');
+        }
+        if($post['red_num'] > $post['red_price']){
+            wrong_return('红包人均必须大于1');
+        }
+        $user_room = db_func('user_av_room','sp_')->where('id',$post['rid'])->find();
+        if(empty($user_room)){
+            wrong_return('频道不存在');
+        }
+
+        Db::startTrans();//开启事务
+        try{
+            if($post['red_type'] == 1){
+                $min = 1;//每个人最少获得一个
+                for ($i=1;$i<$post['red_num'];$i++){
+                    $safe_price = ceil(($post['red_price'] - ($post['red_num'] - $i) * $min)/($post['red_num']-$i));//设置安全金额
+                    $coin=mt_rand($min,$safe_price);
+                    $post['red_price']=$post['red_price'] - $coin;
+                    $coins[] = $coin;
+                }
+                $coins[] = $post['red_price'];
+            }else{
+                $coin = $post['red_price'] % $post['red_num'];
+                $safe_price = $post['red_price'] / $post['red_num'];//平均分配金额
+                if($coin != 0){
+                    wrong_return('金额不是数量的整数倍');
+                }else{
+                    for ($i=1;$i<=$post['red_num'];$i++){
+                        $coins[] = $safe_price;
+                    }
+                }
+            }
+            $str_coins = implode(',',$coins);//字符化
+            $bonus_data = array(
+                'red_des'=>$post['red_describe'],
+                'coin'=>$total,
+                'rid' =>$post['rid'],
+                'num'=>$post['red_num'],
+                'type'=>$post['red_type'],
+                'plan'=>$str_coins,
+                'mid' => $mid,
+                'create_time'=>NOW_TIME,
+                'expiration_time'=>NOW_TIME+3600*24,
+                'status' => 0
+            );
+            $bonus_id = db_func('bonus')->insertGetId($bonus_data);
+            if(empty($bonus_id)) {
+                wrong_return('插入红包数据出错，请重新试下');
+            }
+            $redis = new \Redis();
+            $redis->connect('127.0.0.1', 6379) or die('连接redis失败');
+            foreach ($coins as $coin){
+                $arr = array(
+                    'bonus_id'=>$bonus_id,
+                    'coin'=>$coin,
+                );
+                $redis->lPush('bonus_'.$bonus_id.'_list',json_encode($arr));//压入未消费列表
+            }
+            $redis->hset('bonus_'.$bonus_id.'_info','expiretime',NOW_TIME+24*3600);
+            $redis->hset('bonus_'.$bonus_id.'_info','bonus_id',$bonus_id);
+            $redis->hset('bonus_'.$bonus_id.'_info','num',$post['red_num']);
+                //扣钱
+            $flag = db_func('member')->where('member_id',$mid)->setDec('balance',$bonus_data['coin']);//- 发起者的
+            if (empty($flag)) throw new \Exception("bonus_{$bonus_id}更改账户余额出错");
+            Db::commit(); //提交事务
+            ok_return('发送红包成功');
+        } catch (\Exception $ex){
+            log_w($mid."发送红包异常：".$ex->getMessage());
+            Db::rollback();//回滚
+            exit_json(119,$ex->getMessage());
+        }
+    }
+    /** 红包金额入库 */
+    public function create_reward($data) {
+        $reward_type = $data['reward_type'];
+        import("app.lib.rewardlib.livereward",null,'.php');
+        $object = new \livereward();
+
+        $object->setController($this);//内化
+        $object->reward_type =$reward_type;
+
+        $sender = db('member')->where('member_id',$data['uid'])->find();//获取登录者信息
+        if(empty($sender)) {
+            wrong_return('传入发送者信息有误');
+        }
+        $parameter = $object->_getPublishParamters($sender,$data);//参数格式化处理输入参数
+        unset($parameter['pay_info']);
+
+        $parameter['user_good_id'] = '';
+        if (!empty($parameter)){
+        $rewardId = db('reward')->insertGetId($parameter);
+        }
+        (empty($rewardId)) && wrong_return('打赏失败');
+        $object->doPay($rewardId);//具体的支付
+    }
+
+    /** 更改红包状态 */
+    public function up_bonus($bonus_id){
+        return db_func('bonus','sp_')->where('id',$bonus_id)->update(['status' => 1,'update_time' => NOW_TIME]);
+    }
+    /** 获取红包记录 */
+    public function get_bonus_list($mid,$id){
+        return db_func('bonus b','sp_')
+            ->join('member m','b.mid = m.member_id')
+            ->where(['b.mid' => $mid,'b.rid' => $id,'b.status' => 1])
+            ->field('b.create_time,b.coin,m.phone')
+            ->order("b.create_time desc")
+            ->paginate(5,false,['query' => request()->param()]);
+    }
+}

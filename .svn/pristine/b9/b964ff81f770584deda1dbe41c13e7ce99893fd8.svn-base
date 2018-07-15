@@ -1,0 +1,26 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/index.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+
+<div class="main">
+
+</div>
+<input type="hidden" id="text" value="{:url('index/index/query')}">
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/index.js"/}
+<script>
+    $(function(){
+        setInterval(function(){
+            var url = $("#text").val();
+            common.ajax_post(url,false,true,function(rt){
+                var object = common.str2json(rt);
+                console.log(object);
+            });
+        },5000);
+    });
+</script>
+{/block}

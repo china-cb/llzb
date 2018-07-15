@@ -1,0 +1,159 @@
+{extend name='base:base' /}
+{block name='css'}
+{css file="__plugin__/webuploader/0.1.5/webuploader.css" /}
+{/block}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}{$title|default=''}{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加文章{/case}
+{case value='edit'}编辑文章{/case}
+{default /}查看文章
+{/switch}
+{/notempty}
+{/block}
+{block name='content'}
+<form class="form form-horizontal" id="form-article-add">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级分类：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <span class="select-box radius">
+                <select name="status" class="select">
+                    {volist name="info" id="vo" }
+                    <option value="{$vo.id}"  {if condition="!empty($pid) AND $pid eq $vo['id']"} selected="selected" {/if}>{$vo.title|default="--"}</option>
+                    {/volist}
+                </select>
+            </span>
+        </div>
+    </div>
+
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章标题：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请输入文章标题" name="name" value="{$child_info.name|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章简介：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请输入文章简介" name="desc" value="{$child_info.desc|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red chart">*</span>上传封面图：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            {eq name="type" value="edit"}
+                <img src="{$Think.config.CONFIG_CDN_URL}{$child_info.cover|default=''}" style="width: 200px;height: 200px;" id="cover_img">
+                {else/}
+                <img src="" style="display: none;width: 200px;height: 200px;" id="cover_img">
+            {/eq}
+            <span class="btn-upload">
+              <a href="javascript:void();" class="btn btn-primary radius box_img"><i class="Hui-iconfont">&#xe642;</i> 上传图片</a>
+              <input type="file" multiple name="cover_file" class="input-file">
+            </span>
+            <input type="hidden" name="cover" value="{$child_info.cover|default=''}" id="article_cover">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章内容：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <!-- 加载编辑器的容器 -->
+            <div id="container" name="content" style="width:1000px;height:400px;"></div>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否推荐：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+             <span class="select-box radius">
+                <select name="type" class="select">
+                    <option value="1"  {if condition="!empty($child_info['type']) AND $child_info['type'] eq 1"}selected="selected"{/if}>推荐</option>
+                    <option value="-1" {if condition="!empty($child_info['type']) AND $child_info['type'] eq -1"}selected="selected"{/if}>不推荐</option>
+                </select>
+            </span>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>状态：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+             <span class="select-box radius">
+                <select name="status" class="select">
+                    <option value="1"  {if condition="!empty($child_info['status']) AND $child_info['status'] eq 1"}selected="selected"{/if}>可用</option>
+                    <option value="-1" {if condition="!empty($child_info['status']) AND $child_info['status'] eq -1"}selected="selected"{/if}>不可用</option>
+                </select>
+            </span>
+        </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            {notempty name='type'}
+            {switch name='type'}
+            {case value='add'}
+            <button class="btn btn-primary radius ok_submit" type="button" data-url="{:url('update_category_child')}">
+                <i class="Hui-iconfont">&#xe632;</i>&nbsp;确定
+            </button>
+            {/case}
+            {case value='edit'}
+            <button class="btn btn-warning radius ok_submit" type="button" data-url="{:url('update_category_child')}">
+                <i class="Hui-iconfont">&#xe632;</i>&nbsp;保存
+            </button>
+            {/case}
+            {default /}查看配置
+            {/switch}
+            {/notempty}
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="pid" value="{$pid}">
+    <input type="hidden" name="id" value="{$child_info.id|default=''}" id="id">
+    <input type="hidden" id="get_editor_content" value="{:url('admin/application/get_editor_content')}">
+    <input type="hidden" id="up_cover_url" value="{:Url('admin/application/article_cover')}"><!--上传-->
+    <input type="hidden" id="img_cdn_url" value="{$Think.config.CONFIG_CDN_URL}"><!--上传-->
+</form>
+{/block}
+{block name="js"}
+{js href="__static__/plugin/ueditor/1.4.3/ueditor.config.js"/}
+{js href="__static__/plugin/ueditor/1.4.3/ueditor.all.js"/}
+{js href="__plugin__/webuploader/0.1.5/webuploader.min.js"/}
+{js href="__static__/admin/js/upload/upload_video.js"/}
+<script>
+    var ue = UE.getEditor('container');
+    var id = $("#id").val();
+    if(id != ""){
+        var url = $("#get_editor_content").val();
+        common.ajax_post(url,{id:id},true,function(rt){
+            var obj = common.str2json(rt);
+            if(obj.code == 1){
+                ue.ready(function(){
+                    ue.setContent(obj.ret_data);
+                })
+            }
+        });
+    }
+
+    /** 文章封面图上传*/
+    $("input[name='cover_file']").change(function(){
+        var data = new FormData($('#form-article-add')[0]);
+        $.ajax({
+            url: $("#up_cover_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    var path = $("#img_cdn_url").val();
+                    $("#cover_img").attr("src",path + rt.ret_data);
+                    $("#cover_img").show();
+                    $("#article_cover").val(rt.ret_data);
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+</script>
+{/block}

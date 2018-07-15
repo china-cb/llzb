@@ -1,0 +1,52 @@
+{extend name="base/login_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/login.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<header id="header" class="login-header">
+    <span class="logo"></span>
+    <span class="login-list">注册</span>
+    <div class="login-main">
+        <a href="{:url('index/index/index')}">
+            玲珑直播首页
+            <i class="arrow-right"></i>
+        </a>
+    </div>
+</header>
+<div class="main login_reg">
+    <h1>已有账号直接<a href="{:url('index')}">登录</a></h1>
+    <form action="" method="get">
+        <label class="login_reg_lable">
+            <input type="text" id="phone_reg" name="phone" placeholder="请输入手机号" class="login_reg_inpit1" />
+        </label>
+        <label class="login_reg_lable">
+            <input type="text" id="phone_code_reg" name="phone_code" placeholder="请输入验证码" class="login_reg_inpit1"/>
+            <input type="button" value="发送验证码" class="reg_get_code login_reg_free vacode"/>
+        </label>
+        <label class="login_reg_lable">
+            <input type="password" id="password_reg" name="password" placeholder="6～16位密码" class="login_reg_inpit2" />
+            <span class="login_reg_span1">设置密码</span>
+        </label>
+        <label class="login_reg_lable">
+            <input type="password" id="re_password_reg" name="re_password" placeholder="6～16位密码" class="login_reg_inpit2"/>
+            <span class="login_reg_span1">确认密码</span>
+        </label>
+        <div class="login_agreement">
+            <input type="checkbox" name="agreement" checked="checked"/>
+            <i class="iconfont">&#xe617;</i>
+            <p class="login_checkeds"></p>
+            <a >同意并遵守《玲珑TV服务协议》</a>
+        </div>
+        <label class="login_reg_lable">
+            <input type="button" class="login_reg_inpit3 reg_submit" value="注册" />
+        </label>
+    </form>
+</div>
+<input type="hidden" id="submit_reg_url" value="{:url('index/login/register_do')}">
+<input type="hidden" class="get_phone_code_type" value="reg">
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/login/login.js"/}
+{js href="__static__/index/js/login/reg.js"/}
+{/block}

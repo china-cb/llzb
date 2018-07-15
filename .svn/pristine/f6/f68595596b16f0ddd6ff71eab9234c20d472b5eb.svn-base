@@ -1,0 +1,93 @@
+<?php
+namespace app\index\model;
+use think\Model;
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/5
+ * Time: 14:20
+ */
+class LoginModel extends Model
+{
+    /** 更新用户信息的某个字段 */
+    public function update_user_info($mid,$field,$value){
+        return db("member")->where("member_id",$mid)->setField($field,$value);
+    }
+    /** 验证用户手机号是已注册 */
+    public function get_user_info_by_phone($phone){
+        return db('member')->where("phone",$phone)->field("member_id")->find();
+    }
+
+    /** 验证用户手机号是否入手机验证码库 */
+    public function get_phone_code_by_phone($map){
+        return db('phone_code')->where($map)->find();
+    }
+
+    /** 注册新用户 */
+    public function reg_do($post){
+        $phone = $password = $cookie_code = '';
+        extract($post);
+        $data = [
+            'phone' => strtolower($phone),
+            'account'=>$phone,
+            'password' => md6($password),
+            'state'=>0,
+            'status'=>1,
+            'reg_ip'=>get_client_ip(),
+            'create_time' => NOW_TIME
+        ];
+        return db_func('member', 'sp_')->insertGetId($data);
+    }
+
+    /** 添加 session */
+    public function add_user_session($session_data){
+       return db('session_pc')->insert($session_data);
+    }
+
+    /** 添加登录或注册记录信息 */
+    public function insert_log_manager($data){
+        return db("log_manager")->insert($data);
+    }
+    /** 获取session信息 */
+    public function get_session_info($mid){
+        return db("session_pc")->where('uid',$mid)->find();
+    }
+    /** 设置用户登录后的信息 */
+    public function set_login_info($user_info)
+    {
+        $ip = get_client_ip(); //获取登录ip
+        //设置用户登录日志
+        $data = [
+            "uid" => $user_info['member_id'],
+            "type" => 0,
+            "phone" => $user_info['phone'],
+            "source" => get_user_browser(),
+            "ip" => $ip,
+            "login_way" => 1,
+//            "provicence"=>get_province_by_ip($ip),
+//            "city"=>get_city_by_ip($ip),
+            "create_time" => NOW_TIME
+        ];
+        db_func('log_manager', 'sp_')->insert($data);
+    }
+
+    /** 根据用户id查询用户信息 */
+    public function get_user_info_by_mid($mid){
+        return db('member')->where('member_id',$mid)->find();
+    }
+
+    /** 根据账号查询用户信息 */
+    public function get_user_info_by_account($account){
+        return db('member')->where("phone",$account)->whereOr("account",$account)->find();
+    }
+
+    /** 修改用户字段信息*/
+    public function modify_user_info_do($mid,$type,$value){
+        return db('member')->where('member_id',$mid)->setField($type,$value);
+    }
+
+    /** 更新用户信息 */
+    public function update_user_info_do($data){
+        return db("member")->update($data);
+    }
+}

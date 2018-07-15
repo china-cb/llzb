@@ -1,0 +1,55 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}分享设置 - 玲珑直播{/block}
+{block name="content"}                                                                                  <!--base-->
+<!-- endinject -->
+<div class="statistics">
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">微信分享设置</span>
+                </h1>
+                <div class="guide">
+                        <div class="logo_location">
+                            <p class="guide_p guide_p2 guide_p3">发送给微信好友:</p>
+                            <div class="win_preview5">
+                                <img src="" alt="">
+                                <input type="text/css" name="" value="" class="" placeholder="玲珑直播" />
+                                <textarea name="comment" form="usrform">我正在玲珑直播，快来看吧！</textarea>      
+                            </div>
+                            <div style="clear: both"></div>
+                            <!-- 正在审核  preview_sub添加 guide_layer_act-->
+                            <input type="submit" name="" value="保存" class="preview_sub preview_sub2"/>
+                        </div>
+                        <span class="lines"></span>
+                        <div class="logo_location">
+                            <p class="guide_p guide_p2 guide_p3">发送到朋友圈:</p>
+                            <div class="win_preview5">
+                                <img src="" alt="">
+                                <textarea name="comment" form="usrform" class="area">我正在玲珑直播，快来看吧！</textarea>      
+                            </div>
+                            <div style="clear: both"></div>
+                            <input type="submit" name="" value="保存" class="preview_sub preview_sub2"/>
+                        </div>
+                </div>
+
+            </div>
+
+        </div>
+</div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

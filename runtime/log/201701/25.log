@@ -1,0 +1,3363 @@
+[ 2017-01-25T16:49:37+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index
+[ log ] llzb.com/index.php/index [运行时间：0.047272s][吞吐率：21.15req/s] [内存消耗：1,729.76kb] [文件加载：33]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] /** 玲珑TV首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Index.php 25 - 28
+}
+
+[ info ] [ VIEW ] ../tpl/index/index\index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+
+---------------------------------------------------------------
+[ 2017-01-25T16:49:38+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/login/index.html
+[ log ] llzb.com/index.php/index/login/index.html [运行时间：0.019241s][吞吐率：51.97req/s] [内存消耗：1,773.52kb] [文件加载：33]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'login',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] /** 登录界面 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Login.php 21 - 23
+}
+
+[ info ] [ VIEW ] ../tpl/index/login\index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+
+---------------------------------------------------------------
+[ 2017-01-25T16:49:41+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.725375s][吞吐率：1.38req/s] [内存消耗：3,296.69kb] [文件加载：50]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.066606s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_session_pc` [ RunTime:0.039170s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_session_pc` WHERE  `uid` = '3'  AND `cookie_code` = '1701131005308820' LIMIT 1     [ RunTime:0.038189s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.044915s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.033348s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `member_id` = '3' LIMIT 1   [ RunTime:0.030999s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.044958s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] UPDATE `sp_member`  SET `last_login_ip`='127.0.0.1',`last_login_time`='1485334180',`login_count`='137'  WHERE  `member_id` = '3'       [ RunTime:0.030675s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039076s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_log_manager` [ RunTime:0.028923s ]
+[ sql ] [ SQL ] INSERT INTO `sp_log_manager` (`uid` , `type` , `phone` , `source` , `ip` , `login_way` , `create_time`) VALUES ('3' , '0' , '' , '火狐浏览器' , '127.0.0.1' , '1' , '1485334180')         [ RunTime:0.036373s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.040778s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT * FROM `sp_session_pc` WHERE  `uid` = '3' LIMIT 1   [ RunTime:0.027685s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.049898s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] UPDATE `sp_session_pc`  SET `uid`='3',`session_id`='cc1ce0584e1f444e574d72048d68f966',`enable`='true',`create_time`='1485334180',`session_expire_time`='1485420580',`randsal`='8389'  WHERE  `uid` = 3         [ RunTime:0.040745s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039249s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.027306s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:12+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.167977s][吞吐率：5.95req/s] [内存消耗：2,769.13kb] [文件加载：48]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.068413s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.046887s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:13+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.132084s][吞吐率：7.57req/s] [内存消耗：2,769.13kb] [文件加载：48]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.051980s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.035012s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:14+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.130536s][吞吐率：7.66req/s] [内存消耗：2,769.13kb] [文件加载：48]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.051314s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.035489s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:14+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.121064s][吞吐率：8.26req/s] [内存消耗：2,769.13kb] [文件加载：48]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.045251s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.032054s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:15+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.118905s][吞吐率：8.41req/s] [内存消耗：2,769.13kb] [文件加载：48]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.044123s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.032679s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:17+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index
+[ log ] llzb.com/index.php/index [运行时间：0.021901s][吞吐率：45.66req/s] [内存消耗：1,730.00kb] [文件加载：33]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => NULL,
+    2 => NULL,
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ RUN ] /** 玲珑TV首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Index.php 25 - 28
+}
+
+[ info ] [ VIEW ] ../tpl/index/index\index.html [ array (
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+
+---------------------------------------------------------------
+[ 2017-01-25T16:54:18+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.118596s][吞吐率：8.43req/s] [内存消耗：2,769.09kb] [文件加载：48]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LANG ] C:\Users\admin\Documents\linglongzhibo\thinkphp\lang\zh-cn.php
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.043359s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.032756s ]
+[ error ] [10501]SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.package_id' in 'on clause'[C:\Users\admin\Documents\linglongzhibo\thinkphp\library\think\db\Connection.php:357]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:55:44+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.445072s][吞吐率：2.25req/s] [内存消耗：3,168.41kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 控制台首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 26 - 32
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/admin\index.html [ array (
+  0 => 'user_info',
+  1 => 'data',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.059879s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.030476s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `status` = '1'  AND `member_id` = '3' LIMIT 1     [ RunTime:0.031023s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.111542s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_user_av_room` [ RunTime:0.041632s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_user_av_room` WHERE  `uid` = '3'  AND `status` <> -2 LIMIT 1   [ RunTime:0.036435s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.041105s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_live_record` [ RunTime:0.028669s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_live_record` WHERE  `uid` = '3'  AND `status` = '1' LIMIT 1     [ RunTime:0.031164s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:55:44+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/admin/count_bill.html
+[ log ] llzb.com/index.php/index/admin/count_bill.html [运行时间：0.307381s][吞吐率：3.25req/s] [内存消耗：2,978.13kb] [文件加载：41]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'count_bill',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** ajax统计账单情况 */
+Method [ <user> public method count_bill ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 35 - 55
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.078422s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.048041s ]
+[ sql ] [ SQL ] SELECT char_type as name,sum(cost_money) as value FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 GROUP BY char_type  [ RunTime:0.042608s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.073898s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT sum(cost_money) as all_money FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.029964s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:55:45+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.357462s][吞吐率：2.80req/s] [内存消耗：3,091.14kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 控制台首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 26 - 32
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/admin\index.html [ array (
+  0 => 'user_info',
+  1 => 'data',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.056205s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_user_av_room` [ RunTime:0.051828s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_user_av_room` WHERE  `uid` = '3'  AND `status` <> -2 LIMIT 1   [ RunTime:0.075036s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.090855s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_live_record` [ RunTime:0.027179s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_live_record` WHERE  `uid` = '3'  AND `status` = '1' LIMIT 1     [ RunTime:0.026431s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:55:46+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/admin/count_bill.html
+[ log ] llzb.com/index.php/index/admin/count_bill.html [运行时间：0.277214s][吞吐率：3.61req/s] [内存消耗：2,978.13kb] [文件加载：41]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'count_bill',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** ajax统计账单情况 */
+Method [ <user> public method count_bill ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 35 - 55
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.066235s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.030201s ]
+[ sql ] [ SQL ] SELECT char_type as name,sum(cost_money) as value FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 GROUP BY char_type  [ RunTime:0.029155s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.070415s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT sum(cost_money) as all_money FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.056037s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:55:55+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.270851s][吞吐率：3.69req/s] [内存消耗：3,091.14kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 控制台首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 26 - 32
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/admin\index.html [ array (
+  0 => 'user_info',
+  1 => 'data',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.050634s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_user_av_room` [ RunTime:0.039856s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_user_av_room` WHERE  `uid` = '3'  AND `status` <> -2 LIMIT 1   [ RunTime:0.032304s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.051633s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_live_record` [ RunTime:0.034838s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_live_record` WHERE  `uid` = '3'  AND `status` = '1' LIMIT 1     [ RunTime:0.033402s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T16:55:56+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/admin/count_bill.html
+[ log ] llzb.com/index.php/index/admin/count_bill.html [运行时间：0.196487s][吞吐率：5.09req/s] [内存消耗：2,978.13kb] [文件加载：41]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'count_bill',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** ajax统计账单情况 */
+Method [ <user> public method count_bill ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 35 - 55
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039704s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.026285s ]
+[ sql ] [ SQL ] SELECT char_type as name,sum(cost_money) as value FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 GROUP BY char_type  [ RunTime:0.026549s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.045758s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT sum(cost_money) as all_money FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.029900s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:01:56+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/user_center/account/type/1.html
+[ log ] llzb.com/index.php/index/user_center/account/type/1.html [运行时间：0.389527s][吞吐率：2.57req/s] [内存消耗：3,103.61kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'account',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'type' => '1',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] Method [ <user> public method account ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 28 - 45
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\account.html [ array (
+  0 => 'user_info',
+  1 => 'user_audit',
+  2 => 'user_phone',
+  3 => 'list',
+  4 => 'type',
+  5 => 'info',
+  6 => 'rt',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.040175s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.026516s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `status` = '1'  AND `member_id` = '3' LIMIT 1     [ RunTime:0.029839s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.048899s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `member_id` = '3' LIMIT 1   [ RunTime:0.033974s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_audit` [ RunTime:0.033498s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_audit` WHERE  `mid` = '3' LIMIT 1   [ RunTime:0.033615s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.033398s ]
+[ sql ] [ SQL ] SELECT SUM(cost_money) AS tp_sum FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.032914s ]
+[ sql ] [ SQL ] SELECT SUM(cost_money) AS tp_sum FROM `sp_cost_orders` WHERE  `uid` = '3' LIMIT 1   [ RunTime:0.032497s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:01:56+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/order_ajx.html
+[ log ] llzb.com/index.php/index/user_center/order_ajx.html [运行时间：0.152442s][吞吐率：6.56req/s] [内存消耗：2,988.38kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'order_ajx',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 账单详情 */
+Method [ <user> public method order_ajx ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 107 - 149
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\order_ajx.html [ array (
+  0 => 'user_info',
+  1 => 'pages',
+  2 => 'list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039916s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.027397s ]
+[ sql ] [ SQL ] SELECT SQL_CALC_FOUND_ROWS c.*,u.title FROM sp_cost_orders c INNER JOIN sp_user_av_room u ON c.cid = u.id  WHERE  c.uid = '3'  AND c.status = 1  AND c.create_time >  1483200000 ORDER BY c.create_time desc LIMIT 0,9   [ RunTime:0.027207s ]
+[ sql ] [ SQL ] SELECT FOUND_ROWS() as num [ RunTime:0.025927s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:01:56+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/recharge_ajx.html
+[ log ] llzb.com/index.php/index/user_center/recharge_ajx.html [运行时间：0.149184s][吞吐率：6.70req/s] [内存消耗：2,991.94kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'recharge_ajx',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 充值订单日期筛选AJX*/
+Method [ <user> public method recharge_ajx ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 65 - 105
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\recharge_ajx.html [ array (
+  0 => 'user_info',
+  1 => 'pages',
+  2 => 'list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039545s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_recharge` [ RunTime:0.027198s ]
+[ sql ] [ SQL ] SELECT SQL_CALC_FOUND_ROWS r.* FROM sp_recharge r WHERE  r.uid = '3' ORDER BY r.create_time desc LIMIT 0,9   [ RunTime:0.027406s ]
+[ sql ] [ SQL ] SELECT FOUND_ROWS() as num [ RunTime:0.025930s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:15:29+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.350523s][吞吐率：2.85req/s] [内存消耗：3,168.19kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 控制台首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 26 - 32
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/admin\index.html [ array (
+  0 => 'user_info',
+  1 => 'data',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.040877s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.027079s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `status` = '1'  AND `member_id` = '3' LIMIT 1     [ RunTime:0.027206s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.049613s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_user_av_room` [ RunTime:0.033705s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_user_av_room` WHERE  `uid` = '3'  AND `status` <> -2 LIMIT 1   [ RunTime:0.032413s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.043687s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_live_record` [ RunTime:0.029655s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_live_record` WHERE  `uid` = '3'  AND `status` = '1' LIMIT 1     [ RunTime:0.028552s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:15:30+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/admin/count_bill.html
+[ log ] llzb.com/index.php/index/admin/count_bill.html [运行时间：0.205293s][吞吐率：4.87req/s] [内存消耗：2,977.84kb] [文件加载：41]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'count_bill',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** ajax统计账单情况 */
+Method [ <user> public method count_bill ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 35 - 55
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039368s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.026674s ]
+[ sql ] [ SQL ] SELECT char_type as name,sum(cost_money) as value FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 GROUP BY char_type  [ RunTime:0.026045s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.051772s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT sum(cost_money) as all_money FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.033531s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:26:15+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/admin/index.html
+[ log ] llzb.com/index.php/index/admin/index.html [运行时间：0.369963s][吞吐率：2.70req/s] [内存消耗：3,168.34kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'index',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 控制台首页 */
+Method [ <user> public method index ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 26 - 32
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/admin\index.html [ array (
+  0 => 'user_info',
+  1 => 'data',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.045304s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.030677s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `status` = '1'  AND `member_id` = '3' LIMIT 1     [ RunTime:0.030933s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.045469s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_user_av_room` [ RunTime:0.031126s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_user_av_room` WHERE  `uid` = '3'  AND `status` <> -2 LIMIT 1   [ RunTime:0.028976s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.053081s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_live_record` [ RunTime:0.034565s ]
+[ sql ] [ SQL ] SELECT COUNT(id) AS tp_count FROM `sp_live_record` WHERE  `uid` = '3'  AND `status` = '1' LIMIT 1     [ RunTime:0.034666s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:26:15+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/admin/count_bill.html
+[ log ] llzb.com/index.php/index/admin/count_bill.html [运行时间：0.254833s][吞吐率：3.92req/s] [内存消耗：2,977.84kb] [文件加载：41]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'admin',
+    2 => 'count_bill',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** ajax统计账单情况 */
+Method [ <user> public method count_bill ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\Admin.php 35 - 55
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.051511s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.034774s ]
+[ sql ] [ SQL ] SELECT char_type as name,sum(cost_money) as value FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 GROUP BY char_type  [ RunTime:0.034387s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.070825s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT sum(cost_money) as all_money FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.036867s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:41:31+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/user_center/account/type/1.html
+[ log ] llzb.com/index.php/index/user_center/account/type/1.html [运行时间：0.353308s][吞吐率：2.83req/s] [内存消耗：3,103.61kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'account',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'type' => '1',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] Method [ <user> public method account ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 28 - 45
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\account.html [ array (
+  0 => 'user_info',
+  1 => 'user_audit',
+  2 => 'user_phone',
+  3 => 'list',
+  4 => 'type',
+  5 => 'info',
+  6 => 'rt',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.047345s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.031680s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `status` = '1'  AND `member_id` = '3' LIMIT 1     [ RunTime:0.031326s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.040127s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `member_id` = '3' LIMIT 1   [ RunTime:0.028307s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_audit` [ RunTime:0.027739s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_audit` WHERE  `mid` = '3' LIMIT 1   [ RunTime:0.026895s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.026428s ]
+[ sql ] [ SQL ] SELECT SUM(cost_money) AS tp_sum FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.026494s ]
+[ sql ] [ SQL ] SELECT SUM(cost_money) AS tp_sum FROM `sp_cost_orders` WHERE  `uid` = '3' LIMIT 1   [ RunTime:0.026017s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:41:32+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/order_ajx.html
+[ log ] llzb.com/index.php/index/user_center/order_ajx.html [运行时间：0.148953s][吞吐率：6.71req/s] [内存消耗：2,988.38kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'order_ajx',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 账单详情 */
+Method [ <user> public method order_ajx ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 107 - 149
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\order_ajx.html [ array (
+  0 => 'user_info',
+  1 => 'pages',
+  2 => 'list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039598s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.027131s ]
+[ sql ] [ SQL ] SELECT SQL_CALC_FOUND_ROWS c.*,u.title FROM sp_cost_orders c INNER JOIN sp_user_av_room u ON c.cid = u.id  WHERE  c.uid = '3'  AND c.status = 1  AND c.create_time >  1483200000 ORDER BY c.create_time desc LIMIT 0,9   [ RunTime:0.026642s ]
+[ sql ] [ SQL ] SELECT FOUND_ROWS() as num [ RunTime:0.025373s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:41:32+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/recharge_ajx.html
+[ log ] llzb.com/index.php/index/user_center/recharge_ajx.html [运行时间：0.170308s][吞吐率：5.87req/s] [内存消耗：2,991.94kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'recharge_ajx',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 充值订单日期筛选AJX*/
+Method [ <user> public method recharge_ajx ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 65 - 105
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\recharge_ajx.html [ array (
+  0 => 'user_info',
+  1 => 'pages',
+  2 => 'list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.044732s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_recharge` [ RunTime:0.030200s ]
+[ sql ] [ SQL ] SELECT SQL_CALC_FOUND_ROWS r.* FROM sp_recharge r WHERE  r.uid = '3' ORDER BY r.create_time desc LIMIT 0,9   [ RunTime:0.030781s ]
+[ sql ] [ SQL ] SELECT FOUND_ROWS() as num [ RunTime:0.029941s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:43:38+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/change_message.html
+[ log ] llzb.com/index.php/index/user_center/change_message.html [运行时间：0.245423s][吞吐率：4.07req/s] [内存消耗：2,948.59kb] [文件加载：41]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'change_message',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'content-length' => '126',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'content-type' => 'application/x-www-form-urlencoded; charset=UTF-8',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+)
+[ info ] [ PARAM ] array (
+  'enterprise_name' => '~~~~(>_<)~~~~',
+  'vocation' => '玩具礼品',
+  'nick_name' => '我要放假',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 用户修改信息 */
+Method [ <user> public method change_message ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 181 - 191
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.039434s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.027815s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `status` = '1'  AND `member_id` = '3' LIMIT 1     [ RunTime:0.028013s ]
+[ sql ] [ DB ] CONNECT:[ UseTime:0.050831s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] UPDATE `sp_member`  SET `enterprise_name`='~~~~(>_<)~~~~',`vocation`='玩具礼品',`nick_name`='我要放假',`update_time`='1485337417'  WHERE  `member_id` = '3'        [ RunTime:0.067787s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:43:38+08:00 ] 127.0.0.1 127.0.0.1 GET /index.php/index/user_center/account/type/1.html
+[ log ] llzb.com/index.php/index/user_center/account/type/1.html [运行时间：0.381591s][吞吐率：2.62req/s] [内存消耗：3,051.42kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'account',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'cache-control' => 'max-age=0',
+  'upgrade-insecure-requests' => '1',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/admin/index.html',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+  'content-length' => '',
+)
+[ info ] [ PARAM ] array (
+  'type' => '1',
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] Method [ <user> public method account ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 28 - 45
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\account.html [ array (
+  0 => 'user_info',
+  1 => 'user_audit',
+  2 => 'user_phone',
+  3 => 'list',
+  4 => 'type',
+  5 => 'info',
+  6 => 'rt',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.059937s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_member` [ RunTime:0.041905s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_member` WHERE  `member_id` = '3' LIMIT 1   [ RunTime:0.040889s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_audit` [ RunTime:0.041204s ]
+[ sql ] [ SQL ] SELECT * FROM `sp_audit` WHERE  `mid` = '3' LIMIT 1   [ RunTime:0.040939s ]
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.041071s ]
+[ sql ] [ SQL ] SELECT SUM(cost_money) AS tp_sum FROM `sp_cost_orders` WHERE  `uid` = '3'  AND `create_time` >  1483200000 LIMIT 1   [ RunTime:0.042149s ]
+[ sql ] [ SQL ] SELECT SUM(cost_money) AS tp_sum FROM `sp_cost_orders` WHERE  `uid` = '3' LIMIT 1   [ RunTime:0.039873s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:43:39+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/order_ajx.html
+[ log ] llzb.com/index.php/index/user_center/order_ajx.html [运行时间：0.205556s][吞吐率：4.86req/s] [内存消耗：2,988.84kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'order_ajx',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 账单详情 */
+Method [ <user> public method order_ajx ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 107 - 149
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\order_ajx.html [ array (
+  0 => 'user_info',
+  1 => 'pages',
+  2 => 'list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.056402s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_cost_orders` [ RunTime:0.038445s ]
+[ sql ] [ SQL ] SELECT SQL_CALC_FOUND_ROWS c.*,u.title FROM sp_cost_orders c INNER JOIN sp_user_av_room u ON c.cid = u.id  WHERE  c.uid = '3'  AND c.status = 1  AND c.create_time >  1483200000 ORDER BY c.create_time desc LIMIT 0,9   [ RunTime:0.037933s ]
+[ sql ] [ SQL ] SELECT FOUND_ROWS() as num [ RunTime:0.043461s ]
+
+---------------------------------------------------------------
+[ 2017-01-25T17:43:39+08:00 ] 127.0.0.1 127.0.0.1 POST /index.php/index/user_center/recharge_ajx.html
+[ log ] llzb.com/index.php/index/user_center/recharge_ajx.html [运行时间：0.156216s][吞吐率：6.40req/s] [内存消耗：2,992.20kb] [文件加载：44]
+[ info ] [ CACHE ] INIT File:array (
+  'type' => 'File',
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\cache\\',
+  'prefix' => '',
+  'expire' => 0,
+)
+[ info ] [ ROUTE ] array (
+  'type' => 'module',
+  'module' => 
+  array (
+    0 => 'index',
+    1 => 'user_center',
+    2 => 'recharge_ajx',
+  ),
+)
+[ info ] [ HEADER ] array (
+  'content-length' => '0',
+  'cache-control' => 'max-age=0',
+  'connection' => 'keep-alive',
+  'cookie' => 'member_id=3; cookie_code=1701131005308820; PHPSESSID=bub1dedorcup1r29p0nuk03df6; think_var=zh-cn',
+  'referer' => 'http://llzb.com/index.php/index/user_center/account/type/1.html',
+  'x-requested-with' => 'XMLHttpRequest',
+  'accept-encoding' => 'gzip, deflate',
+  'accept-language' => 'zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3',
+  'accept' => 'application/json, text/javascript, */*; q=0.01',
+  'user-agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0',
+  'host' => 'llzb.com',
+  'content-type' => '',
+)
+[ info ] [ PARAM ] array (
+)
+[ info ] [ SESSION ] INIT array (
+  'id' => '',
+  'var_session_id' => '',
+  'prefix' => 'think',
+  'type' => '',
+  'auto_start' => true,
+)
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ RUN ] /** 充值订单日期筛选AJX*/
+Method [ <user> public method recharge_ajx ] {
+  @@ C:\Users\admin\Documents\linglongzhibo\app\index\controller\UserCenter.php 65 - 105
+}
+
+[ info ] [ DB ] INIT mysql:array (
+  'type' => 'mysql',
+  'dsn' => '',
+  'hostname' => 'rm-bp105600eui961p5d.mysql.rds.aliyuncs.com',
+  'database' => 'linglongzhibo_test',
+  'username' => 'linglongzhibo',
+  'password' => 'l4jx8CiUqBZaN9HsAyQ2srU7LQzBJe40',
+  'hostport' => '3306',
+  'params' => 
+  array (
+  ),
+  'charset' => 'utf8',
+  'prefix' => 'sp_',
+  'debug' => true,
+  'deploy' => 0,
+  'rw_separate' => false,
+  'master_num' => 1,
+  'slave_no' => '',
+  'fields_strict' => true,
+  'auto_timestamp' => false,
+  'resultset_type' => 'array',
+  'sql_explain' => false,
+)
+[ info ] [ VIEW ] ../tpl/index/user_center\recharge_ajx.html [ array (
+  0 => 'user_info',
+  1 => 'pages',
+  2 => 'list',
+) ]
+[ info ] [ LOG ] INIT File: array (
+  'path' => 'C:\\Users\\admin\\Documents\\linglongzhibo\\public/../runtime\\log\\',
+)
+[ sql ] [ DB ] CONNECT:[ UseTime:0.041413s ] mysql:dbname=linglongzhibo_test;host=rm-bp105600eui961p5d.mysql.rds.aliyuncs.com;port=3306;charset=utf8
+[ sql ] [ SQL ] SHOW COLUMNS FROM `sp_recharge` [ RunTime:0.027447s ]
+[ sql ] [ SQL ] SELECT SQL_CALC_FOUND_ROWS r.* FROM sp_recharge r WHERE  r.uid = '3' ORDER BY r.create_time desc LIMIT 0,9   [ RunTime:0.028932s ]
+[ sql ] [ SQL ] SELECT FOUND_ROWS() as num [ RunTime:0.028550s ]
+
+---------------------------------------------------------------

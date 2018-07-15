@@ -1,0 +1,35 @@
+<?php
+namespace app\core\model;
+
+Class BusinessModel
+{
+    /** 获取用户信息 */
+    public function get_user_info_by_id($mid){
+        return db('member')->where(['member_id'=>$mid,'status'=>1])->find();
+    }
+
+    //创建订单
+    public function create_order($order)
+    {
+        $order_id =$pak_id= $name = $origin = $username = $exec_data = $type = $money = $coupon = $remark = $promoter_pos = $uid = $create_time = null;
+        extract($order);
+
+        $data = [
+            'pak_id'=> $pak_id,
+            'order_id' => $order_id,
+            'name' => $name,
+            'username' => $username,
+            'exec_data' => $exec_data,
+            'origin' => $origin,
+            'type' => $type,
+            'money' => $money,
+            'coupon' => $coupon,
+            'remark' => $remark,
+            'promoter_pos' => $promoter_pos,
+            'uid' => $uid,
+            'create_time' => NOW_TIME
+        ];
+        return db_func('order_list', 'md_')->insert($data);
+    }
+
+}

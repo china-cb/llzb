@@ -1,0 +1,160 @@
+/**
+ * Created by admin on 2016/12/12.
+ */
+$(function () {
+    var time_reset = 60;
+    var time_modfy = 60;
+    var is_phone_sent = false;
+    var func = {
+        init: function () {
+        },
+
+
+        /**修改用户信息*/
+        modify_msg: function () {
+
+            var vocation =$("#vocation_val").val();
+            var enterprise_name = $("input[name='industry']").val();
+            var url = $("#change_message").val();
+            common.ajax_post(url,{enterprise_name:enterprise_name,vocation:vocation},true,function(rt){
+                common.post_tips(rt);
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    layer.msg(obj.msg,{icon:1});
+                    $(".basic-modify").addClass("basic_info_act");
+                    $(".modify-msg").addClass("modify_act");
+                    $(".save-msg").removeClass("modify_act");
+                    $(".basic-save").removeClass("basic_info_act");
+                    $(".industry_ul").removeClass("industry_ul_act");
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        
+        /**获取手机验证码 (验证)*/
+        vacode_replace:function(){
+            //检查手机号是否符合规范
+            var regx = /^[1][3-9][0-9]{9}$/;
+            var phone=$("input[name='phone_Verify']").val();
+            if(!regx.test(phone)){
+                //layer.msg('手机号格式不正确',{icon:2});
+                layer.msg('手机号格式不正确',{icon:2});
+                return false;
+            }
+            func.get_phone_code_replace();
+        },
+        /** 获取手机验证码 (验证)*/
+        get_phone_code_replace:function(){
+            var url = $("#get_phone_code").val();
+            var phone = $("input[name='phone_Verify']").val();
+            //alert(phone);
+            common.ajax_post(url, {phone:phone,type:'modify_phone'}, true, function (rt) {
+                is_phone_sent = true;
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    func.time_clock_replace(time_modfy);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /**倒计时60秒*/
+        time_clock_replace: function (time_modfy) {
+
+            $(".verify_phone").addClass("disabled").removeClass("get_code_audit");
+            $(".verify_phone").val(time_modfy + "秒后重试");
+            time_index = window.setInterval(function () {
+                $(".verify_phone").val(--time_modfy + "秒后重试");
+                if (time_modfy == 0) {
+                    $(".verify_phone").val('再次获取').addClass("get_code_audit").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+            }, 1000)
+        },
+
+        /**获取手机验证码 (更改)*/
+        change_phone:function(){
+            //检查手机号是否符合规范
+            var regx = /^[1][3-9][0-9]{9}$/;
+            var phone=$("input[name='phone_change']").val();
+            if(!regx.test(phone)){
+                //layer.msg('手机号格式不正确',{icon:2});
+                layer.msg('手机号格式不正确',{icon:2});
+                return false;
+            }
+            func.get_chnage_phone_code();
+        },
+        /** 获取手机验证码 (更改)*/
+        get_chnage_phone_code:function(){
+            var url = $("#get_phone_code").val();
+            var phone = $("input[name='phone_change']").val();
+            //alert(phone);
+            common.ajax_post(url, {phone:phone,type:'other'}, true, function (rt) {
+                is_phone_sent = true;
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    func.time_clock_change(time_reset);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+
+        /**倒计时60秒*/
+        time_clock_change: function (time_sec) {
+
+            $(".change_phone").addClass("disabled").removeClass("get_code_audit");
+            $(".change_phone").val(time_sec + "秒后重试");
+            time_index = window.setInterval(function () {
+                $(".change_phone").val(--time_sec + "秒后重试");
+                if (time_sec == 0) {
+                    $(".change_phone").val('再次获取').addClass("get_code_audit").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+            }, 1000)
+        },
+        change_user_phone:function(){
+            var param = $("#change-phone").serialize();
+            var url = $("#change_user_phone_url").val();
+            common.ajax_post(url,param, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $("#error_message").hide();
+                    layer.msg(obj.msg,{icon:1});
+                }else{
+                    $("#error_message").show();
+                    $('#error_message').html(obj.msg);
+                }
+            })
+        }
+    };
+    /** 调出用户修改界面 */
+    $(document).on("click",".modify-msg",function(){
+        $(".basic-modify").removeClass("basic_info_act");
+        $(".modify-msg").removeClass("modify_act");
+        $(".save-msg").addClass("modify_act");
+        $(".basic-save").addClass("basic_info_act");
+        $(".industry_ul").removeClass("industry_ul_act");
+    });
+    /** 修改用户信息 */
+    $(document).on("click",".save-msg",function(){
+        func.modify_msg();
+    });
+    /** 获取手机验证码（验证）*/
+    $(document).on("click", '.get_phone_Verify', function () {
+        func.vacode_replace();
+    });
+    /** 获取手机验证码（更换）*/
+    $(document).on("click", '.get_phone_change', function () {
+        func.change_phone();
+    });
+    /** 更换手机号 */
+    $(document).on("click","#Submit-change-phone",function() {
+        func.change_user_phone();
+    });
+    func.init();
+});

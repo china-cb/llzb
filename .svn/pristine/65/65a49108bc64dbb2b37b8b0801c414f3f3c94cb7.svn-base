@@ -1,0 +1,29 @@
+<?php
+namespace app\index\controller;
+use app\lib\TisApi;
+use app\lib\WisApi;
+use think\Controller;
+//use Mts\Request\V20140618 as Mts;
+
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/5
+ * Time: 13:19
+ */
+class Index extends Controller
+{
+    protected $partNum;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->partNum = 1;
+    }
+
+    /** 玲珑TV首页 */
+    public function index()
+    {
+        return $this->fetch();
+    }
+}

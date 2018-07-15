@@ -1,0 +1,49 @@
+var submits = {
+	chooses:function() {
+		$(".set_choose").on("click",function() {
+			var a = $(this).index(".set_choose");
+			$(".set_choose").eq(a).addClass("set_choose_act").siblings(".set_choose").removeClass("set_choose_act set_choose2s");
+			$(".basis1").eq(a).addClass("basis_act").siblings(".basis1").removeClass("basis_act");
+		});
+
+		$(".set_choose").eq(0).on("click",function() {
+			$(this).eq(0).children(".arrow_down").addClass("arrow_down_act");
+			$(".charging_ul2s>li").children(".arrow_down").removeClass("arrow_down_act");
+		});
+
+		$(".set_choose").eq(1).on("click",function() {
+			$(".set_choose").eq(0).children(".arrow_down").removeClass("arrow_down_act");
+			$(this).addClass("set_choose2s");
+		});
+
+		$(".charging_ul2s>li").on("click",function() {
+			var a = $(this).index(".charging_ul2s>li");
+			$(".charging_ul2s>li").eq(a).children(".arrow_down").addClass("arrow_down_act").parent().siblings(".charging_ul2s>li").children(".arrow_down").removeClass("arrow_down_act");
+			$(".charging_ul2s>li").eq(a).addClass("li_act").siblings(".charging_ul2s>li").removeClass("li_act");
+			var b = $(this).data('val');
+			$("#package_type").val(b);
+			var url = $("#pay_url").val();
+			common.ajax_post(url,{b:b}, true, function (rt) {
+				var obj = common.str2json(rt);
+				if(obj.code == 1){
+					$(".payment_right").html(obj.ret_data['money']);
+					$("#package_money").val(obj.ret_data['money']);
+				}else {
+					layer.msg(obj.msg,{icon:2});
+				}
+			})
+		});
+
+		$(".ways>span").on("click",function() {
+			var a = $(this).index(".ways>span");
+			$(".ways>span").eq(a).addClass("span_act").siblings(".ways>span").removeClass("span_act");
+			$(".ways>span").eq(a).children(".arrow_down").addClass("arrow_down_act").parent().siblings(".ways>span").children(".arrow_down").removeClass("arrow_down_act");
+			var b = $(this).data('type');
+			$("#pay_type").val(b);
+		})
+
+	}
+};
+$(function(){
+	submits.chooses();
+});

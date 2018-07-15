@@ -1,0 +1,823 @@
+/**
+ * Created by 翟垒垒 on 2016/12/12.
+ */
+$(function () {
+    var time_reset = 60;
+    var time_modfy = 60;
+    var time_email = 60;
+    var time_pwd = 60;
+    var is_phone_sent = false;
+    var func = {
+        init: function () {
+        },
+        /**修改用户信息*/
+        modify_msg: function () {
+            var vocation =$("#vocation_val").val();
+            var enterprise_name = $("input[name='industry']").val();
+            var nick_name = $("input[name='nickname']").val();
+            var url = $("#change_message").val();
+            common.ajax_post(url,{enterprise_name:enterprise_name,vocation:vocation,nick_name:nick_name},true,function(rt){
+                common.post_tips(rt);
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    layer.msg(obj.msg,{icon:1});
+                    $(".basic-modify").addClass("basic_info_act");
+                    $(".modify-msg").addClass("modify_act");
+                    $(".save-msg").removeClass("modify_act");
+                    $(".basic-save").removeClass("basic_info_act");
+                    $(".industry_ul").removeClass("industry_ul_act");
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        //账单详情减少
+        update_list:function(page) {
+            var year = $('.li_text1s').html();
+            var month = $('.li_text2s').html();
+            if(year == ''){
+                layer.msg('填写筛选时间年',{icon:2});
+                return false;
+            }
+            if(month == ''){
+                layer.msg('填写筛选时间月',{icon:2});
+                return false;
+            }
+        var used_url=$('#user_order_ajx').val();
+        $.post(used_url,{year:year,month:month,page:page}, function (data) {
+            if(data.code==1){
+                $('.li_text1s').html(data.data.year);
+                $('.li_text2s').html(data.data.month);
+                $('.cost_order').html(data.html);
+            }
+        },'json')
+    },
+        update_recharge:function(page){
+        var used_url=$('#recharge_ajx').val();
+        $.post(used_url,{page:page}, function (data) {
+            if(data.code==1){
+                $('.rechage').html(data.html);
+            }
+        },'json')
+    },
+        //账单详情增加
+        increase_list:function(page) {
+            var year = $('.li_text1s').html();
+            var month = $('.li_text2s').html();
+            if(year == ''){
+                layer.msg('填写筛选时间年',{icon:2});
+                return false;
+            }
+            if(month == ''){
+                layer.msg('填写筛选时间月',{icon:2});
+                return false;
+            }
+            var used_url=$('#bill_increase_ajx').val();
+            $.post(used_url,{year:year,month:month,page:page}, function (data) {
+                if(data.code==1){
+                    $('.li_text1s').html(data.data.year);
+                    $('.li_text2s').html(data.data.month);
+                    $('.cost_order').html(data.html);
+                }
+            },'json')
+        },
+        /** 时间筛选账单信息减少 */
+        reduce_order:function(){
+            var year = $('.li_text1s').html();
+            var month = $('.li_text2s').html();
+            if(year == ''){
+                layer.msg('填写筛选时间年',{icon:2});
+                return false;
+            }
+            if(month == ''){
+                layer.msg('填写筛选时间月',{icon:2});
+                return false;
+            }
+            var url = $('#user_order_ajx').val();
+            common.ajax_post(url,{year:year,month:month}, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $('.cost_order').html(obj.html);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /** 时间筛选账单信息增加 */
+        increase_order:function(){
+            var year = $('.li_text1s').html();
+            var month = $('.li_text2s').html();
+            if(year == ''){
+                layer.msg('填写筛选时间年',{icon:2});
+                return false;
+            }
+            if(month == ''){
+                layer.msg('填写筛选时间月',{icon:2});
+                return false;
+            }
+            var url = $('#bill_increase_ajx').val();
+            common.ajax_post(url,{year:year,month:month}, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $('.cost_order').html(obj.html);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /**获取手机验证码 (验证)*/
+        vacode_replace:function(){
+            //检查手机号是否符合规范
+            var regx = /^[1][3-9][0-9]{9}$/;
+            var phone=$("input[name='phone_Verify']").val();
+            if(!regx.test(phone)){
+                layer.msg('手机号格式不正确',{icon:2});
+                return false;
+            }
+            func.get_phone_code_replace();
+        },
+        /** 获取手机验证码 (验证)*/
+        get_phone_code_replace:function(){
+            var url = $("#get_phone_code").val();
+            var phone = $("input[name='phone_Verify']").val();
+            common.ajax_post(url, {phone:phone,type:'modify_phone'}, true, function (rt) {
+                is_phone_sent = true;
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    func.time_clock_replace(time_modfy);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /**倒计时60秒*/
+        time_clock_replace: function (time_modfy) {
+            $(".verify_phone").addClass("disabled").removeClass("get_code_audit");
+            $(".verify_phone").val(time_modfy + "秒后重试");
+            time_index = window.setInterval(function () {
+                $(".verify_phone").val(--time_modfy + "秒后重试");
+                if (time_modfy == 0) {
+                    $(".verify_phone").val('再次获取').addClass("get_code_audit").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+            }, 1000)
+        },
+        /**获取手机验证码 (更改)*/
+        change_phone:function(){
+            //检查手机号是否符合规范
+            var regx = /^[1][3-9][0-9]{9}$/;
+            var phone=$("input[name='phone_change']").val();
+            if(!regx.test(phone)){
+                layer.msg('手机号格式不正确',{icon:2});
+                return false;
+            }
+            func.get_chnage_phone_code();
+        },
+        /** 获取手机验证码 (更改)*/
+        get_chnage_phone_code:function(){
+            var url = $("#get_phone_code").val();
+            var phone = $("input[name='phone_change']").val();
+            common.ajax_post(url, {phone:phone,type:'other'}, true, function (rt) {
+                is_phone_sent = true;
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    func.time_clock_change(time_reset);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /**倒计时60秒*/
+        time_clock_change: function (time_sec) {
+            $(".change_phone").addClass("disabled").removeClass("get_code_audit");
+            $(".change_phone").val(time_sec + "秒后重试");
+            time_index = window.setInterval(function () {
+                $(".change_phone").val(--time_sec + "秒后重试");
+                if (time_sec == 0) {
+                    $(".change_phone").val('再次获取').addClass("get_code_audit").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+            }, 1000)
+        },
+        /**获取手机验证码 (修改邮箱)*/
+        change_email:function(){
+            //检查手机号是否符合规范
+            var regx = /^[1][3-9][0-9]{9}$/;
+            var phone=$("input[name='change_email']").val();
+            if(!regx.test(phone)){
+                layer.msg('手机号格式不正确',{icon:2});
+                return false;
+            }
+            func.get_change_email_code();
+        },
+        /** 获取手机验证码 (修改邮箱)*/
+        get_change_email_code:function(){
+            var url = $("#get_phone_code").val();
+            var phone = $("input[name='change_email']").val();
+            common.ajax_post(url, {phone:phone,type:'modify_email'}, true, function (rt) {
+                is_phone_sent = true;
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    func.time_change_email(time_email);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /**倒计时60秒（修改邮箱）*/
+        time_change_email: function (time_email) {
+            $(".change-email-code").addClass("disabled").removeClass("get_code_audit");
+            $(".change-email-code").val(time_email + "秒后重试");
+            time_index = window.setInterval(function () {
+                $(".change-email-code").val(--time_email + "秒后重试");
+                if (time_email == 0) {
+                    $(".change-email-code").val('再次获取').addClass("get_code_audit").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+            }, 1000)
+        },
+        /**获取手机验证码 (修改邮箱)*/
+        change_pwd:function(){
+            //检查手机号是否符合规范
+            var regx = /^[1][3-9][0-9]{9}$/;
+            var phone=$("input[name='user_phone_pwd']").val();
+            if(!regx.test(phone)){
+                layer.msg('手机号格式不正确',{icon:2});
+                return false;
+            }
+            func.get_change_pwd_code();
+        },
+        /** 获取手机验证码 (修改密码)*/
+        get_change_pwd_code:function(){
+            var url = $("#get_phone_code").val();
+            var phone = $("input[name='user_phone_pwd']").val();
+            common.ajax_post(url, {phone:phone,type:'modify_pwd'}, true, function (rt) {
+                is_phone_sent = true;
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    func.time_change_pwd(time_pwd);
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        /**倒计时60秒（修改密码）*/
+        time_change_pwd: function (time_pwd) {
+            $(".change_user_pwd").addClass("disabled").removeClass("get_code_audit");
+            $(".change_user_pwd").val(time_pwd + "秒后重试");
+            time_index = window.setInterval(function () {
+                $(".change_user_pwd").val(--time_pwd + "秒后重试");
+                if (time_pwd == 0) {
+                    $(".change_user_pwd").val('再次获取').addClass("get_code_audit").removeClass("disabled");
+                    window.clearInterval(time_index);
+                }
+            }, 1000)
+        },
+        /** 更换手机号 */
+        change_user_phone:function(){
+            var param = $("#change-phone").serialize();
+            var url = $("#change_user_phone_url").val();
+            common.ajax_post(url,param, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $("#error_pwd_message").hide();
+                    $(".login_reg").hide();
+                    $(".phone_pwd").show();
+                    var i = 5;
+                    var index = window.setInterval(function(){
+                        i--;
+                        $("#phone_down").html(i);
+                        if(i == 0){
+                            clearInterval(index);
+                            var url = $("#user_center").val();
+                            location.href = url;
+                        }
+                    },1000);
+                }else{
+                    $("#error_message").show();
+                    $('#error_message').html(obj.msg);
+                }
+            })
+        },
+        /** 更换邮箱 */
+        change_user_email:function(){
+            var param = $("#change-user-email").serialize();
+            var url = $("#change_user_email_url").val();
+            common.ajax_post(url,param, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $('#user-email').html(obj.ret_data[0]);
+                    $('#send_email').val(obj.ret_data[0]);
+                    $("#email_jump").attr('href',obj.ret_data[1]);
+                    $("#error_email_message").hide();
+                    $(".login_reg").hide();
+                    $(".email_succes").show();
+                }else{
+                    $("#error_email_message").show();
+                    $('#error_email_message').html(obj.msg);
+                }
+            })
+        },
+        /** 绑定邮箱 */
+        bind_user_email:function(){
+            var email =$("input[name='bind_user_email']").val();
+            var url = $("#bind_user_email_url").val();
+            common.ajax_post(url,{email:email}, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $('#user-email').html(obj.ret_data[0]);
+                    $('#send_email').val(obj.ret_data[0]);
+                    $("#email_jump").attr('href',obj.ret_data[1]);
+                    $("#error_email_message").hide();
+                    $(".login_reg").hide();
+                    $(".email_succes").show();
+                }else{
+                    $("#error_email_img").show();
+                    $('#error_email_img').html(obj.msg);
+                }
+            })
+        },
+        /** 修改密码 */
+        change_user_pwd:function(){
+            var param = $("#change_user_pwd").serialize();
+            var url = $("#change_user_pwd_url").val();
+            common.ajax_post(url,param, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    $("#error_pwd_message").hide();
+                    $(".login_reg").hide();
+                    $(".modify_pwd").show();
+                    var i = 5;
+                    var index = window.setInterval(function(){
+                        i--;
+                        $("#modify_down").html(i);
+                        if(i == 0){
+                            clearInterval(index);
+                            var url = $("#user_center").val();
+                            location.href = url;
+                        }
+                    },1000);
+                }else{
+                    $("#error_pwd_message").show();
+                    $('#error_pwd_message').html(obj.msg);
+                }
+            })
+        },
+        /** 实名认证 */
+        audit:function(param){
+            var url = $("#audit").val();
+            common.ajax_post(url,param, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+                })
+        },
+        /** 获取实名认证页面（企业） */
+        company:function(){
+          var url = $("#company_ajx").val();
+            common.ajax_post(url,false, true, function (rt) {
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    $(".company_ajx").html(obj.html);
+                    func.file_upload();
+                    account_index.industry();
+                    $(".industry_ul,.addres_ul1s,.years_list").mCustomScrollbar();
+                }else {
+                    layer.msg(obj.msg,{icon:1});
+                }
+            })
+        },
+        /** 获取实名认证页面（個人） */
+        person:function(){
+            var url = $("#person_ajx").val();
+            common.ajax_post(url,false, true, function (rt) {
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    $(".company_ajx").html(obj.html);
+                    func.file_upload();
+                    account_index.industry();
+                    $(".industry_ul,.addres_ul1s,.years_list").mCustomScrollbar();
+                }else {
+                    layer.msg(obj.msg,{icon:1});
+                }
+            })
+        },
+        /** 重新发送邮箱 */
+        email_form:function(){
+            var url = $("#user_email_url").val();
+            var email = $("#send_email").val();
+            common.ajax_post(url,{type:1,email:email}, true, function (rt) {
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        },
+        //下单
+        order: function (param) {
+            var url = $('.at_recharges').data('url');
+            common.ajax_post(url, param, false, function (rt) {
+                common.post_tips(rt, function (obj) {
+                    var order = obj.ret_data.order;
+                    if (!order) {
+                        layer.msg('订单创建失败!',{icon:2});
+                        return false;
+                    }
+                    switch (param.pay_type) {
+                        case '1':
+                            $("#order_form").attr('action', $("#alipay_url").val() + '?order=' + order);
+                            $("#order_form").submit();
+                            break;
+                        case '2':
+                            func.wechat_pay(order);
+                            break;
+                    }
+                },function(obj){
+                    layer.msg(obj.msg,{icon:2});
+                });
+            }, true, [0.1, '#eee'])
+        },
+        //微信支付
+        wechat_pay: function (order) {
+            layer.closeAll();
+            layer.load(2, {
+                shade: [0.1, '#fff'] //0.1透明度的白色背景
+            });
+            //获取微信二维码url
+            var url = $('#get_qrcode_url').val();
+            var param = {
+                order: order
+            };
+            common.ajax_post(url, param, true, function (rt) {
+                layer.closeAll();
+                common.post_tips(rt, function (obj) {
+                    func.start_scan(order);
+                    var url = obj.ret_data.url;
+                    layer.confirm('请用微信扫描支付<br /><img style="width: 200px;height: 200px;" src="' + url + '" />', {
+                        title: false, btn: false, cancel: function () {
+                            func.stop_scan();
+                        }
+                    });
+                }, function (obj) {
+                    layer.msg(obj.msg);
+                });
+
+            });
+        },
+        //开始扫描
+        start_scan: function (order) {
+            var url = $('#get_order_pay_status').val();
+            index = window.setInterval(function () {
+                common.ajax_post(url, {'order': order}, true, function (rt) {
+                    common.post_tips(rt, function (obj) {
+                        layer.closeAll();
+                        func.stop_scan();
+                        layer.confirm("支付成功!",{title:'支付状态',skin:'layui-layer-molv',fixed:true,icon:1,btn:['确定']},function(){
+                            location.reload();
+                        });
+
+                    }, function () {
+                        console.log('扫描订单支付状态');
+                    })
+                });
+            }, 3000);
+        },
+        //停止扫描
+        stop_scan: function () {
+            window.clearInterval(index);
+        },
+        file_upload:function() {
+            $(".file_upload").change(function() {
+                var $file = $(this); var $file_indx = $(this).index(".file_upload");var fileObj = $file[0];var windowURL = window.URL || window.webkitURL;var dataURL;var $img = $(".preview").eq($file_indx);
+                if(fileObj && fileObj.files && fileObj.files[0]){
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $img.attr('src',dataURL);
+                }else{dataURL = $file.val();var imgObj = $(".preview").eq($file_indx);}});
+        }
+    };
+    /** 调出用户修改界面 */
+    $(document).on("click",".modify-msg",function(){
+        $(".basic-modify").removeClass("basic_info_act");
+        $(".modify-msg").removeClass("modify_act");
+        $(".save-msg").addClass("modify_act");
+        $(".basic-save").addClass("basic_info_act");
+        $(".industry_ul").removeClass("industry_ul_act");
+    });
+    /** 修改用户信息 */
+    $(document).on("click",".save-msg",function(){
+        func.modify_msg();
+    });
+    /** 获取手机验证码（验证）*/
+    $(document).on("click", '.get_phone_Verify', function () {
+        func.vacode_replace();
+    });
+    /** 获取手机验证码（更换）*/
+    $(document).on("click", '.get_phone_change', function () {
+        func.change_phone();
+    });
+    /** 获取手机验证码（修改邮箱）*/
+    $(document).on("click", '.change_email', function () {
+        func.change_email();
+    });
+    /** 获取手机验证码（修改密码）*/
+    $(document).on("click", '.change_pwd', function () {
+        func.change_pwd();
+    });
+    /** 更换手机号 */
+    $(document).on("click","#Submit-change-phone",function() {
+        func.change_user_phone();
+    });
+    /** 更换邮箱 */
+    $(document).on("click","#change-email",function() {
+        func.change_user_email();
+    });
+    /** 绑定邮箱 */
+    $(document).on("click","#bind-email",function() {
+        func.bind_user_email();
+    });
+    /** 修改密码 */
+    $(document).on("click","#change-pwd",function() {
+        func.change_user_pwd();
+    });
+    /** 实名认证（個人） */
+    $(document).on("click",".person_up",function(){
+        var type = $("input[name='radios']:checked").val();
+        var true_name = $("input[name='true_name']").val();
+        var identity_card = $("input[name='identity_card']").val();
+        var detailed_address = $("input[name='detailed_address']").val();
+        var positive_img_url = $("#positive_img_url").val();
+        var negative_img_url = $("#negative_img_url").val();
+        var industry = $("#industry").val();
+        var province = $("#province").val();
+        var city = $("#city").val();
+        if(type == ""){layer.msg("输入用户类型",{icon:2});return false;}
+        if(true_name == ""){layer.msg("输入真实姓名",{icon:2});return false;}
+        if(identity_card == ""){layer.msg("输入身份证号",{icon:2});return false;}
+        if(detailed_address == ""){layer.msg("输入详细地址",{icon:2});return false;}
+        if(positive_img_url == ""){layer.msg("输入身份证正面照",{icon:2});return false;}
+        if(negative_img_url == ""){layer.msg("输入身份证反面照",{icon:2});return false;}
+        if(industry == ""){layer.msg("输入所属行业",{icon:2});return false;}
+        if(province == ""){layer.msg("输入所属地区省",{icon:2});return false;}
+        if(city == ""){layer.msg("输入所属地区市",{icon:2});return false;}
+        var param = {
+            type:type,
+            true_name:true_name,
+            identity_card:identity_card,
+            detailed_address:detailed_address,
+            positive_img_url:positive_img_url,
+            negative_img_url:negative_img_url,
+            industry:industry,
+            province:province,
+            city:city
+        };
+         func.audit(param);
+    });
+    /** 实名认证（企业） */
+    $(document).on("click",".company_up",function(){
+        var type = $("input[name='radios']:checked").val();
+        var true_name = $("input[name='true_name']").val();
+        var identity_card = $("input[name='identity_card']").val();
+        var detailed_address = $("input[name='detailed_address']").val();
+        var registration = $("input[name='registration']").val();
+        var enterprise_name = $("input[name='enterprise_name']").val();
+        var business_img_url = $("#business_img_url").val();
+        var positive_img_url = $("#positive_img_url").val();
+        var negative_img_url = $("#negative_img_url").val();
+        var industry = $("#industry").val();
+        var province = $("#province").val();
+        var city = $("#city").val();
+        if(type == ""){layer.msg("输入用户类型",{icon:2});return false;}
+        if(true_name == ""){layer.msg("输入真是姓名",{icon:2});return false;}
+        if(identity_card == ""){layer.msg("输入身份证号",{icon:2});return false;}
+        if(detailed_address == ""){layer.msg("输入详细地址",{icon:2});return false;}
+        if(positive_img_url == ""){layer.msg("输入身份证正面照",{icon:2});return false;}
+        if(negative_img_url == ""){layer.msg("输入身份证反面照",{icon:2});return false;}
+        if(industry == ""){layer.msg("输入所属行业",{icon:2});return false;}
+        if(province == ""){layer.msg("输入所属地区省",{icon:2});return false;}
+        if(registration == ""){layer.msg("输入营业执照注册号",{icon:2});return false;}
+        if(enterprise_name == ""){layer.msg("输入企业名称",{icon:2});return false;}
+        if(business_img_url == ""){layer.msg("输入营业执照",{icon:2});return false;}
+
+        var param = {
+            type:type,
+            true_name:true_name,
+            identity_card:identity_card,
+            detailed_address:detailed_address,
+            positive_img_url:positive_img_url,
+            negative_img_url:negative_img_url,
+            business_img_url:business_img_url,
+            enterprise_name:enterprise_name,
+            registration:registration,
+            industry:industry,
+            province:province,
+            city:city
+        };
+        func.audit(param);
+    });
+    /** 获取页面实名认证（企业） */
+    $(document).on("click","#types2",function(){
+        func.company();
+    });
+    /** 获取页面实名认证（个人） */
+    $(document).on("click","#types",function(){
+        func.person();
+    });
+    /** 重新发送邮箱 */
+    $(document).on("click","#email_form",function(){
+        func.email_form();
+    });
+    /** 身份证上传 （正面）*/
+    $(document).on("change","#positive_img",function(){
+        var data = new FormData($('#form1')[0]);
+        $.ajax({
+            url: $("#identity_photo_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#positive_img_url").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 营业执照*/
+    $(document).on("change","#company_img",function(){
+        var data = new FormData($('#form3')[0]);
+        $.ajax({
+            url: $("#company_img_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#business_img_url").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 身份证上传 （反面）*/
+    $(document).on("change","#negative_img",function(){
+        var data = new FormData($('#form2')[0]);
+        $.ajax({
+            url: $("#identity_opposite_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#negative_img_url").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 上传头像 */
+    $(document).on("change","#user_face",function(){
+        var data = new FormData($('#chang_price')[0]);
+        $.ajax({
+            url: $("#user_price_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    location.reload();
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 充值订单时间筛选 */
+    $("#end").change(function() {
+        $("#end").text();
+    });
+    /** 选择充值金额 */
+    $(document).on('click','.money',function(){
+        $("#balance").val("");
+        var money = $(this).data('val');
+        $("#balance_all").val(money);
+    });
+    /** 选择支付方式  */
+    $(document).on('click','.pay',function(){
+        var pay_type = $(this).data('type');
+        $("#pay_type").val(pay_type);
+    });
+    //自定义充值
+    $(document).on('change','#balance',function() {
+        var re = /^[0-9]*[1-9][0-9]*$/ ;
+        var rmb = $("#balance").val();
+        if(isNaN(rmb)|| !re.test(rmb) || rmb<0){
+            layer.msg('请输入正整数字',{icon:2});
+            $("#balance_all").val('');
+            return false;
+        }
+        $("#balance_all").val(rmb);
+    });
+    //自定义充值
+    $(document).on('click','#balance',function() {
+        $("#balance_all").val('');
+    });
+
+
+    //立即支付
+    $(document).on('click','.at_recharges',function(){
+        var type = $("#pay_type").val();
+        if(type == ''){
+            return false;
+        }
+        var money = $("#balance_all").val();
+        if(money == ''){
+            return false;
+        }
+
+        var param = {
+            money: money,
+            pay_type: type,
+            type:'recharge'
+        };
+        func.order(param);
+    });
+    //充值记录立即支付
+    $(document).on('click','.at_buys',function(){
+        var type = $(this).data('val');
+        var order = $("#order_id").val();
+        if(type == 1){
+            $("#order_form").attr('action', $("#alipay_url").val() + '?order=' + order);
+            $("#order_form").submit();
+        }else{
+            func.wechat_pay(order);
+        }
+    });
+
+    /** 时间筛选账单信息增加 */
+    $(document).on('click','#bill_increase',function(){
+        func.increase_order();
+    });
+
+    /** 时间筛选账单信息 */
+    $(document).on('click','#bill_msg',function(){
+        var bill = $("#bill_list").val();
+        if(bill == 1){
+            func.increase_order();
+        }else{
+            func.reduce_order();
+        }
+    });
+
+    /** 时间筛选账单信息减少 */
+    $(document).on('click','#bill_reduce',function(){
+        func.reduce_order();
+    });
+       
+    $(document).on('click', '.page_btn', function () {
+        var obj = $(this);
+        var page = obj.data('page');
+        var type = $("#bill_list").val();
+        if(type == 1){
+            func.increase_list(page);
+        }else if(type == 2){
+            func.update_list(page);
+        }else{
+            func.update_recharge(page);
+        }
+    });
+
+    func.init();
+    });

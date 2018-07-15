@@ -1,0 +1,606 @@
+<?php
+namespace app\core\controller;
+
+use app\lib\Geetest;
+use app\lib\Touclick;
+use app\lib\MAILSend;
+use app\lib\Smtp;
+use app\lib\PhoneCode;
+use app\core\model\ApiModel;
+use app\core\model\UserModel;
+use org\Verify;
+use PHPMailer\PHPMailer\PHPMailer;
+use think\Controller;
+
+Class Api extends Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * 普通验证码类
+     */
+    public function verify()//验证码
+    {
+        ob_clean();//清缓存
+        $config = [
+            'seKey' => '', // 验证码加密密钥
+            'codeSet' => '23456789', // 验证码字符集合
+            'expire' => 1800, // 验证码过期时间（s）
+            'useZh' => false, // 使用中文验证码
+            'useImgBg' => false, // 使用背景图片
+            'fontSize' => 30, // 验证码字体大小(px)
+            'useCurve' => false, // 是否画混淆曲线
+            'useNoise' => false, // 是否添加杂点
+            'imageH' => 0, // 验证码图片高度
+            'imageW' => 0, // 验证码图片宽度
+            'length' => 4, // 验证码位数
+            'fontttf' => '', // 验证码字体，不设置随机获取
+        ];
+        $verify = new Verify($config);
+        $verify->entry();//输出保存session
+        die();
+    }
+
+    /** 获取手机验证码 */
+    public function get_phone_code()
+    {
+        $post = input("post.",'');
+        extract($post);
+        !preg_match('/^1[3-9][0-9]{9}$/', $phone) && wrong_return("手机号码格式不正确");
+        //如果是注册,检查手机号是否已经注册
+        $purpose='重要操作';
+        $m_user = new UserModel();
+        $phone_info = $m_user->get_user_info_by_filed($phone);
+        if (($type == "reg" || $type == "bind") && !empty($phone_info)){
+            wrong_return("该手机已注册");
+        }else if($type == "rst_pass" && empty($phone_info)){
+            wrong_return("该手机尚未注册过");
+        }
+        //检测用户手机验证码一分钟只能用一次
+        $m_user = new UserModel();
+        $code_info = $m_user->get_phone_code_expire_time($phone,$type);
+        if(!empty($code_info)){
+            ((NOW_TIME - $code_info['create_time']) < 60) && wrong_return('手机验证码一分钟只能发一次');
+        }
+        $rand_num = rand(100000, 999999);
+
+        $r = $this->get_phone_code_auto($phone, $rand_num,$purpose);
+        ($r == 1) && wrong_return("获取验证码次数过多,您的手机号暂时被锁定,请稍后再来");
+        $session = md6($phone . $rand_num . NOW_TIME);
+        //记录短信发送情况
+        $data = [
+            "session" => $session,
+            "plat" => $r['plat'],
+            "use_times" => 0,
+            "phone_code" => $rand_num,
+            "data" => json_encode($r['r']),
+            "phone" => $phone,
+            "type" => $type,
+            "enable" => 'true',
+            "expire_time" => (time() + 1200),
+            'create_time' => time()
+        ];
+        $m_api = new ApiModel();
+        $rt = [
+            "code" => "1",
+            "plat" => $r['plat'],
+            "phone_code" => $rand_num,
+            "data" => json_encode($r),
+            "phone" => $phone,
+            "type" => 'reg',
+            "expire_time" => time() + 1200,
+        ];
+        if ($m_api->add_phone_code($data)) {
+            unset($rt['data'], $rt['phone_code']);//注销定义的变量
+            ok_return("获取验证码成功");
+        }
+    }
+
+    //获取手机验证码(找回密码)(阿里大鱼)
+    public function get_phone_code_forgot()
+    {
+        $post = input("post.");
+        extract($post);
+        !preg_match('/^1[3-9][0-9]{9}$/', $phone) && die_json("-100");//手机号码格式不正确
+        //检查该手机号是否已注册
+        $m_user = new UserModel();
+        if(empty($m_user->get_user_info_by_filed($phone))){die_json("-105");}//该手机未注册
+//        !sp_check_verify_code() && die_json("-120");//验证码错误
+//        if($post['type'] == 'rst_pass'){
+//            $mid = check_login();
+//            empty($m_user->get_user_bind_phone($mid,$phone)) && die_json("-121");//该手机不是绑定的手机号
+//        }
+        $rand_num = rand(100000, 999999);
+        $m_sms = new PhoneCode();
+        $send_result = $m_sms->alidayu_forgot_sms($phone, $rand_num);
+        $r = ['r' => $send_result, 'plat' => 'alidayu'];
+        $session = md6($phone . $rand_num . time());
+
+        if($type == "message_login"){
+            $types = "login";
+        }elseif($type == "rst_pass"){
+            $types = "rst_pass";
+        }elseif($type == "modify_phone"){
+            $types = "modify_phone";
+        }
+        //记录短信发送情况
+        $data = [
+            "session" => $session,
+            "username" => '',
+            "plat" => $r['plat'],
+            "use_times" => 0,
+            "phone_code" => $rand_num,
+            "data" => json_encode($r['r']),
+            "phone" => $phone,
+            "type" => $types,
+            "enable" => 'true',
+            "expire_time" => (time() + 1200),
+            'create_time' => time()
+        ];
+        $m_api = new ApiModel();
+        $rt = [
+            "code" => "1",
+            "plat" => $r['plat'],
+            "session" => $session,
+            "phone_code" => $rand_num,
+            "data" => json_encode($r),
+            "phone" => $phone,
+            "type" => $types,
+            "expire_time" => time() + 1200,
+        ];
+        if ($m_api->add_phone_code($data)) {
+            unset($rt['data'], $rt['phone_code']);
+            die_json($rt);
+        }
+    }
+
+    /**注册手机验证码的验证
+     *功能:通过手机号码检测验证码是否正确,正确则增加使用次数,并且设置为不可用
+     * @param phone [string]必须 手机号
+     * @param code [string]必须 验证码
+     * @param expire [bool]选填 是否校验过期时间
+     * @param use_time [int]选填 使用次数
+     * @return 结果
+     */
+    public function check_phone_code($post)
+    {
+        extract($post);
+        if (empty($phone)) return ("-100");//手机号不能为空
+        if (empty($phone_code)) return ("-110");//手机验证码不能为空
+        $m_api = new ApiModel();
+        //获取手机验证码的详细信息
+        $info = $m_api->get_info_by_phone_and_code($phone, $phone_code);
+        if (empty($info)) return ("-120");//手机验证码错误
+        //如果检测过期时间
+        if (isset($expire) && $info['expire_time'] > 0 && $info['expire_time'] < time()) return ("-130");//已过期
+        //检测使用次数
+        if (isset($use_times) && $info['use_times'] >= $use_times) {
+            return ("-140");//使用次数超出规定范围
+        }
+        //检测是否可用
+        if ($info['enable'] != 'true') return ("-150");//验证码不可用
+        //可用,设置验证码已使用
+        $r = $m_api->set_phone_code_used($phone, $phone_code);
+        if ($r !== false) return ("1");//验证通过
+        return ("-1");//设置验证码失败
+    }
+
+    public function rt_phone_code($r)
+    {
+        switch ($r) {
+            case "1":
+                break;
+            case "-100":
+                die_json("-200");//手机号不能为空
+                break;
+            case "-110":
+                die_json("-210");//手机验证码不能为空
+                break;
+            case "-120":
+                die_json("-220");//手机验证码不存在
+                break;
+            case "-130":
+                die_json("-230");//手机验证码已过期
+                break;
+            case "-140":
+                die_json("-240");//使用次数超出规定范围
+                break;
+            case "-150":
+                die_json("-250");//验证码不可用
+                break;
+            case "-1":
+                die_json("-260");//设置验证码失败
+                break;
+            default:
+                die_json("-270");//验证码已失效
+        }
+    }
+
+    //螺丝帽
+    public function luosimao_sms($phone, $phone_code)
+    {
+        $m_phone_code = new PhoneCode();
+        return $m_phone_code->send_sms_luosimao($phone, $phone_code, $product = config('CONFIG_FLATFORM_NAME'));
+
+    }
+
+    //阿里大鱼验证码
+    private function alidayu_sms($phone, $phone_code,$purpose )
+    {
+//        $product = empty(Config('SMS_TEMP_NAME')) ? $product : Config('SMS_TEMP_NAME');//短信模板;
+        $m_sms = new PhoneCode();
+        $temp =  $m_sms->alidayu_reg_sms($phone, $phone_code, $product= config('CONFIG_FLATFORM_NAME'),$purpose);
+        return $temp;
+
+
+    }
+
+    //鼎游企信通短信接口
+    private function dingxintong_send($phone_num, $phone_code, $product )
+    {
+        $model = new PhoneCode();
+        return $model->dingxintong_send($phone_num, $phone_code, $product= config('CONFIG_FLATFORM_NAME'));
+    }
+
+    //阿里大鱼语音接口
+    private function alidayu_vn_send($phone)
+    {
+        $model = new PhoneCode();
+        return $model->alidayu_vn($phone);
+    }
+
+    //根据优先级自动获取手机验证码
+    public function get_phone_code_auto($phone, $rand_num,$purpose)
+    {
+
+        $plat = 'alidayu';
+        $r = $this->alidayu_sms($phone, $rand_num,$purpose);
+
+        //阿里大鱼不能用时,用备用接口
+        if(empty($r["result"]['success'])) {
+            return 1;
+
+
+            $plat = 'luosimao';
+//            /**记录日志*/
+//            $log = new LogModel();
+//            $log_text = [
+//                'user' => $phone,
+//                'type' => 'phone_code_error',
+//                'log' => json_encode($r)
+//            ];
+//            $log->log_add($log_text);
+            $r = $this->luosimao_sms($phone, $rand_num);
+            //螺丝帽不能用 就用鼎信通短信
+            if ($r['msg'] !== "ok") {
+                $plat = 'dingxintong';
+//                $log_text = [
+//                    'user' => $phone,
+//                    'type' => 'phone_code_error',
+//                    'log' => json_encode($r)
+//                ];
+//                $log->log_add($log_text);
+                //鼎信通接口
+                $r = $this->dingxintong_send($phone, $rand_num);
+            }
+        }
+
+
+            return array(
+                "r" => $r,//接口返回
+                "plat" => $plat
+            );
+
+        }
+
+    //将微信code_url生成二维码
+    public function qr_base64($text = '', $level = 0, $size = 3, $margin = 2)
+    {
+        Config('default_return_type', 'null');
+        import("app.lib.phpqrcode.phpqrcode", null, '.php');
+        ob_clean();
+        header('Content-Type:image/png');
+        $text = input('param.text', '', 'trim,base64_decode');
+        \QRcode::png($text, false, $level, $size, $margin);
+    }
+//
+//
+//    //根据优先级发送获奖短信
+//
+//    public function send_win_msg($phone, $nper_id)
+//    {
+//        $model = new PhoneCode();
+//        $plat = 'luosimao';
+////        /**记录日志*/
+////        $log = new LogModel();
+//        $r = $model->luosimao_win($phone, $nper_id);
+//        //螺丝帽不能用 就用鼎信通短信
+//        if ($r['msg'] !== "ok") {
+//            $plat = 'dingxintong';
+////            $log_text = [
+////                'user' => $phone,
+////                'type' => 'phone_code_error',
+////                'log' => json_encode($r)
+////            ];
+////            $log->log_add($log_text);
+//            //鼎信通接口
+//            $r = $model->dingxintong_win($phone, $nper_id);
+//            if (!empty($r['msg']) && $r['msg'] !== "ok") {
+////                $log_text = [
+////                    'user' => $phone,
+////                    'type' => 'phone_code_error',
+////                    'log' => json_encode($r)
+////                ];
+////                $log->log_add($log_text);
+//            }
+//        }
+//
+//        return array(
+//            "r" => $r,//接口返回
+//            "plat" => $plat
+//        );
+//    }
+//
+//    //获取手机归属地
+//    public function get_phone_location($phone)
+//    {
+//        if (empty($phone)) return false;
+////        $m_com = new CommonModel();
+//        $url = Config('TAOBAO_PHONE_API') . $phone;
+//        $s = curl_http($url);
+//        $s = gbk2utf8($s);
+//        preg_match_all("/(\\w+):'([^']+)/", $s, $m);
+//        $a = array_combine($m[1], $m[2]);
+//        return $a;
+//    }
+//
+//    //获取ip归属地
+//    public function get_ip_location($ip = "")
+//    {
+//        if (empty($ip)) return false;
+////        $m_com = new CommonModel();
+//        $url = Config('TAOBAO_IP_API') . $ip;
+//        $s = curl_http($url);
+//        return json_decode($s, true);
+//    }
+//
+//    //上传图片
+//    public function up_img()
+//    {
+//
+//        $timestamp = microtime_float();//获取当前时间戳，精确到毫秒
+//        $uid = get_user_id();//获取当前用户id
+//        $token = sign_by_key(array("uid" => $uid, "timestamp" => $timestamp));//本站签名方法
+//
+//        $this->assign('uid', $uid);
+//        $this->assign('timestamp', $timestamp);
+//        $this->assign('token', $token);
+//        return $this->fetch();
+//    }
+//
+//    //生成二维码
+//    public function qr_code($text = '', $level = 0, $size = 3, $margin = 2)
+//    {
+//        Config('default_return_type', 'null');
+//        import("app.lib.phpqrcode.phpqrcode", null, '.php');
+//        ob_clean();
+//        header('Content-Type:image/png');
+//        $text = input('get.text', '', 'trim,urldecode');
+//        \QRcode::png($text, false, $level, $size, $margin);
+////        include ('phpqrcode.php');
+////        $value = 'http://www.codesc.net';//二维码数据
+////        $errorCorrectionLevel = 'L';//纠错级别：L、M、Q、H
+////        $matrixPointSize = 10;//二维码点的大小：1到10
+////        QRcode::png ( $value, 'ewm.png', $errorCorrectionLevel, $matrixPointSize, 2 );//不带Logo二维码的文件名
+////        echo "二维码已生成" . "<br />";
+////        $logo = 'http://o7djuqrn7.bkt.clouddn.com/logo1.png';//需要显示在二维码中的Logo图像
+////        $QR='qrcode.png';
+////        if($logo!== false){
+////            $QR= imagecreatefromstring(file_get_contents($QR));
+////            $logo= imagecreatefromstring(file_get_contents($logo));
+////            $QR_width= imagesx($QR);
+////            $QR_height= imagesy($QR);
+////            $logo_width= imagesx($logo);
+////            $logo_height= imagesy($logo);
+////            $logo_qr_width= $QR_width / 5;
+////            $scale= $logo_width / $logo_qr_width;
+////            $logo_qr_height= $logo_height / $scale;
+////            $from_width= ($QR_width - $logo_qr_width) / 2;
+////            imagecopyresampled($QR,$logo, $from_width,$from_width, 0, 0,$logo_qr_width, $logo_qr_height, $logo_width, $logo_height);
+////        }
+////        header("Content-Type:image/jpg");
+////        imagepng($QR);
+//    }
+//
+//    public function qr_base64($text = '', $level = 0, $size = 3, $margin = 2)
+//    {
+//        Config('default_return_type', 'null');
+//        import("app.lib.phpqrcode.phpqrcode", null, '.php');
+//        ob_clean();
+//        header('Content-Type:image/png');
+//        $text = input('get.text', '', 'trim,base64_decode');
+//        \QRcode::png($text, false, $level, $size, $margin);
+//    }
+//
+//    //SUBMAIL邮件发送接口
+//    public function submail($umail,$uname){
+//        //初始化参数
+//        $mail_configs['appid']='11540';
+//        $mail_configs['appkey']='2e31557df68f83b6e32610f9990ca1df';
+//        $mail_configs['sign_type']='normal';
+//
+//        //自动加载方法
+//        function __autoload($classname)
+//        {
+//            $this->SUBMAILAutoload($classname);
+//        }
+////        if (version_compare(PHP_VERSION, '5.1.2', '>=')) {
+////            if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
+////                spl_autoload_register('SUBMAILAutoload', true, true);
+////            } else {
+////                spl_autoload_register('SUBMAILAutoload');
+////            }
+////        } else {
+////           ;
+////            }
+////        }
+//
+//        //初始化 MAILSend 类
+//        $submail=new MAILSend($mail_configs);
+//
+//        //添加收件人姓名和称谓
+//        $submail->AddTo($umail,$uname);
+//
+//        /*
+//         |添加密送地址，可多次调用
+//         |最多添加5个密送地址
+//         */
+////        $submail->AddBcc('xxx@xxx.xx');
+//
+//        /*
+//         |添加抄送地址，可多次调用
+//         |最多添加5个抄送地址
+//         */
+////        $submail->AddCc('xxx@xxx.xx');
+//
+//        /*
+//         |添加地址薄标识，可重复调用
+//         |后台可以配置，用于群发邮件
+//         */
+////        $submail->AddAddressbook('N1Vz12');
+//
+//        /*
+//         |设置发件人邮件地址和名称(可选)
+//         */
+//        $submail->SetSender('service@xiazaika.com','下载咖官网');
+//
+//        /*
+//         |设置回复邮件地址
+//         */
+//
+////    $submail->SetReply('service@xiazaika.com');
+//
+//        /*
+//         |必选参数，设置邮件标题
+//         */
+//
+//        $submail->SetSubject('下载咖-注册认证');
+//
+//        /*
+//         |设置邮件纯文本内容
+//         */
+//        $submail->SetText('这是一个文本邮件内容！');
+//
+//        /*
+//         |设置邮件HTML内容 注：邮件TEXT纯文本内容不能和邮件HTML共存，同时设置只会显示html邮件内容
+//         */
+//        $submail->SetHtml('尊敬的用户，你好！<br> @var(name)友情提示：点击下面连接以完成立即注册 <br> <a href="var://@link(developer)">http://mengdie.com/</a>');
+//
+//        /*
+//         |添加文本变量
+//         |示例为您的模板中包含@var(name)和@var(age)文本变量，以下AddVar方法将替换 @var(name)为leo,@var(age)为32
+//         */
+//
+//        $submail->AddVar('name','下载咖');
+////        $submail->AddVar('age','32');
+//
+//        /*
+//         |添加超链接变量
+//         |示例为您的模板中包含@link(developer)和@link(store)超链接变量，以下AddLink方法将替换 @var(developer)为http://submail.cn/chs/developer,@var(store)为http://submail.cn/chs/store
+//         |可重复调用
+//         |如果您使用HTML代码编辑的模板，您需要在申明超链接的 A 标签内使用 var:// 协议, 即 <a href="var://@link(developer)">超链接</a>
+//         |--------------------------------------------------------------------------
+//         */
+//        $submail->AddLink('developer','http://mengdie.com/');
+////      $submail->AddLink('store','http://mengdie.com/');
+//
+//        /*
+//         |可选参数，设置自定义邮件头指令
+//         |可重复调用(不知道这个参数有啥用)
+//         |--------------------------------------------------------------------------
+//         */
+//
+//        $submail->AddHeaders('X-Accept','zh-cn');
+//        $submail->AddHeaders('X-Mailer','my App');
+//
+//        /*
+//         |添加附件，可重复调用
+//         */
+////    $submail->AddAttachment('/subfile/tmp/c4ebf8621b652936ea41ed70adf9107b691.jpg');
+////    $submail->AddAttachment('/subfile/tmp/c43934a06c28cfcacb6ca9700871b70b118_0_1920x1200.jpg');
+//
+//        /*
+//         |可选参数，设置是否异步发送
+//         */
+//
+//        $submail->setAsynchronous(false);
+//
+//        /*
+//         |调用 send 方法发送邮件
+//         */
+//        $send=$submail->send();
+//
+//        /*
+//         |打印服务器返回码
+//         */
+////         dump($send);
+//         if($send['status'] == 'success'){
+//            return $result=1;
+//         }else{
+//            return $result=0;
+//         }
+//
+//    }
+//    //SMPT邮件发送接口(暂时不可用)
+//    public function smtp_send_mail(){
+//        $smtpserver = "smtp.163.com";//SMTP服务器
+//        $smtpserverport =25;//SMTP服务器端口
+//        $smtpusermail = "fty_php@163.com";//SMTP服务器的用户邮箱
+//        $smtpemailto = "1050135309@qq.com";//发送给谁
+//        $smtpuser = "fty_php";//SMTP服务器的用户帐号
+//        $smtppass = "f319188";//SMTP服务器的用户密码
+//        $mailsubject = "交朋友";//邮件主题
+//        $mailbody = "<h1> 你好！ </h1>";//邮件内容
+//        $mailtype = "HTML";//邮件格式（HTML/TXT）,TXT为文本邮件
+//
+//        $smtp = new Smtp($smtpserver,$smtpserverport,true,$smtpuser,$smtppass);//这里面的一个true是表示使用身份验证,否则不使用身份验证.
+//        $smtp->debug = true;//是否显示发送的调试信息
+//        $smtp->sendmail($smtpemailto, $smtpusermail, $mailsubject, $mailbody, $mailtype);
+//    }
+    /**phpmail邮件发送接口  */
+    public function send_mail($email, $subject, $body)
+    {
+        $mail = new PHPMailer(true);
+        // 服务器设置
+        $mail->SMTPDebug = 0;                                    // 开启Debug
+        $mail->isSMTP();                                        // 使用SMTP
+        $mail->Host = 'smtp.exmail.qq.com ';                        // 服务器地址
+        $mail->SMTPAuth = true;                                    // 开启SMTP验证
+        $mail->Username = 'gongdan@mengdie.com';                // SMTP 用户名（你要使用的邮件发送账号）
+        $mail->Password = 'Lingjiang735';                 // SMTP 密码
+        $mail->SMTPSecure = 'tls';                                // 开启TLS 可选
+        $mail->Port = 25;                                        // 端口
+        // 发件人
+        $mail->setFrom('gongdan@mengdie.com', '玲珑TV官网');            // 来自
+        $mail->addAddress($email);        // 添加一个收件人
+        //收件人
+        $mail->addReplyTo('gongdan@mengdie.com', '玲珑TV官网');        // 回复地址
+        // 内容
+        $mail->isHTML(true);                                        // 设置邮件格式为HTML
+        $mail->Subject = $subject;
+//        $mail->Body    = '<br>尊敬的客户'.'qlx'.'您好:<br>您于'.'2017-3-3'.'收到精彩礼品一份
+//<br>点击验证:<a href="http://llzb.com/index.php/zb/user_center/judge_email?name=thinkphp">http://llzb.mengdie.com/</a></br>';
+        $mail->Body = $body;
+
+        $result = $mail->send();
+        if ($result == true) {
+            return 0;
+        } else {
+           return 1;
+        }
+    }
+}

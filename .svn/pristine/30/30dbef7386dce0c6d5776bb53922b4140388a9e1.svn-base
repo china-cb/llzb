@@ -1,0 +1,45 @@
+<?php
+namespace app\index\model;
+
+
+use think\Model;
+
+class ChannelSetModel extends Model
+{
+    /** 获取user_av_room 值 */
+    public function get_user_av_room_list($id,$mid){
+        return db_func('user_av_room','sp_')
+            ->where(['id' => $id,'uid' => $mid])
+            ->field('cover,secret_key,unit_price,map_guide,guide_type,type,window,logo,logo_type,logo_position,reward_switch,phone_switch')
+            ->find();
+    }
+    /** 直播间设置 */
+    public function up_map_guide($mid,$id,$data){
+        return db_func('user_av_room','sp_')
+            ->where(['id' => $id,'uid' => $mid])
+            ->update($data);
+    }
+    /** 获取打赏信息 */
+    public function get_reward_list($id, $mid){
+        return db_func('reward','sp_')
+            ->where(['rid' => $id,'mid' => $mid])
+            ->find();
+    }
+    /** 更新礼物打赏配置 */
+    public function up_gift_list($mid,$rid,$rt){
+        $list = db_func('reward','sp_')->where(['rid' => $rid,'mid' => $mid])->find();
+        if(empty($list)){
+            $rt['create_time'] = NOW_TIME;
+            $rt['mid'] = $mid;
+            $rt['rid'] = $rid;
+            return db_func('reward','sp_')
+                ->where(['rid' => $rid,'mid' => $mid])
+                ->insert($rt);
+        }else{
+            $rt['update_time'] = NOW_TIME;
+            return db_func('reward','sp_')
+                ->where(['rid' => $rid,'mid' => $mid])
+                ->update($rt);
+        }
+    }
+}

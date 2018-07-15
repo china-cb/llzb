@@ -1,0 +1,29 @@
+<!--插件-->
+{js href="__plugin__/jquery/1.9.1/jquery.min.js" /}
+{js href="__plugin__/layer/2.1/layer.js" /}
+{js href="__plugin__/laydate/laydate.js" /}
+{js href="__plugin__/My97DatePicker/WdatePicker.js"/}
+{js href='__plugin__/zTree/js/jquery.ztree.core-3.5.min.js' /}
+{js href='__plugin__/zTree/js/jquery.ztree.excheck-3.5.min.js' /}
+{js href="__plugin__/webuploader/0.1.5/webuploader.min.js"/}
+
+
+
+
+
+<!--基础-->
+{js href="__hui__/js/H-ui.js" /}
+{js href="__hui_admin__/js/H-ui.admin.js" /}
+
+<!--[if lt IE 9]>
+{js file="__plugin__/html5.js"/}
+{js file="__plugin__/respond.min.js"/}
+{js file="__plugin__/PIE_IE678.js"/}
+<![endif]-->
+
+<!--通用-->
+{js href="__static__/public/js/common.js"/}
+{js href="__static__/admin/js/public.js"/}
+
+
+

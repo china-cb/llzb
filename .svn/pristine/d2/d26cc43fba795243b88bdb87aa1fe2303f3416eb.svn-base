@@ -1,0 +1,21 @@
+{empty name='list'}
+<div class="statis_list_no">
+    <span></span>
+    暂无数据。。。
+</div>
+{else/}
+{volist name="list" id="vo"}
+<ul class="statis_ul">
+    <li>{$vo['id']|default=''}</li>
+    <!--<li>{$vo['title']|default=''}</li>-->
+    <li>{$vo['package_all']|default=''}分钟</li>
+    <li>{$vo.balance|default=''}分钟</li>
+    <li>{$vo.create_time|date="Y-m-d H:i:s",###}分钟</li>
+   <!--  ￥{}
+    $vo.cost_money|default='' -->
+</ul>
+{/volist}
+<div>
+    {$page|default=''}
+</div>
+{/empty}

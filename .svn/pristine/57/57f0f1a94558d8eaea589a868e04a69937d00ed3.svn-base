@@ -1,0 +1,130 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_channel.css"/}
+{/block}
+{block name="title"}频道管理-用户管理 直播中心{/block}
+{block name="content"}
+    <script  src="__static__/index/src/js/admin/admin.js" type="text/javascript"></script>
+<!-- endinject -->
+<div class="main admin admin-bg-1 channel-user">
+    <div class="channel-title">
+        直播监控
+        <div class="drop-sel channel-change">
+            <div class="dp-content">
+                <span class="dp-text">{$channel_list[0]['title']|default="--"}</span>
+                <button class="dp-icon"></button>
+                <input type="hidden" value="2010-01-01">
+                <ul class="dp-group">
+                    {volist name="channel_list" id="vo" }
+                        <li class="dp-item channel_title" data-val="{$vo.id|default=''}">{$vo.title|default="--"}</li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="content  ">
+            <span class="cu-title">用户管理</span>
+            <h4>累计用户量:
+                <span class="all_count_num">{$total|default='0'}</span>
+                <a>数据导出</a>
+            </h4>
+            <div class="cu-sheet user_count">
+                <div class="cs-th">
+                    <div class="cs-td nick"><i class="iconfont">&#xe630;</i>用户昵称</div>
+                    <div class="cs-td address"><i class="iconfont">&#xe642;</i>地址</div>
+                    <div class="cs-td time"><i class="iconfont">&#xe619;</i>观看时长</div>
+                    <div class="cs-td phone"><i class="iconfont">&#xe627;</i>手机号</div>
+                    <div class="cs-td vv"><i class="iconfont">&#xe6f8;</i>访问次数</div>
+                    <div class="cs-td chat"><i class="iconfont">&#xe613;</i>聊天数</div>
+                    <div class="cs-td time-1"><i class="iconfont">&#xe61a;</i>首次登录时间</div>
+                    <div class="cs-td time-2"><i class="iconfont">&#xe695;</i>最后在线时间</div>
+                    <div class="cs-td device"><i class="iconfont">&#xe628;</i>最后登录设备</div>
+                    <div class="cs-td way"><i class="iconfont">&#xe675;</i>最后登录方式</div>
+                </div>
+                {empty name="channel_user"}
+                   <div class="cs-tr" colspan="12">暂无记录..</div>
+                {else/}
+                {volist name="channel_user" id="vo" }
+                   <div class="cs-tr">
+                    <div class="cs-td nick">
+                        <h4>
+                            {empty name="vo.face_img"}
+                            <img src="__static__/index/src/img/temp/user_ava.png">
+                            {else/}
+                            {/empty}
+                            <span>
+                               {elt name="vo['nick_name']|mb_strlen='utf8'" value="5"}
+                                   {$vo['nick_name']|default='匿名用户'}
+                               {else/}
+                                   {$vo['nick_name']|mb_substr=0,5,'utf-8'}...
+                               {/elt}
+                            </span>
+                        </h4>
+                    </div>
+                    <div class="cs-td address">
+                        <span>{$vo.address|default="--"}</span>
+                    </div>
+                    <div class="cs-td time">
+                        <!--<span>{$vo.watch_count|gmstrftime="%H:%M:%S",###|default="0"}</span>-->
+                        <span>{$vo.watch_count|default="0"}分钟</span>
+                    </div>
+                    <div class="cs-td phone">
+                        <span>{$vo.phone|default="--"}</span>
+                    </div>
+                    <div class="cs-td vv">
+                        <span>{$vo.visit_count|default='0'}</span>
+                    </div>
+                    <div class="cs-td chat">
+                        <span>{$vo.chat_count|default='0'}</span>
+                    </div>
+                    <div class="cs-td time-1">
+                        <span>
+                            {empty name="vo.create_time"}
+                               --
+                            {else/}
+                               {$vo.create_time|date="Y.m.d H:i",###}
+                            {/empty}
+                        </span>
+                    </div>
+                    <div class="cs-td time-2">
+                        <span>
+                            {empty name="vo.end_time"}
+                               --
+                            {else/}
+                               {$vo.end_time|date="Y.m.d H:i",###}
+                            {/empty}
+                        </span>
+                    </div>
+                    <div class="cs-td device">
+                        <span>{$vo.last_login_device|default="电脑端"}</span>
+                    </div>
+                    <div class="cs-td way">
+                        <span>{$vo.last_login_type|default="pc"}</span>
+                    </div>
+                </div>
+                {/volist}
+                {/empty}
+                <div class="pages">
+                    {$page|default=''}
+                </div>
+            </div>
+            <div class="pages">
+                <a class="items text">前页</a>
+                <a class="items active">1</a>
+                <a class="items">2</a>
+                <a class="items disable">3</a>
+                <a class="items text">后页</a>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="channel_user_url" value="{:url('index/admin/ajax_channel_user')}">
+{/block}
+{block name="js"}
+{js href="__static__/index/js/admin/channel.js"/}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin_account.js"/}
+
+{/block}

@@ -1,0 +1,103 @@
+{extend name="base:base" /}
+{block name='content'}
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+    <img class="avatar size-XL l" src= "https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/pacific/upload_941607_1445008739414.jpg?x=0&y=0&h=75&w=121&vh=93&vw=150&oh=75&ow=121">
+    <dl style="margin-left:80px; color:#fff">
+        <dt><span class="f-18">被举报昵称：{$reportinfo['reportname']|default='--'}</span> <span class="pl-10 f-12"></span></dt>
+        <dd class="pt-10 f-12" style="margin-left:0">可以写一些其他东西</dd>
+    </dl>
+</div>
+<div class="pd-20">
+
+    <form class="form form-horizontal" id="form-admin-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>序号：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$reportinfo['id']|default='--'}" placeholder="" id="id" name="id" readonly>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>举报人：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$reportinfo['m_nickname']|default='--'}" placeholder="" id="m_nickname" name="" readonly>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>IP：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="{$reportinfo['ip']|long2ip|default='--'}" placeholder="" id="ip" name="ip" readonly>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>状态：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+
+                <div class="radio-box">
+                    <input name="status" type="radio" id="status-1" {if $reportinfo['status'] eq 0} checked {/if} value="0">
+                    <label for="status-1">待解决</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="status-2" name="status" {if $reportinfo['status'] eq 1} checked{/if} value="1" >
+                    <label for="status-2">已解决</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="status-2" name="status" {if $reportinfo['status'] eq -1} checked{/if} value="-1">
+                    <label for="status-2">已删除</label>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>举报时间：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" autocomplete="off"  value="{$reportinfo['create_time']|date="y-m-d :i:s",###|default='--'}" id="create_time" name="create_time" readonly>
+            </div>
+        </div>
+
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>举报原因：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+
+                {notempty name='reportinfo.reason'}
+                {switch name='reportinfo.reason'}
+                {case value='1'}<input type="text" class="input-text" readonly value="敏感信息">{/case}
+                {case value='2'}<input type="text" class="input-text" readonly value="恶意广告">{/case}
+                {case value='3'}<input type="text" class="input-text" readonly value="谣    言">{/case}
+                {case value='4'}<input type="text" class="input-text" readonly value="人身攻击">{/case}
+                {case value='5'}<input type="text" class="input-text" readonly value="色情，暴力，赌博">{/case}
+                {case value='6'}<input type="text" class="input-text" readonly value="民族，宗教歧视">{/case}
+                {default/}
+                {/switch}
+                {/notempty}
+            </div>
+        </div>
+
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">备注：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="detail" cols="" rows="" class="textarea"    onKeyUp="textarealength(this,100)" >{$reportinfo['detail']|default=''}</textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary submit_btn" type="button" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+
+
+</div>
+<input type="hidden" id="submit_url" value="{:Url('report_change')}">
+<input type="hidden" id="root_url" value="{:Url('index/index')}">
+</body>
+{/block}
+{block name='js'}
+{js href="__static__/admin/js/users/report_edit.js" /}
+{/block}

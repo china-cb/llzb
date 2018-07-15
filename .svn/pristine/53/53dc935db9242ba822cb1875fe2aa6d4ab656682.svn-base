@@ -1,0 +1,48 @@
+<?php
+namespace app\index\controller;
+use app\index\model\PreviewModel;
+use app\lib\TisApi;
+use app\lib\WisApi;
+use think\Controller;
+
+class Preview extends Controller
+{
+    protected  $instId;
+    protected  $channel_info;
+    public function __construct()
+    {
+        parent::__construct();
+        $post = input('param.',[]);
+        extract($post);
+        (empty($cid)) && wrong_return("缺少参数");
+        $m = new PreviewModel();
+        $this->channel_info = $m->get_channel_info($cid);
+    }
+
+
+    /** 玲珑TV首页 */
+    public function index()
+    {
+        $mid = session('member_id');
+        if(!empty($mid)){//会员观看
+            $m = new PreviewModel();
+            $user_info = $m->get_member_info($mid);
+        }else{//游客观看
+            $ip = get_client_ip();
+            $province = get_province_by_ip($ip);
+            $user_info['nick_name'] = !empty($province)?$province."网友":"匿名网友";
+        }
+        $this->assign("user_info",$user_info);
+        $this->assign("channel_info",$this->channel_info);
+        return $this->fetch();
+    }
+
+    /*获取tis信息*/
+    public function msg(){
+        $method = $_REQUEST['method'];
+        $api = new TisApi(config("LIVE_ACCESS_ID"),config("LIVE_ACCESS_KEY"));
+        $instId = $this->channel_info['tis_id'];
+        $rst = $api->$method($_REQUEST,$instId);
+        echo json_encode($rst);
+    }
+}

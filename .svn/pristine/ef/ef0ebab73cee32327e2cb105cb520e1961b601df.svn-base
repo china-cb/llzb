@@ -1,0 +1,463 @@
+/**
+ * Created by 冯天元 on 2016/12/28.
+ */
+$(function(){
+    var func = {
+        init:function(){
+            var type = $("#type_html").val();
+            var obj = $("#"+type);
+            obj.addClass("active");
+            obj.parents(".item-group").addClass("active");
+            obj.parents(".menu-item").addClass("active");
+        },
+        ajax_html:function(url){
+            common.ajax_post(url,false,true,function(rt){
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    $(".content").html(obj.html);
+                }
+            },true,[0.3,'#444']);
+        },
+        /** 引导图提交 */
+        edit_guide:function(){
+            var id = $("#guide_id").val();
+            var map_guide = $("#map_guide").val();
+            var guide_type = $("#guide_val").val();
+            var url = $("#map_guide_url").val();
+            if(map_guide == ''){
+                return false;
+            }
+            common.ajax_post(url,{id:id,map_guide:map_guide,guide_type:guide_type},true, function (rt){
+                    var obj = common.str2json(rt);
+                    if (obj.code == 1) {
+                        layer.msg(obj.msg,{icon:1});
+                        location.reload();
+                    }else{
+                        layer.msg(obj.msg,{icon:2});
+                    }
+            });
+        },
+        /** 引导图开关设置 */
+        guide_switch:function(guide_type){
+            var id = $("#guide_id").val();
+            var url = $("#all_switch").val();
+            common.ajax_post(url,{id:id,guide_type:guide_type},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** LOGO开关设置 */
+        logo_switch:function(logo_type){
+            var id = $("#logo_id").val();
+            var url = $("#all_switch").val();
+            common.ajax_post(url,{id:id,logo_type:logo_type},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 视频LOGO提交 */
+        edit_logo:function(){
+            var id = $("#logo_id").val();
+            var logo_type = $("#logo_type").val();
+            var map_logo = $("#map_logo").val();
+            if(map_logo == ''){
+                return false;
+            }
+            var url = $("#map_logo_url").val();
+            common.ajax_post(url,{id:id,logo_type:logo_type,map_logo:map_logo},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 视频图标提交 */
+        edit_cover:function(){
+            var id = $("#cover_id").val();
+            var map_cover = $("#map_cover").val();
+            if(map_cover == ''){
+                return false;
+            }
+            var url = $("#map_cover_url").val();
+            common.ajax_post(url,{id:id,map_cover:map_cover},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 窗口背景提交 */
+        edit_window:function(){
+            var id = $("#window_id").val();
+            var map_window = $("#map_window").val();
+            if(map_window == ''){
+                return false;
+            }
+            var url = $("#window_url").val();
+            common.ajax_post(url,{id:id,map_window:map_window},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    layer.msg(obj.msg,{icon:1});
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 付费与私密直播开关设置 */
+        record_switch:function(type){
+            var id = $("#record_id").val();
+            var url = $("#all_switch").val();
+            common.ajax_post(url,{id:id,type:type},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+        /** 打赏功能开关 */
+        reward_switch:function(reward_switch){
+        var id = $("#reward_id").val();
+        var url = $("#all_switch").val();
+        common.ajax_post(url,{id:id,reward_switch:reward_switch},true, function (rt){
+            var obj = common.str2json(rt);
+            if (obj.code == 1) {
+            }else{
+                layer.msg(obj.msg,{icon:2});
+            }
+        });
+    },
+        /** 填写手机号开关 */
+        phone_switch:function(phone_switch){
+            var id = $("#reward_id").val();
+            var url = $("#all_switch").val();
+            common.ajax_post(url,{id:id,phone_switch:phone_switch},true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        },
+         /** 礼物打赏提交 */
+        gif_act:function(){
+             var data = $("#reward_list").serialize();
+             var url = $("#gift_art").val();
+             common.ajax_post(url,data,true, function (rt){
+                 var obj = common.str2json(rt);
+                 if (obj.code == 1) {
+                     location.reload();
+                 }else{
+                     layer.msg(obj.msg,{icon:2});
+                 }
+             });
+         },
+        /** 红包打赏 */
+        red_reward:function(){
+            var red_type = $("input[name='rule']:checked").val();
+            var red_num = $("#red_num").val();
+            var red_price = $("#red_price").val();
+            var reward_name = $("#share_speak").val();
+            var phone_prompt = $("#phone_speak").val();
+            var red_describe = $("#red_reward").val();
+            var rid = $("#reward_id").val();
+            if(red_num == 0){
+                layer.msg('红包数量不能为0',{icon:2});
+                return false;
+            }
+            var param = {
+                rid:rid,
+                red_type: red_type,
+                red_num: red_num,
+                red_price: red_price,
+                reward_name: reward_name,
+                phone_prompt: phone_prompt,
+                red_describe: red_describe
+            };
+            var url = $("#gift_red_reward").val();
+            common.ajax_post(url,param,true, function (rt){
+                var obj = common.str2json(rt);
+                if (obj.code == 1) {
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            });
+        }
+};
+    func.init();
+    /**ajax请求页面*/
+    $(document).on("click",".ig-item",function(){
+        $(".ig-item").removeClass("active");
+        $(this).addClass("active");
+    });
+    ///**选项卡切换*/
+    //$(document).on("click",".menu-item",function(){
+    //    $(".menu-item").removeClass("active");
+    //    $(this).addClass("active");
+    //    $(this).children(".item-group").addClass("active");
+    //});
+    /** 窗口背景提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_window();
+    });
+    /** 直播引导图提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_guide();
+    });
+    /** 视频LOGO提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_logo();
+    });
+    /** 视频图标提交 */
+    $(document).on("click",".preview_sub",function(){
+        func.edit_cover();
+    });
+    /** 直播引导图关*/
+   $(document).on("click",".guide_off",function(){
+        $(".on_off i").addClass("off_act");
+        $(".guide_layer2").addClass("guide_layer2_act");
+        $(".on_off").removeClass("guide_off");
+        $(".on_off").addClass("guide_on");
+        func.guide_switch(0);
+   });
+    /** 直播引导图開*/
+    $(document).on("click",".guide_on",function(){
+        $(".on_off i").removeClass("off_act");
+        $(".guide_layer2").removeClass("guide_layer2_act");
+        $(".on_off").addClass("guide_off");
+        $(".on_off").removeClass("guide_on");
+        func.guide_switch(1);
+    });
+    /** 直播引导图上传*/
+    $("input[name='guide_url']").change(function(){
+        var data = new FormData($('#guide_up')[0]);
+        $.ajax({
+            url: $("#up_guide_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_guide").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 直播窗口背景上传*/
+    $("input[name='window_img']").change(function(){
+        var data = new FormData($('#window_list')[0]);
+        $.ajax({
+            url: $("#up_window_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_window").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 频道图标上传*/
+    $("input[name='cover_file']").change(function(){
+        var data = new FormData($('#cover_url')[0]);
+        $.ajax({
+            url: $("#up_cover_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_cover").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 直播LOGO关*/
+    $(document).on("click",".logon_off",function(){
+        $(".on_off i").addClass("off_act");
+        $(".guide_layer2").addClass("guide_layer2_act");
+        $(".on_off").removeClass("logon_off");
+        $(".on_off").addClass("logon_on");
+        func.logo_switch(0);
+    });
+    /** 直播LOGO開*/
+    $(document).on("click",".logon_on",function(){
+        $(".on_off i").removeClass("off_act");
+        $(".guide_layer2").removeClass("guide_layer2_act");
+        $(".on_off").addClass("logon_off");
+        $(".on_off").removeClass("logon_on");
+        func.logo_switch(1);
+    });
+    /** 判断LOGO位置  */
+    $(document).on('click','.logo_val',function(){
+        var logo_type = $(this).data('val');
+        $("#logo_type").val(logo_type);
+    });
+    /** LOGO上传*/
+    $("input[name='logo_url']").change(function(){
+        var data = new FormData($('#logo_up')[0]);
+        $.ajax({
+            url: $("#up_logo_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    $("#map_logo").val(rt.ret_data);
+                    layer.msg(rt.msg,{icon:1});
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 付费直播关*/
+    $(document).on("click",".secret_off",function(){
+        $(".secret_val i").addClass("off_act");
+        $(".secret_key").addClass("guide_layer_dis");
+        $(".secret_val").removeClass("secret_off");
+        $(".secret_val").addClass("secret_on");
+        func.record_switch(0);
+    });
+    /** 付费直播開*/
+    $(document).on("click",".secret_on",function(){
+        $(".secret_val i").removeClass("off_act");
+        $(".secret_key").removeClass("guide_layer_dis");
+        $(".secret_val").addClass("secret_off");
+        $(".secret_val").removeClass("secret_on");
+        func.record_switch(2);
+    });
+    /** 私密直播关*/
+    $(document).on("click",".unit_off",function(){
+        $(".unit_val i").addClass("off_act");
+        $(".unit_key").addClass("guide_layer_dis");
+        $(".unit_val").removeClass("unit_off");
+        $(".unit_val").addClass("unit_on");
+        func.record_switch(0);
+
+    });
+    /** 私密直播開*/
+    $(document).on("click",".unit_on",function(){
+        $(".unit_val i").removeClass("off_act");
+        $(".unit_key").removeClass("guide_layer_dis");
+        $(".unit_val").addClass("unit_off");
+        $(".unit_val").removeClass("unit_on");
+        func.record_switch(1);
+    });
+    /** 打赏功能关*/
+    $(document).on("click",".reward_on",function(){
+        $(".reward_switch").attr("checked",false);
+        $(".reward_switch").removeClass("reward_on");
+        $(".reward_switch").addClass("reward_off");
+        func.reward_switch(0);
+    });
+    /** 打赏功能开*/
+    $(document).on("click",".reward_off",function(){
+        $(".reward_switch").attr("checked",true);
+        $(".reward_switch").removeClass("reward_off");
+        $(".reward_switch").addClass("reward_on");
+        func.reward_switch(1);
+    });
+    /** 填写手机号关*/
+    $(document).on("click",".phone_on",function(){
+        $(".phone_switch").attr("checked",false);
+        $(".phone_switch").removeClass("phone_on");
+        $(".phone_switch").addClass("phone_off");
+        func.phone_switch(0);
+    });
+    /** 填写手机号开*/
+    $(document).on("click",".phone_off",function(){
+        $(".phone_switch").attr("checked",true);
+        $(".phone_switch").removeClass("phone_off");
+        $(".phone_switch").addClass("phone_on");
+        func.phone_switch(1);
+    });
+    // //上传图片
+    // $(".file_upload").change(function() {
+    //     var $file = $(this);
+    //     var $file_indx = $(this).index(".file_upload");
+    //     var fileObj = $file[0];
+    //     var windowURL = window.URL || window.webkitURL;
+    //     var dataURL;
+    //     var $img = $(".preview");
+    //     if(fileObj && fileObj.files && fileObj.files[0]){,
+    //         dataURL = windowURL.createObjectURL(fileObj.files[0]);
+    //         $img.attr('src',dataURL);
+    //     }else{dataURL = $file.val();var imgObj = $(".preview").eq($file_indx);}});
+    /** 礼物打赏删除 */
+    $(document).on("click",".delete",function(){
+        $(this).parents(".gift_box").remove();
+    });
+    /** 礼物打赏提交 */
+    $(document).on("click",".gift-submit",function(){
+        func.gif_act();
+    });
+    /** 礼物上传*/
+    $(".gift_img").change(function(){
+        var obj = $(this);
+        var data = new FormData($("#reward_list")[0]);
+        $.ajax({
+            url: $("#gift_img_url").val(),
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success : function(rt){
+                if (rt.code == 1) {
+                    obj.parent().siblings(".gift_msg").val(rt.ret_data);
+                }else{
+                    layer.msg(rt.msg,{icon:2});
+                }
+            }
+        });
+        return false;
+    });
+    /** 红包打赏提交 */
+    $(document).on("click",".submit",function(){
+        func.red_reward();
+    });
+});
+

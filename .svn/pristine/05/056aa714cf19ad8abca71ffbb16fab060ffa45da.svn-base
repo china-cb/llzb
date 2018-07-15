@@ -1,0 +1,24 @@
+<div class="helplist">
+    <h1 class="list_title">
+        {switch name="list.0.type"}
+            {case value="1"}入门指南{/case}
+            {case value="2"}如何直播{/case}
+            {case value="3"}产品说明{/case}
+            {default /}入门指南
+        {/switch}
+    </h1>
+
+        <div>
+            <h2 class="list_title2">{$list.0.title}</h2>
+            <section class="list_content">
+                <div class="content_list">
+                    {volist name="list" id="vo" }
+                       <a class="item-category" data-id="{$vo.id}">{$vo.name|default='--'}</a>
+                    {/volist}
+                </div>
+            </section>
+            <a class="list_title3">
+                <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+            </a>
+        </div>
+</div>

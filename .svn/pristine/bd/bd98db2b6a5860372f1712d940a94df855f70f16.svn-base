@@ -1,0 +1,217 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin_account.css"/}
+{css file="__static__/index/src/css/mCustomScrollbar.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<!-- inject:admin_header:html -->
+<!-- endinject -->
+<div class="main admin">
+    <div class="container">
+        <!-- inject:account_menu:html -->
+
+        <ul class="menu">
+            <li class="menu-item account">
+                <h4 class="mi-text">
+                    <i class="iconfont">&#xe615;</i>
+                    账户信息
+                </h4>
+                <ul class="item-group">
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe737;</i>
+                        修改手机号
+                    </li>
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe62f;</i>
+                        修改邮箱
+                    </li>
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe62c;</i>
+                        修改密码
+                    </li>
+                    <li class="ig-item">
+                        <i class="iconfont">&#xe61d;</i>
+                        实名认证
+                        {eq name="list.state" value="1"}
+                        <span class="auth ing">审核中</span>
+                        {/eq}
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item bill">
+                <a class="mi-text">
+                    <i class="iconfont">&#xe729;</i>
+                    账单详情
+                </a>
+            </li>
+            <li class="menu-item balance">
+                <a class="mi-text">
+                    <i class="iconfont">&#xe610;</i>
+                    余额充值
+                </a>
+            </li>
+            <li class="menu-item recharge">
+                <a class="mi-text">
+                    <i class="iconfont">&#xe656;</i>
+                    充值订单
+                </a>
+            </li>
+        </ul>
+
+        <!-- endinject -->
+        <div class="content account-msg content_act">
+            <div class="block block1s block_act">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">基本信息</span>
+                    <span class="reg_time">注册时间<span>{$list.create_time|default="0"}</span></span>
+                    <a class="modify modify_act">修改信息</a>
+                    <!-- 修改激活 -->
+                    <a class="modify">保存</a>
+                </h1>
+                <section class="basic_content">
+                    <img src="__static__/index/src/img/temp/user_ava.png" class="head_img"/>
+                    <ul class="basic_info basic_info_act" >
+                        <li>
+                            <span>登录账号</span>
+                            <span>{$list.account|default="0"}</span>
+                        </li>
+                        <li>
+                            <span>行业</span>
+                            <span>{$list.vocation|default="/(ㄒoㄒ)/~~"}</span>
+                        </li>
+
+                        <li>
+                            <span>企业名称</span>
+                            <span>{$list.vocation|default="/(ㄒoㄒ)/~~"}</span>
+                        </li>
+                        <li>
+                            <span>手机号</span>
+                            <span>{$list.vocation|default="0"}</span>
+                        </li>
+                        <li>
+                            <span>邮箱</span>
+                            {empty name="list.email"}
+                              <span>
+                                 <span class="not_bound">未绑定</span>
+                                 绑定邮箱用于用户找回密码
+                                <a href="" class="go_bound">去绑定</a>
+                             </span>
+                            {else/}
+                            <span>{$list.empty|default="0"}</span>
+                            {/empty}
+                        </li>
+                    </ul>
+                    <!-- 修改激活 -->
+                    <ul class="basic_info">
+                        <li>
+                            <span>登录账号</span>
+                            <span>{$list.account|default=""}</span>
+                        </li>
+                        <li>
+                            <span>行业</span>
+                             <span class="industry industrys">
+                                <span class="industry_inner">{$list.vocation|default="/(ㄒoㄒ)/~~"}</span>
+                                <span class="triangle_up"></span>
+                             </span>
+                            <ul class="industry_ul ">
+                                <li>网络视频电台1</li>
+                                <li>网络视频电台2</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <span>企业名称</span>
+                            <input type="" name="" class="industry" value="{$list.vocation|default='/(ㄒoㄒ)/~~'}">
+                        </li>
+                        <li>
+                            <span>手机号</span>
+                             <span class="x_modify">
+                                {$list.vocation|default=""}
+                                <a href="" class="go_bound">修改</a>
+                             </span>
+
+                        </li>
+                        <li>
+                            <span>邮箱</span>
+                             <span class="x_modify">
+                                 {$list.empty|default="0"}
+                                 <a href="" class="go_bound">修改</a>
+                             </span>
+                        </li>
+                    </ul>
+                </section>
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">安全信息</span>
+                </h1>
+                <ul class="security">
+                    <li>
+                        <span class="security_ico">
+                            <i class="iconfont">&#xe655;</i>
+                            <i class="i_img"></i>
+                        </span>
+                        <span class="real_1">实名认证</span>
+                        <span class="real_2">未认证</span>
+                        <span class="real_3">您还没有进行实名认证，为保障您的权益最大化，请进行实名认证。</span>
+                        <a href="" class="go_real">去认证</a>
+                    </li>
+                    <li>
+                        <span class="security_ico">
+                            <i class="iconfont">&#xe622;</i>
+                            <i class="i_img i_img2"></i>
+                        </span>
+                        <span class="real_1">登录密码</span>
+                        <span class="real_2 psd_1">安全等级：中</span>
+                        <span class="real_3 real_3s">安全性高的密码可以使账户更安全，建议您定期修改密码。</span>
+                        <a href="" class="go_real go_modify">修改密码</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="contents">
+                <div class="block block2s">0</div>
+                <div class="block block2s">1</div>
+                <div class="block block2s">2</div>
+                <div class="block block2s">3</div>
+            </div>
+        </div>
+        <div class="content bill-msg"><div class="block block_act">11</div></div>
+        <div class="content balance-msg"><div class="block block_act">22</div></div>
+        <div class="content recharge-msg"><div class="block block_act">33</div></div>
+    </div>
+</div>
+<input type="hidden" name="item_type" value="{$type|default=''}">
+{/block}
+{block name="js"}
+<script>
+    $(function(){
+        var type = $("input[name='item_type']").val();
+        if(type == 1){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.account').addClass('active');
+            $('.account-msg').addClass('content_act');
+            $('.item-group').addClass('active');
+        }
+        if(type == 2){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.bill').addClass('active');
+            $('.bill-msg').addClass('content_act');
+        }
+        if(type == 3){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.balance').addClass('active');
+            $('.balance-msg').addClass('content_act');
+        }
+        if(type == 4){
+            $('.menu-item ').removeClass('active');
+            $('.content').removeClass('content_act');
+            $('.recharge').addClass('active');
+            $('.recharge-msg').addClass('content_act');
+        }
+    });
+</script>
+{js href="__static__/index/src/js/mCustomScrollbar.js"/}
+{js href="__static__/index/src/js/admin_account.js"/}
+{/block}

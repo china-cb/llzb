@@ -1,0 +1,23 @@
+<div class="menu_dropdown bk_2">
+    {notempty name="list"}
+    {volist name='list' id='menu_1'}
+    <dl id="menu-article">
+        <dt>
+            <i class="fa {$menu_1.ico|default='fa-star'}"></i>&nbsp;{$menu_1.title|default=''}
+            <i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
+        <dd>
+            <ul>
+                {notempty name="menu_1._child"}
+                {volist name="menu_1._child" id="menu_2"}
+                <li>
+                    <a _href="{empty name='menu_2._child'}{:Url($menu_2['url'])}{notempty name='menu_2.param'}?{$menu_2['param']}{/notempty}{else /}javascript:{/empty}" data-title="{$menu_2.title|default=''}" href="javascript:void(0)">{$menu_2.title|default=''}</a>
+                </li>
+                {/volist}
+                {/notempty}
+            </ul>
+        </dd>
+    </dl>
+    {/volist}
+    {/notempty}
+</div>
+{css href="__plugin__/font-awesome/css/font-awesome.min.css" /}

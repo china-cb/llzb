@@ -1,0 +1,141 @@
+{extend name='base:base' /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}角色{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加角色{/case}
+{case value='edit'}编辑角色{/case}
+{default /}查看角色
+{/switch}
+{/notempty}
+{/block}
+{block name='content'}
+<form class="form form-horizontal" id="form_content">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色默认打开页：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select-box"  name="index_id">
+                <option value="0">默认页</option>
+                {if condition="($type == 'add')"}
+                {volist name="menu_list" id="vo"}
+                <option value="{$vo['id']}" >{$vo.title_show|default='--'}</option>
+                {/volist}
+                {else /}
+                {volist name="menu_list" id="vo"}
+                <option value="{$vo['id']}"  {if condition="$vo['id'] eq $info['index_id'] "} selected="selected" {/if} {if condition=" $vo['id'] eq $info['index_id'] "}disabled="disabled"{/if} >{$vo.title_show|default='--'}</option>
+                {/volist}
+                {/if}
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级角色：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select-box"  name="pid">
+                {if condition="($type == 'add')"}
+                {volist name="role_list" id="vo"}
+                <option value="{$vo['id']}" >{$vo.title_show|default='--'}</option>
+                {/volist}
+                {else /}
+                {volist name="role_list" id="vo"}
+                <option value="{$vo['id']}"  {if condition="$vo['id'] eq $info['pid'] "} selected="selected" {/if} {if condition=" $vo['id'] eq $info['id'] "}disabled="disabled"{/if} >{$vo.title_show|default='--'}</option>
+                {/volist}
+                {/if}
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色名称：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请输入角色名称" name="name" value="{$info.name|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>状态：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="status" class="select">
+                    <option value="1"  {if condition="!empty($info['status']) AND $info['status'] eq '1'"}selected="selected"{/if} >正常</option>
+                    <option value="-2" {if condition="!empty($info['status']) AND $info['status'] eq '-2'"}selected="selected"{/if} >禁用</option>
+                </select>
+				</span>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否为超级用户：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="is_super" class="select">
+                    <option value="false" {if condition="!empty($info['is_super']) AND $info['is_super'] eq 'false'"}selected="selected"{/if} >否</option>
+                    <option value="true"  {if condition="!empty($info['is_super']) AND $info['is_super'] eq 'true'"}selected="selected"{/if} >是</option>
+                </select>
+				</span>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>权限管理：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <ul id="treeDemo" class="ztree"></ul>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">角色描述：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text"  placeholder="请输入角色描述" name="tips" value="{$info.tips|default=''}">
+        </div>
+    </div>
+
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            <button  class="btn btn-primary radius submit_btn" type="button" data-url="{:url('update')}">
+                <i class="Hui-iconfont">&#xe632;</i>确定
+            </button>
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">
+                &nbsp;&nbsp;取消&nbsp;&nbsp;
+            </button>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id|default=''}">
+    <input type="hidden" id="submit_url" value="{:url('update')}">
+    <input type="hidden" id="root_url" value="{:url('role')}">
+    <input type="hidden" id="menu_list" value='{$menu_list_json|default=""}'/>
+</form>
+
+
+
+{/block}
+
+{block name='js'}
+{js href="__static__/admin/js/auth/form.js" /}
+{/block}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

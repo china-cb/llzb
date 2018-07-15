@@ -1,0 +1,292 @@
+<?php
+use think\db\connector\Mysql;
+
+use think\Db;
+
+abstract class rewardLibrary {
+    abstract protected function getData($object_id);
+
+    abstract protected function getMessage($nickName,$num);
+
+    abstract protected function getPayBody();
+
+
+    abstract protected function getMobileMessage($money = null);
+
+    abstract protected function getSystemMessage($uid,$money = null);
+
+    protected $systemMessageTitle;
+
+    public $object_type;
+
+    public $reward_type;
+
+    protected $ci;
+
+    protected $pay_info;
+
+    protected $paySum;
+
+    protected $userInfo;
+
+    protected $controller;
+
+    protected $msgType;
+
+    public $uvData;
+
+    public $vgoods;
+
+    public $rewardnum;
+
+    public $balance_coin;
+
+    public $type_name;
+    public $object_uid;
+    protected $returnData = array();//
+
+
+    /**
+     * 获取 GET/POST 参数
+     * @param string $param 参数名称
+     * @return mixed|string  boolean
+     */
+    public function getParams($param){
+        $getstr=input("param.$param",null);
+        if(empty($getstr)) $getstr= input("request.$param",null);
+        if(empty($getstr)){
+            $data = json_decode(file_get_contents('php://input'),true);
+
+            if(empty($data["$param"])){
+                $getstr ='';
+            }else{
+                $getstr = $data["$param"];
+            }
+        }
+        return $getstr;
+    }
+
+    public function setController($obj) {
+        $this->controller = $obj;
+    }
+
+    public function _getPublishParamters($sender,$data) {
+
+        if($data['reward_type']) $this->reward_type = $data['reward_type'];
+        if(empty($this->reward_type)) $this->reward_type = REWARD_TYPE_GOOD;//默认赠送礼物
+
+        $parameter['object_id'] = $data['object_id'] ? intval($data['object_id']) : intval($data['liveid']);
+
+        if(empty($parameter['object_id'])) exit_json(1,'请传入赠送对象id');
+
+        if($this->reward_type ==REWARD_TYPE_REDBAG){
+            $objinfo = $this->getData($data['object_uid']);//找到标的物的 信息 ，并且将标的物相关  的 人 uid 赋值
+            if (empty($objinfo)) exit_json(1, '赠送对象信息不存在',$this->returnData);
+        }else{
+            $objinfo = $this->getData($parameter['object_id']);//找到标的物的 信息 ，并且将标的物相关  的 人 uid 赋值
+            if (empty($objinfo)) exit_json(1, '赠送对象信息不存在',$this->returnData);
+        }
+
+
+        $this->rewardnum = isset($data['num'])?$data['num']:1;//单次 订购个数
+        if(empty($this->rewardnum)) $this->rewardnum = 1;//单次 定购个数
+        //支付信息
+
+        $payInfo = $data['pay_info'];
+
+        $this->pay_info = $payInfo;
+        $this->paySum = intval($payInfo['input_free_coin'])*$this->rewardnum;//总价格
+        if (empty($payInfo)) exit_json(1, '支付信息不能为空',$this->returnData);
+        $parameter['pay_info'] = $payInfo;
+
+
+        $parameter['free_coin'] = $payInfo['input_free_coin'];//支付单价
+        $parameter['num'] = $this->rewardnum;//单次数量
+        $parameter['coin'] = $payInfo['input_free_coin']*$this->rewardnum;//支付总价
+
+
+        $parameter['uid'] = $sender['member_id'];
+        $parameter['object_type'] = $this->object_type;//5 or 6  or7
+        $parameter['object_uid'] = $this->object_uid;
+
+        $nickname = $sender['nickname'] ? $sender['nickname'] : $sender['num'];
+        $parameter['description'] = $this->getMessage($nickname,$parameter['coin']);
+        $ip = get_client_ip();
+        $parameter['ip'] = ip2long($ip);
+        $parameter['create_time'] = time();
+        $parameter['reward_type'] = $this->reward_type;
+        return $parameter;
+    }
+
+    public function doPay($rewardId) {
+        if($this->reward_type == REWARD_TYPE_GOOD) {//实际都是走子级具体的doPAY  这里只做宏观逻辑展示
+            $flag = $this->_doPayResult($rewardId);
+            if(!$flag) {
+                exit_json(1,'赠送失败',$this->returnData);
+            }
+            exit_json(0,"赠送成功",$this->returnData);
+        }else{
+
+        }
+    }
+
+    public function setPaySum($paySum) {
+        $this->paySum = $paySum;
+    }
+
+    public function setUserInfo($userInfo) {
+        $this->userInfo = $userInfo;
+    }
+
+    public function _doPayResult($rewardId) {
+
+        $reward = db('reward')->where('reward_id',$rewardId)->find();
+        $live_id ='';
+        if($reward['object_type'] == OBJECT_TYPE_LIVE){
+            $live_id = $reward['object_id'];
+        }elseif($reward['object_type'] == OBJECT_TYPE_REDBAG){
+            $bonus_id = $reward['object_id'];
+        }
+        if (empty($reward))
+        {
+            log_w("reward_{$rewardId}赠送信息不存在");
+            exit_json(1, '馈赠信息不存在');
+        }
+
+        if ($reward['status'] != 0) exit_json(1, '信息不需要支付');
+
+        $objectUserInfo = $this->controller->getFormatUserInfo($reward['object_uid']);
+        $result = true;
+
+        Db::startTrans();//开启事务
+        try {
+            if($reward['reward_type'] == REWARD_TYPE_GOOD ||$reward['reward_type'] ==REWARD_TYPE_FEEBASED)
+            {
+                $flag = db_func('member')->where('member_id',$reward['object_uid'])->setInc('ticket',$reward['coin']);//- 收到者的 余额
+                $flag2 = db_func('member')->where('member_id',$reward['object_uid'])->setInc('get_ticket',$reward['coin']);//- 收到者的 永增收
+                $flag3 = db_func('member')->where('member_id',$reward['object_uid'])->setInc('newaccountlogcount',1);//- 收到者的
+
+                $maek = db_func('member')->where('member_id',$reward['uid'])->setDec('coin',$reward['coin']);//- 发起者的
+                $maek2 = db_func('member')->where('member_id',$reward['uid'])->setInc('give_coin',$reward['coin']);//- 发起者的  永增发出
+                if (empty($maek)||empty($maek2)) throw new \Exception("reward_{$rewardId}更改账户余额出错");
+
+                $maek = db_func('reward')->where('reward_id',$rewardId)->update(array('status'=>1,'pay_time'=>$this->controller->timestamp));
+                if (empty($maek)) throw new \Exception("reward_{$rewardId}更改赠送状态出错");
+            }
+            elseif ($reward['reward_type'] == REWARD_TYPE_REDBAG )
+            {
+                $flag = db_func('member')->where('member_id',$reward['object_uid'])->setInc('coin',$reward['coin']);//- 收到者的
+                $flag2 = db_func('member')->where('member_id',$reward['object_uid'])->setInc('get_coin',$reward['coin']);//-特殊收入 收到者的
+                $flag3 = db_func('member')->where('member_id',$reward['object_uid'])->setInc('newaccountlogcount',1);//- 收到者的
+
+                //红包 在发送初期 就已经扣过了
+            }
+
+            if (empty($flag)||empty($flag2)||empty($flag3)) throw new Exception("reward_{$rewardId}更新对方账户信息出错");
+
+            //查询对象用户的钱
+            $objectUserData = db_func('member')->where('member_id',$reward['object_uid'])->find();
+
+            $objdata = array(
+                'uid' => $reward['object_uid'],
+                'to_uid' => $reward['object_uid'],//
+                'from_uid' => $reward['uid'],
+                'object_type' => OBJECT_TYPE_REWARD,
+                'object_id' => $rewardId,
+                'live_id'=>$live_id,
+                'type' => ACCOUNT_LOG_TYPE_COIN,//出账 用coin 入账 用票   根据实际 下方更改
+                'create_time' => $this->controller->timestamp,
+                'income' => ACCOUNT_LOG_INCOME_TRUE,
+                'description' => $reward['description'],
+                'balance_advance' => $objectUserData['advance'],
+                'balance_coin' => $objectUserData['coin'],
+                'balance_ticket' =>$objectUserData['ticket'],
+            );
+
+            if($reward['coin']>0) {
+                //金币
+                $objdata['ticket'] = $reward['coin'] + 0;
+                $objdata['type'] = ACCOUNT_LOG_TYPE_TICKET;//以票的形式收
+
+            }
+            if($reward['reward_type'] ==REWARD_TYPE_REDBAG){
+                $objdata['object_type'] = OBJECT_TYPE_REDBAG;
+                $objdata['object_id'] = $bonus_id;
+                $objdata['ticket'] =0;
+                $objdata['coin'] = $reward['coin'] + 0;
+                $objdata['type'] = ACCOUNT_LOG_TYPE_COIN;//红包特殊 以币的形式收
+            }
+
+            $accid = db_func('account_log')->insertGetId($objdata);
+
+            if (empty($accid)) throw new Exception("reward_{$rewardId}新增对方资金流水出错");
+
+            $reward_sender = db_func('member')->where('member_id',$reward['uid'])->find();
+
+            $this->balance_coin = $reward_sender['coin'];
+
+            $authordata = array(
+                'uid' => $reward['uid'],
+                'from_uid' => $reward['uid'],
+                'to_uid' => $reward['object_uid'],
+                'object_type' => OBJECT_TYPE_REWARD,
+                'object_id' => $rewardId,
+                'live_id'=>$live_id,
+                'type' => ACCOUNT_LOG_TYPE_COIN,
+                'create_time' => $this->controller->timestamp,
+                'income' => ACCOUNT_LOG_INCOME_FALSE,
+                'balance_advance' => $reward_sender['advance'],
+                'balance_coin' => $reward_sender['coin'],//已经减过了
+                'balance_ticket'=>$reward_sender['ticket'],
+            );
+
+            if($reward['coin']>0) {
+                //金币
+                $authordata['coin'] = $reward['coin'] + 0;//发出是以币的形式发出
+                $authordata['type'] = ACCOUNT_LOG_TYPE_COIN;
+                $authordata['description'] =  "赠送".$objectUserInfo['nickname'].'的'.$this->rewardnum.'个'.$this->type_name.'折合'.$reward['coin'].config('CONFIG_FLATFORM_NAME').config('PLATFORM_UNIT');
+            }
+
+            //如果是付费直播 进行描述更改
+            if($reward['reward_type'] ==REWARD_TYPE_FEEBASED){
+                $authordata['description'] =  "进入".$objectUserInfo['nickname'].'的'.$live_id.'号'.$this->type_name.'支付'.$reward['coin'].config('CONFIG_FLATFORM_NAME').config('PLATFORM_UNIT');
+            }
+            /** 如果是红包   */
+            if($reward['reward_type'] ==REWARD_TYPE_REDBAG){
+                $authordata['object_type'] =OBJECT_TYPE_REDBAG;
+                $authordata['object_id'] =$bonus_id;
+                $authordata['object_type'] =OBJECT_TYPE_REDBAG;
+                $authordata['description'] =  $objectUserInfo['nickname'].'领取你的'.$bonus_id.'号'.$this->type_name.'中小红包,折合'.$reward['coin'].config('CONFIG_FLATFORM_NAME').config('PLATFORM_UNIT');
+            }
+            $accid = db_func('account_log')->insertGetId($authordata);
+
+            if (empty($accid)) throw new Exception("reward_".$rewardId."新增自己资金流水出错");
+
+            //后续回调
+            $t = $this->mycallback($reward);
+
+            Db::commit(); //提交事务
+            $result = true;
+        } catch (\Exception $ex) {
+            log_w("回调错误：".$ex->getMessage());
+
+            Db::rollback();//回滚
+            $result = false;
+        }
+
+
+        return $result;
+
+    }
+
+    protected function mycallback($reward) {
+        if($this->object_type == OBJECT_TYPE_LIVE){
+            $step = $reward['coin']+0;
+            $flag = db_func('live_record')->where('id',$reward['object_id'])->setInc('ticket',$step);
+            if (empty($flag)) throw new Exception("reward_{$reward['reward_id']}更新直播进账出错，所有支付退回");
+        }
+
+    }
+
+
+}

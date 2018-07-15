@@ -1,0 +1,170 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/setmeal.css"/}
+{/block}
+{block name="title"}套餐购买{/block}
+{block name="content"}
+<div class="main">
+	<div class="submits">
+		<h1 class="submits_h1">套餐提交</h1>
+		<form  method="post" id="package_form" target="_blank">
+		<div class="submits_main">
+			<h1 class="current_h1">
+				当前套餐
+				<span class="current_right">时长套餐A</span>
+			</h1>
+			<i class="line"></i>
+			<h1 class="current_h1">选择套餐</h1>
+			<div class="set_choose set_choose_act">
+				<h1 class="package_h1 package_h1s">
+					<span class="border_o">基础套餐</span>
+					无套餐限制，实时结算，方便快捷
+				</h1>
+				<ul class="package_ul">
+					<li>
+						<span>每人每分钟约为</span>
+						<span class="span_f">
+							0.006
+							<i>元</i>
+						</span>
+						<i class="border_line"></i>
+					</li>
+					<li>
+						<span>起订金额</span>
+						<span class="black_c span_f">
+							10
+							<i>元</i>
+						</span>
+						<i class="border_line"></i>
+					</li>
+					<li>
+						<span class="li_c">订购时间</span>
+						<span class="black_c span_f">
+							灵活可选
+						</span>
+					</li>
+				</ul>
+				<div class="arrow_down arrow_down_act">
+					<i class="iconfont">&#xe745;</i>
+				</div>
+			</div>
+			<h1 class="package_h1 package_h1s package_h2s">
+				<span class="border_o">时长套餐A</span>
+			</h1>
+			<div style="clear: both"></div>
+			<div class="set_choose set_choose2sx ">
+				
+				<ul class="charging_ul charging_ul2s">
+					<!-- <li class="charging_img"></li> -->
+					<li class="li_act" data-val="15">
+						<span>30000分钟</span>
+						<span>
+							<i>0.04</i>
+							元／人／分钟
+						</span>
+						<span class="annotation">无套餐限制，一元起充，实时结算</span>
+						<i></i>	
+						<span class="arrow_down">
+							<i class="iconfont">&#xe745;</i>
+						</span>
+					</li>
+					<li data-val="16">
+						<span>1200000分钟</span>
+						<span>
+							<i>0.03</i>
+							元／人／分钟
+						</span>
+						<span class="annotation">无套餐限制，一元起充，实时结算</span>
+						<i></i>
+						<span class="arrow_down ">
+							<i class="iconfont">&#xe745;</i>
+						</span>
+					</li>
+					<li data-val="17">
+						<span>4500000分钟</span>
+						<span>
+							<i>0.02</i>
+							元／人／分钟
+						</span>
+						<span class="annotation">无套餐限制，一元起充，实时结算</span>
+						<i></i>
+						<span class="arrow_down ">
+							<i class="iconfont">&#xe745;</i>
+						</span>
+					</li>
+					<li data-val="18">
+						<span>10000000分钟</span>
+						<span>
+							<i>0.015</i>
+							元／人／分钟
+						</span>
+						<span class="annotation">无套餐限制，一元起充，实时结算</span>
+						<span class="arrow_down ">
+							<i class="iconfont">&#xe745;</i>
+						</span>
+					</li>
+			    </ul>
+			    
+			</div>
+			<i class="line lines"></i>
+			<div class="basis1 basis_act">
+				<h1 class="current_h1">选择金额</h1>
+				<div class="choose_money"></div>
+			</div>
+			<div class="basis1 basis_act">
+				<h1 class="current_h1">
+					有效期
+					<span class="year_times">1年</span>
+				</h1>
+			</div>
+			<i class="line"></i>
+			<h1 class="current_h1">
+				支付方式
+			</h1>
+			<div class="ways">
+				<span class="pay" data-type="1">
+					支付宝
+					<span class="arrow_down">
+						<i class="iconfont">&#xe745;</i>
+					</span>
+				</span>
+				<span class="pay" data-type="2">
+					微信
+					<span class="arrow_down" >
+						<i class="iconfont">&#xe745;</i>
+					</span>
+				</span>
+			</div>
+
+			<div class="payment">
+				<span class="payment_right">
+					￥20000
+				</span>
+				<span class="payment_left">应付金额</span>
+			</div>
+			<a class="go_pay" data-url="{:url('core/business/order')}">立即支付</a>
+			<div style="clear: both"></div>
+			<ul class="prompts">
+				<li>温馨提示：</li>
+				<li>1.支持微信，银联支付，线下银行付款等方式充值。</li>
+				<li>2.支付成功后，可在账户总览中查看最新余额。</li>
+				<li>3.充值成功的金额不支持提现。</li>
+				<li>4.支持查看所有历史充值记录，点击进入查询。</li>
+				<li>5.若充值未到账或有其他疑问可致电客服热线：4009-618-610。</li>
+			</ul>
+		</div>
+		</form>
+	</div>
+</div>
+<input type="hidden" id="package_type" value=""><!--获取套餐类型ID-->
+<input type="hidden" id="package_money" value=""><!--获取套餐类型-->
+<input type="hidden" id="pay_type" value=""><!--支付方式写入-->
+<input type="hidden" id="pay_url" value="{:url('index/index/pay_info')}"><!--支付方式写入-->
+<input type="hidden" id="alipay_url" value="{:url('core/unionpay/alipay')}"><!--支付宝-->
+<input type="hidden" id="get_qrcode_url" value="{:url('core/unionpay/get_qrcode_url')}"><!--微信-->
+<input type="hidden" value="{:url('core/order/get_order_pay_status')}" id="get_order_pay_status"><!--扫描订单状态-->
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/setmeal.js"/}
+{js href="__static__/index/js/index/index.js"/}
+{/block}

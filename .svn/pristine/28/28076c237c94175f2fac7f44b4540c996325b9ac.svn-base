@@ -1,0 +1,72 @@
+@charset "UTF-8";
+.main_top .main_main > .package, .main_top .main_main > .package > .package_ul, .main_top .main_main > .package > .package_ul li, .charging .charging_main > ul, .charging .charging_main > ul li, .use_fee .fee_main > ul, .use_fee .fee_main > ul > li { *zoom: 1; }
+.main_top .main_main > .package:before, .main_top .main_main > .package > .package_ul:before, .main_top .main_main > .package > .package_ul li:before, .charging .charging_main > ul:before, .charging .charging_main > ul li:before, .use_fee .fee_main > ul:before, .use_fee .fee_main > ul > li:before, .main_top .main_main > .package:after, .main_top .main_main > .package > .package_ul:after, .main_top .main_main > .package > .package_ul li:after, .charging .charging_main > ul:after, .charging .charging_main > ul li:after, .use_fee .fee_main > ul:after, .use_fee .fee_main > ul > li:after { content: ""; display: table; }
+.main_top .main_main > .package:after, .main_top .main_main > .package > .package_ul:after, .main_top .main_main > .package > .package_ul li:after, .charging .charging_main > ul:after, .charging .charging_main > ul li:after, .use_fee .fee_main > ul:after, .use_fee .fee_main > ul > li:after { clear: both; }
+
+.use_fee .fee_main > h2:after, .use_fee .fee_main > h2:before { -moz-user-select: none; /*火狐*/ -webkit-user-select: none; /*webkit浏览器*/ -ms-user-select: none; /*IE10*/ -khtml-user-select: none; /*早期浏览器*/ user-select: none; }
+
+html, body { background-color: #f5f6f6; }
+
+.use_fee .fee_main > h2:after, .use_fee .fee_main > h2:before { font-family: "iconfont" !important; font-style: normal; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+.main_top { position: relative; width: 100%; height: 287px; }
+.main_top:after { content: ""; display: block; position: absolute; top: 0; z-index: 1; height: 100%; width: 50%; left: 0; background-color: #313f52; }
+.main_top:before { content: ""; display: block; position: absolute; top: 0; z-index: 1; height: 100%; width: 50%; right: 0; background-color: #2fcfc5; }
+.main_top .main_main { position: relative; z-index: 2; margin: 0 auto; width: 1200px; height: 100%; background-color: #ccc; }
+.main_top .main_main:after { content: ""; display: block; position: absolute; top: 0; z-index: 1; height: 100%; width: 735px; right: 50%; background: url("../img/setmeal/setmeal_left.png") no-repeat 0px 0px #000; background-size: cover; }
+.main_top .main_main:before { content: ""; display: block; position: absolute; top: 0; z-index: 1; height: 100%; width: 735px; left: 50%; background: url("../img/setmeal/setmeal_right.png") no-repeat 0px 0px; background-size: cover; }
+.main_top .main_main > .package { position: relative; margin-top: 33px; text-align: left; z-index: 2; float: left; width: 810px; padding: 15px 20px; height: 190px; background-color: #fff; }
+.main_top .main_main > .package > .package_h1 { letter-spacing: 1px; font-size: 16px; margin-bottom: 20px; }
+.main_top .main_main > .package > .package_h1 > span { margin-right: 12px; display: inline-block; padding: 0px 15px; border-radius: 5px; background-color: #00c1df; color: #fff; }
+.main_top .main_main > .package > .package_ul { position: relative; }
+.main_top .main_main > .package > .package_ul li { position: relative; float: left; width: auto; height: 70px; padding: 0 30px 0 15px; text-align: center; }
+.main_top .main_main > .package > .package_ul li > span { display: block; }
+.main_top .main_main > .package > .package_ul li > span:nth-child(1) { font-size: 14px; color: #333; font-weight: 700; }
+.main_top .main_main > .package > .package_ul li > span:nth-child(2) { margin-top: 5px; padding-left: 12px; font-size: 36px; color: #ff5400; font-weight: 700; }
+.main_top .main_main > .package > .package_ul li > span:nth-child(2) > i { font-size: 12px; font-style: inherit; font-weight: 400; }
+.main_top .main_main > .package > .package_ul li > .black_c { color: #333 !important; }
+.main_top .main_main > .package > .package_ul li > .li_c { position: relative; text-align: left; text-indent: 17px; }
+.main_top .main_main > .package > .package_ul li .border_line { position: absolute; top: 8px; right: 0; width: 5px; height: 55px; background: url(../img/setmeal/setmeal_ico.png) no-repeat -292px -207px; }
+.main_top .main_main > .package > .package_ul .money_right { position: absolute; top: -20px; right: -40px; width: 209px; height: 123px; letter-spacing: 1px; text-align: center; line-height: 110px; color: #fff; font-size: 19px; background: url(../img/setmeal/setmeal_ico.png) no-repeat -1px 0px; }
+.main_top .main_main > .package > a { margin: 25px 0 0 130px; display: block; width: 160px; height: 40px; border-radius: 3px; background-color: #ea544a; text-align: center; line-height: 40px; color: #fff; font-size: 16px; letter-spacing: 1px; -webkit-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -moz-transition: all 0.3s ease; transition: all 0.3s ease; }
+.main_top .main_main > .package > a:hover { background-color: #f53427; box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); }
+
+.charging { width: 100%; height: 385px; background-color: #f5f6f6; }
+.charging .charging_main { position: relative; margin: 0 auto; width: 1200px; height: 100%; }
+.charging .charging_main > h1 { padding-top: 30px; color: #333; font-size: 24px; text-align: left; }
+.charging .charging_main > h1 span { font-size: 16px; color: #00c1df; }
+.charging .charging_main > ul li { position: relative; width: 240px; height: 240px; float: left; background-color: #fff; }
+.charging .charging_main > ul li > span { display: block; color: #333; }
+.charging .charging_main > ul li > span:first-child { font-size: 18px; margin: 30px auto 5px auto; }
+.charging .charging_main > ul li > span:nth-child(2) { margin: 12px auto 12px auto; font-size: 12px; }
+.charging .charging_main > ul li > span:nth-child(2) > i { font-size: 30px; color: #ff5400; font-style: inherit; }
+.charging .charging_main > ul li > span:nth-child(3) { margin-bottom: 25px; font-size: 14px; }
+.charging .charging_main > ul li > a { margin: 0 auto; display: block; width: 110px; height: 30px; line-height: 30px; text-align: center; font-size: 12px; color: #fff; letter-spacing: 1px; border-radius: 2px; background-color: #00c1df; -webkit-transition: 0.5s; -ms-transition: 0.5s; -moz-transition: 0.5s; transition: 0.5s; }
+.charging .charging_main > ul li > a:hover { -webkit-transform: translateX(5px); -ms-transform: translateX(5px); -moz-transform: translateX(5px); transform: translateX(5px); box-shadow: 0 0 20px rgba(0, 183, 211, 0.4); background-color: #00b7d3; }
+.charging .charging_main > ul li > i { position: absolute; top: 18px; right: 0; display: block; width: 6px; height: 205px; background: url(../img/setmeal/setmeal_ico.png) no-repeat -358px -132px; }
+.charging .charging_main > ul li:first-child { background: url(../img/setmeal/setmeal_ico.png) no-repeat -10px -137px; }
+
+.use_fee { width: 100%; height: 610px; background: url("../img/setmeal/use_fee_banner.jpg") no-repeat center center #181413; background-size: cover; }
+.use_fee .fee_main { position: relative; margin: 0 auto; width: 1200px; height: 100%; color: #fff; letter-spacing: 1px; }
+.use_fee .fee_main > h1 { font-size: 24px; padding-top: 20px; }
+.use_fee .fee_main > h2 { position: relative; font-size: 18px; }
+.use_fee .fee_main > h2:after { position: relative; top: -2px; color: #575454; margin-left: 5px; content: " "; content: "\e648"; }
+.use_fee .fee_main > h2:before { position: relative; top: -2px; color: #575454; margin-right: 5px; content: " "; content: "\e92b"; }
+.use_fee .fee_main > ul { margin-top: 40px; width: 1200px; height: 408px; }
+.use_fee .fee_main > ul > li { position: relative; margin-left: 53px; float: left; width: 330px; height: 408px; font-weight: 700; background-color: #fff; -webkit-transition: 0.6s; -ms-transition: 0.6s; -moz-transition: 0.6s; transition: 0.6s; }
+.use_fee .fee_main > ul > li > span { display: block; }
+.use_fee .fee_main > ul > li > .li_h1 { padding-top: 25px; margin-bottom: 10px; font-size: 24px; color: #00c1df; }
+.use_fee .fee_main > ul > li > .li_h2 { color: #333; font-size: 20px; }
+.use_fee .fee_main > ul > li > .li_fee { margin: 20px auto 35px auto; width: 180px; height: 180px; line-height: 35px; color: #f66539; font-size: 28px; border-radius: 50%; background-color: #fff0eb; }
+.use_fee .fee_main > ul > li > .li_fee > span { position: relative; top: 58px; }
+.use_fee .fee_main > ul > li > .li_fee > span > i { font-size: 18px; font-style: inherit; }
+.use_fee .fee_main > ul > li > .li_fee1 { line-height: 180px; }
+.use_fee .fee_main > ul > li > a { margin: 0 auto; display: block; width: 200px; height: 46px; line-height: 46px; color: #fff; font-size: 18px; border-radius: 4px; background-color: #fd7045; -webkit-transition: 0.6s; -ms-transition: 0.6s; -moz-transition: 0.6s; transition: 0.6s; }
+.use_fee .fee_main > ul > li > a:hover { background-color: #ee4612; box-shadow: 0 0 20px rgba(238, 70, 18, 0.3); -webkit-transform: translateX(5px); -ms-transform: translateX(5px); -moz-transform: translateX(5px); transform: translateX(5px); }
+.use_fee .fee_main > ul > li > i { position: absolute; top: 0; right: -10px; display: block; width: 82px; height: 62px; background: url("../img/setmeal/setmeal_ico.png") no-repeat -255px -9px; }
+.use_fee .fee_main > ul > li:hover { box-shadow: 0 2px 20px 0px rgba(255, 255, 255, 0.87); -webkit-transform: translateY(-2px); -ms-transform: translateY(-2px); -moz-transform: translateY(-2px); transform: translateY(-2px); }
+
+.consult { position: relative; margin: 20px auto; width: 1227px; height: 137px; background: url(../img/setmeal/setmeal_ico.png) no-repeat -338px 2px; }
+.consult > h1 { position: absolute; top: 48px; left: 222px; font-weight: 700; color: #00c1df; font-size: 22px; }
+.consult > a { display: block; position: absolute; right: 110px; top: 48px; width: 160px; height: 45px; line-height: 45px; text-align: center; color: #fff; font-size: 18px; border-radius: 3px; background-color: #00c1df; -webkit-transition: 0.5s; -ms-transition: 0.5s; -moz-transition: 0.5s; transition: 0.5s; }
+.consult > a:hover { -webkit-transform: translateX(5px); -ms-transform: translateX(5px); -moz-transform: translateX(5px); transform: translateX(5px); box-shadow: 0 0 20px rgba(0, 167, 193, 0.4); background-color: #00a7c1; }

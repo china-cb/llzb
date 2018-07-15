@@ -1,0 +1,78 @@
+{extend name='base:base' /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}自定义列表详情{/block}
+{block name="site_nav_2"}
+{notempty name='type'}
+{switch name='type'}
+{case value='add'}添加列表详情{/case}
+{case value='edit'}编辑列表详情{/case}
+{default /}查看列表
+{/switch}
+{/notempty}
+{/block}
+{block name='content'}
+<form class="form form-horizontal" id="form-article-add">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级列表项目：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select-box" data-placeholder="请选择" name="pid">
+                <option value="0">请选择</option>
+                {volist name='category_list' id='vo'}
+                <option value="{$vo.id|default=''}"
+                        {if condition="!empty(input('param.pid',''))" }
+                        {if condition="(input('param.pid') eq $vo['id'])"}selected="selected"{/if}
+                {/if}
+                {if condition="!empty($info['pid']) AND $info['pid'] eq $vo['id']"}selected="selected"{/if}
+                >{$vo.title_show|default=''}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>列表名称：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请输入" name="name" value="{$info.name|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">排序号：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text"  placeholder="请输入" name="sort" value="{$info.sort|default='100'}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">唯一标识符(非必填)：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请填写唯一标识符,该标识符用于系统调用" name="code" value="{$info.code|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">备注：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text"  placeholder="请输入" name="tips" value="{$info.tips|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            {notempty name='type'}
+            {switch name='type'}
+            {case value='add'}
+            <button  class="btn btn-primary radius ok_submit" type="button" data-url="{:url('cate_list_update')}">
+                <i class="Hui-iconfont">&#xe632;</i>确定
+            </button>
+            {/case}
+            {case value='edit'}
+            <button  class="btn btn-warning radius ok_submit" type="button" data-url="{:url('cate_list_update')}">
+                <i class="Hui-iconfont">&#xe632;</i>保存
+            </button>
+            {/case}
+            {default /}查看列表
+            {/switch}
+            {/notempty}
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">取消</button>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id|default=''}">
+    <input type="hidden" name="mid" value="{:input('param.mid')}">
+</form>
+{/block}

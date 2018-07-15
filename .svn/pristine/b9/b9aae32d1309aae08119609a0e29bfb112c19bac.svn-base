@@ -1,0 +1,83 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}频道管理{/block}
+{block name="site_nav_2"}频道列表{/block}
+{block name='content'}
+<title>主播认证</title>
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c">
+            名称搜索：
+            <input type="text" class="input-text" style="width:250px" placeholder="请输入登录账户"  value="{:input('get.search_word')}" name="search_word">
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            日期范围：
+            <input type="text" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" id="datemin" name="start_time" value="{:input('get.start_time')}" placeholder="请输入直播开始时间" class="input-text Wdate" style="width:250px;">
+            -
+            <input type="text"  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" id="datemax" name="end_time" value="{:input('get.end_time')}"class="input-text Wdate" placeholder="请输入直播结束时间" style="width:250px;">
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  name="search_empty"><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total|default=''}</strong> 条</span>
+        </div>
+    </form>
+</div>
+
+<div class="mt-20">
+    <table class="table table-border table-bordered table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="11">频道列表</th>
+        </tr>
+        <tr class="text-c">
+            <th>玲珑ID</th>
+            <th>登录账号</th>
+            <th>频道个数</th>
+            <th>正在直播频道数</th>
+            <th>最后直播时间</th>
+            <th>累计直播播放时长</th>
+            <th>累计花费</th>
+            <th width="20%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {empty name='item'}
+        <tr>
+            <td class="text-c" colspan="12">暂无数据..</td>
+        </tr>
+        {else/}
+        {volist name="item" id='item'}
+        <tr class="text-c">
+            <td>{$item['num_id']|default='--'}</td>
+            <td>{$item['account']|default='--'}</td>
+            <td>{$item['u_num']|default='0'}</td>
+            <td>{$item['live_num']|default='0'}</td>
+            <td>{$item['end_time']|date="Y-m-d H:i:s",###}</td>
+            <td>{$item['c_num']|default='--'}分钟</td>
+            <td>￥{$item['sum_money']|default='0.00'}</td>
+            <td class="td-manage">
+                <a title="查看详情" href="javascript:;" data-url="{:url('channel_info',['id' => $item['member_id'],'cid' => $item['cid']])}" class="btn btn-primary ml-5 open_form radius" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;&nbsp;查看详情</i></a>
+            </td>
+        </tr>
+        {/volist}
+        {/empty}
+        </tbody>
+    </table>
+</div>
+<nav class="page_admin">
+    {$page|default=""}
+</nav>
+<script>
+    $("#search_empty").click(function(){
+        $("input[name='start_time']").val('');
+        $("input[name='end_time']").val('');
+    })
+</script>
+{/block}
+{block name='js'}
+{js href="__static__/admin/js/index/index.js"/}
+{/block}
+
+
+
+
+

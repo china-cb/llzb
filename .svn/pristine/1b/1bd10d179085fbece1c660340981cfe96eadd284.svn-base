@@ -1,0 +1,29 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/setmeal.css"/}
+{/block}
+{block name="title"}套餐购买{/block}
+{block name="content"}
+	<div class="submits">
+		<h1 class="submits_h1">购买结果</h1>
+		<!-- 成功 -->
+		<!-- <div class="succes_img"></div>
+		<p class="succes_p">
+			<span>恭喜您支付成功</span>
+			<span>2s后返回个人中心</span>
+			<a title="" class="go_ok">确定</a>
+		</p> -->
+
+		<!-- 失败哦 -->
+		<div class="succes_img error_img"></div>
+		<p class="succes_p">
+			<span>很抱歉，您的支付未成功！</span>
+			<a title="" class="go_ok continue">继续支付</a>
+			<a title="" class="go_ok returns">返回个人中心</a>
+		</p>
+	</div>
+
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/setmeal.js"/}
+{/block}

@@ -1,0 +1,108 @@
+{extend name='base:base' /}
+{block name="content"}
+<div class="cl pd-5 bg-1 bk-gray">
+    <span class="l">
+        <a class="btn btn-primary radius add"  href="javascript:;" ><i class="Hui-iconfont">&#xe600;</i> 添加角色</a>
+    </span>
+    <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+<table class="table table-border table-bordered table-hover table-bg">
+    <thead>
+    <tr>
+        <th scope="col" colspan="6">角色管理</th>
+    </tr>
+    <tr class="text-c">
+        <th width="25"><input type="checkbox" value="" name=""></th>
+        <th width="40">ID</th>
+        <th width="200">角色名</th>
+        <th>角色描述</th>
+        <th width="140">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    {volist name='admin_role_list' id='item' }
+    <tr class="text-c">
+        <td><input type="checkbox" value="" name=""></td>
+        <td>{$item['id']}</td>
+        <td>{$item['name']}</td>
+        <td>{$item['desc']|default='--'}</td>
+        <td class="f-14">
+            <a title="编辑" href="javascript:;" data-id="{$item['id']}" class="edit" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+            <a title="删除" href="javascript:;" data-id="{$item['id']}"  class="ml-5 del_role" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+    </tr>
+    {/volist}
+
+    </tbody>
+</table>
+<input type="hidden" id="exec_url" value="{:Url('exec')}">
+<input type="hidden" id="del_url" value="{:Url('del')}">
+<script type="text/javascript">
+
+    $(function(){
+        var func = {
+            edit:function(obj){
+                var url = $('#exec_url').val();
+                var id = obj.data('id');
+                layer_show('编辑角色',url,id,'edit');
+
+            },
+            del: function (obj) {
+                layer.confirm('角色删除须谨慎，确认要删除吗？',function(index){
+                    var url = $("#del_url").val();
+                    var id = obj.data('id');
+
+                    common.ajax_post(url,{'id':id},true,function(rt){
+                        common.post_tips(rt,function(){
+                            $(obj).parents("tr").remove();
+                            layer.msg('已删除!',{icon:1,time:1000});
+                        })
+
+                    })
+
+
+                });
+
+            },
+            add:function(obj){
+                var url = $('#exec_url').val();
+                layer_show('增加角色',url,null,'add');
+            }
+        };
+
+        $(document).on("click", ".edit", function () {
+            func.edit($(this));
+        });
+        $(document).on("click", ".del_role", function () {
+            func.del($(this));
+        });
+        $(document).on("click", ".add", function () {
+            func.add($(this));
+        });
+
+    })
+
+
+
+
+
+    function admin_role_add(title,url,type,w,h){
+        layer_show(title,url,null,type,w,h);
+    }
+    /*管理员-角色-编辑*/
+    function admin_role_edit(title,url,id,type,w,h){
+        layer_show(title,url,id,type,w,h);
+    }
+    /*管理员-角色-删除*/
+    function admin_role_del(obj,id){
+        layer.confirm('角色删除须谨慎，确认要删除吗？',function(index){
+
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000});
+        });
+    }
+</script>
+{/block}
+
+{block name='js'}
+{js href="__static__/admin/js/auth/role_list.js" /}
+
+{/block}

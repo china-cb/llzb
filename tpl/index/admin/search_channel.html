@@ -1,0 +1,67 @@
+<div class="channel-item">
+    <div class="ci-btn">
+        <a class="location"></a>
+        <a class="return"></a>
+        <a class="pause"></a>
+        <a class="play"></a>
+        <a class="close"></a>
+    </div>
+    <div class="channel-cover">
+        {eq name="channel_info.live_status" value="1"}<span class="play-flag">正在直播</span>{/eq}
+        {empty name="channel_info.cover"}
+        <img src="{$Think.config.CONFIG_CDN_URL}97e76f3cf45e0e1c2a69e7bb1ae9ea73.png">
+        {else/}
+           <img src="{$Think.config.CONFIG_CDN_URL}{$channel_info.cover|default=''}">
+        {/empty}
+        <h4>{$channel_info.title|default="暂无频道名称"}</h4>
+    </div>
+    <div class="channel-desc">
+        <h4>
+            <label>观看人次:</label>
+            <span class="cd-num">{$channel_info.people|default='0'}人次</span>
+        </h4>
+        <h4>
+            <label>观看时长:</label>
+            <span class="cd-error">{$channel_info.watch_count|default='0'}分钟</span>
+        </h4>
+        <h4>
+            <label>最后直播时间:</label>
+                                <span class="cd-time">
+                                    {empty name="channel_info.end_time"}
+                                       该频道暂未直播
+                                    {else/}
+                                      {$channel_info['end_time']|date="Y-m-d H:i:s",###}
+                                    {/empty}
+                                </span>
+        </h4>
+    </div>
+    <div class="channel-control">
+        <a class="cc-item" href="{:url('index/admin/channel_setting',['id'=>$channel_info['id']])}">
+                                <span>
+                                    <i class="iconfont">&#xe604;</i>
+                                </span>
+            <h4>频道设置</h4>
+        </a>
+        <a class="cc-item" href="{:url('index/admin/channel_count_data',['id'=>$channel_info['id']])}">
+                                <span>
+                                    <i class="iconfont">&#xe6ba;</i>
+                                </span>
+            <h4>数据统计</h4>
+        </a>
+        <a class="cc-item" href="{:url('index/preview/index',['cid'=>$channel_info['id']])}" target="_blank">
+                                <span>
+                                    <i class="iconfont">&#xe77f;</i>
+                                </span>
+            <h4>PC预览</h4>
+        </a>
+        <a class="cc-item phone-view">
+                                <span>
+                                    <i class="iconfont">&#xe62a;</i>
+                                </span>
+            <h4>手机预览</h4>
+            <div class="phone-view-hd">
+                <img src="__static__/index/src/img/temp/qr.png">
+            </div>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+{extend name='base:base' /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}菜单{/block}
+{block name="site_nav_2"}
+    {notempty name='type'}
+    {switch name='type'}
+    {case value='add'}添加菜单{/case}
+    {case value='edit'}编辑菜单{/case}
+    {default /}查看菜单
+    {/switch}
+    {/notempty}
+{/block}
+{block name='content'}
+<form class="form form-horizontal" id="form-article-add">
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>上级菜单：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <select class="select-box" data-placeholder="请选择" name="pid">
+                {volist name='menus' id='vo'}
+                <option value="{$vo.id|default=''}"
+                        {if condition="!empty(input('param.pid',''))" }
+                        {if condition="(input('param.pid') eq $vo['id'])"}selected="selected"{/if}
+                {/if}
+                {if condition="!empty($info['pid'])" }
+                {if condition="$info['pid'] eq $vo['id']"}selected="selected"{/if}
+                {/if}
+                >{$vo.title_show|default=''}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>菜单名称：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请输入菜单名称" name="title" value="{$info.title|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">菜单描述：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text"  placeholder="请输入菜单描述" name="tip" value="{$info.tip|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否显示：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="hide" class="select">
+                    <option value="false"  {if condition="!empty($info['hide']) AND $info['hide'] eq 'false'"}selected="selected"{/if} >显示</option>
+                    <option value="true" {if condition="!empty($info['hide']) AND $info['hide'] eq 'true'"}selected="selected"{/if} >隐藏</option>
+                </select>
+				</span>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">小图标：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请把奥森图标的代码复制到这里,如:fa-star" name="ico" value="{$info.ico|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">url地址：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" placeholder="请输入url路径" name="url" value="{$info.url|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">参数：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text"  placeholder="例如:?type=add" name="param" value="{$info.param|default=''}">
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>打开方式：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="target" class="select">
+                    <option value="self" {if condition="!empty($info['target']) AND $info['target'] eq 'self'"}selected="selected"{/if}>当前窗口</option>
+                    <option value="blank" {if condition="!empty($info['target']) AND $info['target'] eq 'blank'"}selected="selected"{/if} >新窗口</option>
+                </select>
+				</span>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>是否管理员可见：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+				<span class="select-box">
+				<select name="is_admin" class="select">
+                    <option value="false" {if condition="!empty($info['is_admin']) AND $info['is_admin'] eq 'false' "}selected="selected"{/if}>否</option>
+                    <option value="true" {if condition="!empty($info['is_admin']) AND $info['is_admin'] eq 'true' "}selected="selected"{/if}>是</option>
+                </select>
+				</span>
+        </div>
+    </div>
+    <div class="row cl">
+        <label class="form-label col-xs-4 col-sm-2">排序值：</label>
+        <div class="formControls col-xs-8 col-sm-9">
+            <input type="text" class="input-text" value="{$info.sort|default='100'}" placeholder="请输入0-65535之间的数字" name="sort">
+        </div>
+    </div>
+    <div class="row cl">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+            <button  class="btn btn-primary radius ok_submit" type="button" data-url="{:url('update')}">
+                <i class="Hui-iconfont">&#xe632;</i>确定
+            </button>
+            <button onClick="layer_close();" class="btn btn-default radius" type="button">
+                &nbsp;&nbsp;取消&nbsp;&nbsp;
+            </button>
+        </div>
+    </div>
+    <input type="hidden" name="id" value="{$info.id|default=''}">
+</form>
+{/block}
+

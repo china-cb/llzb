@@ -1,0 +1,125 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}礼物打赏记录 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->
+        <div class="content">
+            <div class="block-com rp-list">
+                <h4 class="title">礼物打赏记录</h4>
+                <div class="live-table">
+                    <div class="l-th">
+                        <span class="l-td t-time">
+                            <i class="iconfont">&#xe61a;</i>
+                            时间
+                        </span>
+                        <span class="l-td t-name">
+                            <i class="iconfont">&#xe63c;</i>
+                            名称
+                        </span>
+                        <span class="l-td t-phone">
+                            <i class="iconfont">&#xe627;</i>
+                            手机号
+                        </span>
+                        <span class="l-td t-price">
+                            <i class="iconfont">&#xe63b;</i>
+                            金额(元)
+                        </span>
+                    </div>
+                    <div class="l-tr">
+                        <span class="l-td t-time">
+                            2016.01.01
+                        </span>
+                        <span class="l-td t-name">
+                            礼物名称
+                        </span>
+                        <span class="l-td t-phone">
+                            155555555
+                        </span>
+                        <span class="l-td t-price">
+                            123.00
+                        </span>
+                    </div>
+                    <div class="l-tr">
+                        <span class="l-td t-time">
+                            2016.01.01
+                        </span>
+                        <span class="l-td t-name">
+                            礼物名称
+                        </span>
+                        <span class="l-td t-phone">
+                            155555555
+                        </span>
+                        <span class="l-td t-price">
+                            123.00
+                        </span>
+                    </div><div class="l-tr">
+                        <span class="l-td t-time">
+                            2016.01.01
+                        </span>
+                    <span class="l-td t-name">
+                            礼物名称
+                        </span>
+                    <span class="l-td t-phone">
+                            155555555
+                        </span>
+                    <span class="l-td t-price">
+                            123.00
+                        </span>
+                </div><div class="l-tr">
+                        <span class="l-td t-time">
+                            2016.01.01
+                        </span>
+                    <span class="l-td t-name">
+                            礼物名称
+                        </span>
+                    <span class="l-td t-phone">
+                            155555555
+                        </span>
+                    <span class="l-td t-price">
+                            123.00
+                        </span>
+                </div><div class="l-tr">
+                        <span class="l-td t-time">
+                            2016.01.01
+                        </span>
+                    <span class="l-td t-name">
+                            礼物名称
+                        </span>
+                    <span class="l-td t-phone">
+                            155555555
+                        </span>
+                    <span class="l-td t-price">
+                            123.00
+                        </span>
+                </div><div class="l-tr">
+                        <span class="l-td t-time">
+                            2016.01.01
+                        </span>
+                    <span class="l-td t-name">
+                            礼物名称
+                        </span>
+                    <span class="l-td t-phone">
+                            155555555
+                        </span>
+                    <span class="l-td t-price">
+                            123.00
+                        </span>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

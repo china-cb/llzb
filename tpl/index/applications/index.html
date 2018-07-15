@@ -1,0 +1,97 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/swiper.min.css"/}
+{css file="__static__/index/src/css/applications.css"/}
+{css file="__static__/index/src/css/animate.min.css"/}
+{/block}
+{block name="title"}应用场景{/block}
+{block name="content"}
+	<div class="banners_slide">
+		<div class="swiper-container">
+	        <div class="swiper-wrapper">
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1 class="ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="1s" swiper-animate-delay="0.3s">大型直播保障</h1>
+	            		<h2 class="ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="0.5s" swiper-animate-delay="0.8s">高并发稳定承载，保障网络直播活动额画面清晰度，传输稳定性</h2>
+	            		<a href="" class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="1s" swiper-animate-delay="0.3s">购买套餐>></a>
+	            		<span class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="1.2s" swiper-animate-delay="0.4s">联系我们</span>
+	            	</div>
+	            </div>
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1>大型直播保障</h1>
+	            		<!-- php截取文章前部详细字段 -->
+	            		<h2>现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道，需要文案需要文案需要文案需要文案需要文案需要文 案需要文案</h2>
+	            		<a href="">购买套餐>></a>
+	            		<span>联系我们</span>
+	            	</div>
+	            </div>
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1>跨平台合作直播</h1>
+	            		<!-- php截取文章前部详细字段 -->
+	            		<h2>以合作形式在网站、手机H5页面开启直播，与三方视频网站协议直播，实现多平台同步直播。</h2>
+	            		<a href="">购买套餐>></a>
+	            		<span>联系我们</span>
+	            	</div>
+	            </div>
+	            <div class="swiper-slide">
+	            	<div class="slide_main">
+	            		<h1>微信视频直播</h1>
+	            		<!-- php截取文章前部详细字段 -->
+	            		<h2>自助式发起，开放接入微信、微信公众号，以及基于微信的分享、互动。 案需要文案</h2>
+	            		<a href="">购买套餐>></a>
+	            		<span>联系我们</span>
+	            	</div>
+	            </div>
+	        </div>
+	        <!-- Add Pagination -->
+	        <div class="swiper-pagination"></div>
+	    </div>
+	</div>
+	<div class="content_list">
+		<div class="title_list">
+			<ul class="nav">
+				<li class="active">所有内容</li>
+				<li>功能应用</li>
+				<li>直播场景</li>
+				<li>客户案例</li>
+			</ul>
+			<div class="list_content">
+			  <div class="list_table active">
+					<a>
+						<img src="/static/index/src/img/applications/list_ico3.jpg" alt="" />
+						<!-- php正则取字数，超出隐藏 -->
+						<span class="list_h1">摄像机＋编码器，体验专业 级直播</span>
+						<!-- php正则取字数，超出隐藏 -->
+						<span class="list_h2">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</span>
+					</a>
+					<a>
+						<img src="/static/index/src/img/applications/list_ico1.jpg" alt="" />
+						<span class="list_h1">摄像机＋编码器，体验专业 级直播</span>
+						<span class="list_h2">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</span>
+					</a>
+					<a>
+						<img src="/static/index/src/img/applications/list_ico2.jpg" alt="" />
+						<span class="list_h1">摄像机＋编码器，体验专业 级直播</span>
+						<span class="list_h2">现成的视频托管、直播工具、去标签化平台服务，低成本创建企业专属频道</span>
+					</a>
+			  </div>
+			  <div class="list_table">
+					1
+			  </div>
+			  <div class="list_table">
+					2
+			  </div>
+			  <div class="list_table">
+					3
+			  </div>
+			</div>
+		</div>
+	</div>
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/swiper.min.js"/}
+{js href="__static__/index/src/js/swiper.animate1.0.2.min.js"/}
+{js href="__static__/index/src/js/applications.js"/}
+{/block}

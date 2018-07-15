@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/help.css"/}
+<style>
+    a {
+        cursor:pointer;
+    }
+</style>
+{/block}
+{block name="title"}帮助中心{/block}
+{block name="content"}
+
+<nav class="help_nav">
+    <ul>
+        <li></li>
+        <li>
+            一站式提供“海量存储、高效分发、极速网络”等强大服务， 轻松坐享CCTV-5、新浪微博、知乎等量级的传播能力。广泛应用于 游戏直播、娱乐直播、泛生活直播、 教育类、 远程医疗、 企业远程视频会议等典型场景
+        </li>
+        <li>
+            <a href="{:url('index/index/package')}">套餐购买</a>
+            <a href="">联系我们</a>
+            <a href="{:url('index/index/package')}">套餐购买>></a>
+        </li>
+    </ul>
+</nav>
+<div class="statistics">
+    <!-- endinject -->
+    <div class="main admin ">
+        <div class="container">
+            <!-- inject:admin_menu:html -->
+            <ul class="menu">
+                {volist name="help_category" id="vo" }
+                    <li class="menu-item">
+                        <h4 class="mi-text">
+                            <i class="iconfont">&#xe615;</i>
+                            {$vo.title|default="--"}
+                        </h4>
+                        <ul class="item-group">
+                            {volist name="vo['two']" id="vo2" }
+                            <li class="ig-item" data-id="{$vo2.id}" data-value="{$vo.title}">
+                                {$vo2.title|default='--'}
+                            </li>
+                            {/volist}
+                        </ul>
+                    </li>
+                {/volist}
+            </ul>
+            <!-- endinject -->
+            <div class="content">
+                <div class="block">
+                    {volist name="help_category" id="vo" }
+                        <div class="helplist">
+                            <h1 class="list_title">{$vo.title|default="--"}</h1>
+                            {volist name="help_category_two" id="vo2" }
+                                {eq name="vo2['fid']" value="$vo['id']"}
+                                    <div>
+                                        <h2 class="list_title2">{$vo2.title}</h2>
+                                        <section class="list_content">
+                                                <div class="content_lists"> 
+                                                     {volist name="vo2['child']" id="vo3" }
+                                                        <a class="item-category" data-id="{$vo3.id}" data-value="{$vo.title}">{$vo3.name|default='--'}</a>
+                                                     {/volist}
+                                                 </div> 
+                                        </section>
+                                        <a class="list_title3">
+                                            <span class="list_span">展开<i class="iconfont">&#xe64a;</i></span>
+                                        </a>
+                                    </div>
+                                {/eq}
+                            {/volist}
+                        </div>
+                    {/volist}
+                </div>
+            </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<input type="hidden" id="help_url" value="{:url('index/index/get_help_info')}">
+<input type="hidden" id="get_help_list_url" value="{:url('index/index/get_help_menu_list')}">
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/help.js"/}
+{js href="__static__/index/js/index/help.js"/}
+{/block}
+

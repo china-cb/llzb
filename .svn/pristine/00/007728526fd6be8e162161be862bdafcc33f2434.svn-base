@@ -1,0 +1,207 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/12
+ * Time: 17:22
+ */
+
+namespace app\index\controller;
+
+
+use app\core\controller\Business;
+use app\index\model\AdminModel;
+use think\Controller;
+
+class Admin extends Common
+{
+    /** 控制台首页 */
+    public function index(){
+        $mid = check_login();
+        $m = new AdminModel();
+        $data = $m->get_user_count_info($mid);
+        $this->assign('data',$data);
+        return $this->fetch();
+    }
+
+    /** 频道管理列表 */
+    public function channel_manage(){
+        $type = input("param.type",'');
+        $mid = check_login();
+        $m = new AdminModel();
+        $channel_list = $m->get_channel_list($mid);
+        $this->assign('channel_list',$channel_list);
+        $this->assign('type',$type);
+        return $this->fetch();
+    }
+
+    /** 创建频道 */
+    public function set_channel(){
+        $mid = check_login();
+        $post = input("param.","");
+        extract($post);
+        (empty($title)) && wrong_return("频道名称不能为空");
+
+        $data = [
+            'uid'=>$mid,
+            'status'=> 0,
+            'title'=>$title,
+            'create_time'=>NOW_TIME
+        ];
+
+        $m = new AdminModel();
+        $channel_id = $m->set_channel_do($data);
+        if($channel_id > 0){
+            $stream = $mid."_".$channel_id;
+            //获取推流和拉流地址
+            $api = new Business();
+            $address = $api->get_push_url($stream);
+            if(!empty($address)){
+                //更新频道
+                $update_data = [
+                    'id'=>$channel_id,
+                    'stream'=>$stream,
+                    'push_url'=>$address['push_url'],
+                    'rtmp'=>$address['rtmp'],
+                    'hls'=>$address['hls']
+                ];
+                $res = $m->update_channel($update_data);
+                ($res > 0) && ok_return("创建成功");
+            }
+        }
+        wrong_return("创建失败");
+    }
+
+    /** 搜索频道 */
+    public function search_channel(){
+        $mid = check_login();
+        $title = input("param.title",'');
+        empty($title) && wrong_return("频道名称不能为空");
+
+        $m = new AdminModel();
+        $channel_info = $m->search_channel_do($mid,$title);
+        empty($channel_info) && wrong_return("没找到该频道");
+        $this->assign("channel_info",$channel_info);
+        $data = [
+            'code'=>1,
+            'html'=>$this->fetch()
+        ];
+        die_json($data);
+    }
+
+    /** 删除频道 */
+    public function del_channel(){
+        $mid = check_login();
+        $id = input("param.id",'');
+        empty($id) && wrong_return("频道ID不存在");
+        $m = new AdminModel();
+        $res = $m->update_channel_info($id,"status",'-2');
+        ($res > 0) && ok_return("删除成功");
+        wrong_return("删除失败");
+    }
+
+    /** 频道设置管理 */
+    public function channel(){
+        $cid = input("param.id",'');
+        $mid = check_login();
+        empty($cid) && die("频道不存在");
+        //查询频道详细信息
+        $m = new AdminModel();
+        $channel_info = $m->get_channel_info($mid,$cid);
+        $this->assign("channel_info",$channel_info);
+        return $this->fetch();
+    }
+
+    /** 频道数据统计 */
+    public function channel_count(){
+        $mid = check_login();
+        $m = new AdminModel();
+        //获取所有频道
+        $channel_list = $m->get_channel_list($mid);
+        //获取列表中第一个频道的用户信息
+        $r = $m->get_channel_user($channel_list[0]['id']);
+        $this->assign('channel_list',$channel_list);
+        $this->assign('page', $r->render());
+        $this->assign('channel_user', $r->all());
+        $this->assign('total',$r->total());
+        return $this->fetch();
+    }
+
+    /** ajax频道用户列表 */
+    public function ajax_channel_user(){
+        $id = input("param.id","");
+        empty($id) && wrong_return("频道ID不存在");
+        $mid = check_login();
+        $m = new AdminModel();
+        //获取频道的用户信息
+        $r = $m->get_channel_user($id);
+        $this->assign('page', $r->render());
+        $this->assign('channel_user', $r->all());
+        $data = [
+            'code'=>1,
+            'total'=>$r->total(),
+            'html'=>$this->fetch()
+        ];
+        die_json($data);
+    }
+
+    /** 频道设置 */
+    public function channel_setting(){
+        return $this->fetch();
+    }
+
+    /** 频道数据统计 */
+    public function channel_count_data(){
+        $id = input("param.id","");
+        empty($id) && wrong_return("频道ID不存在");
+        $mid = check_login();
+        $m = new AdminModel();
+        //获取所有频道
+        $channel_list = $m->get_channel_list($mid);
+        //获取频道的统计信息
+        $count = $m->get_channel_count_data($id);
+        $this->assign('channel_list',$channel_list);
+        $this->assign('count',$count);
+        $this->assign('channel_id',$id);
+        return $this->fetch();
+    }
+
+//    /** ajax频道数据统计 */
+//    public function ajax_channel_count(){
+//        $mid = check_login();
+//        $id = input("param.id","");
+//        empty($id) && wrong_return("频道ID不存在");
+//        //获取频道的统计信息
+//        $m = new AdminModel();
+//        $count = $m->get_channel_count_data($id);
+//        $this->assign('count',$count);
+//        $data = [
+//            "code"=>1,
+//            "channel_title"=>$count['channel_title'],
+//            "html"=>$this->fetch()
+//        ];
+//        die_json($data);
+//    }
+
+    /** 频道每月新增人数 */
+    public function count_text(){
+        $id = input("param.id",'');
+        $res = db_func("channel_record","sp_")->where("cid",$id)->order("create_time")->select();
+        $data = array();
+        foreach($res as $key=>$value){
+            $value['flag'] = date("m",$value['create_time']);
+            if(!isset($data[$value['flag']])){
+                $data[$value['flag']] = 0;
+            }
+            $data[$value['flag']] ++;
+        }
+        die_json($data);
+    }
+
+    public function text(){
+        $email = "1050135309@qq.com";
+        $emailArr = explode("@",$email);
+        dump($emailArr[1]);
+        return $this->fetch();
+    }
+}

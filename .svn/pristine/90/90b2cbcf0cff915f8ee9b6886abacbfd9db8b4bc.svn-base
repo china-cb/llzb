@@ -1,0 +1,23 @@
+/**
+ * Created by deloo on 2016/11/30.
+ */
+var _index=(function(){
+
+    function init(){
+        init_block_2();
+    }
+    function init_block_2(){
+        var temp=$(".index-block-2");
+        temp.on("mouseenter"," ul li",function(){
+            temp.find("li").removeClass("active").addClass("active-none");
+            $(this).addClass("active").removeClass("active-none");
+        });
+    }
+    return init;
+
+})();
+
+$(function(){
+    _index();
+    //_common.menu(3);
+});

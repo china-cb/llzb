@@ -1,0 +1,24 @@
+{extend name="base/base"/}
+{extend name="base/base"/}
+{block name="css"}{/block}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}模版管理{/block}
+{block name="site_nav_2"}编辑模版{/block}
+{block name='content'}
+<style>
+    .frame-top{
+        width: calc(100% );
+        height:calc(100% );
+        overflow-y: scroll;
+    }
+</style>
+<form>
+<textarea id="edit_area" class="textarea" name="html" style="width: 100%;height: 500px;resize: none">{$html}</textarea>
+    <input type="hidden" name="path" value="{$path|default=''}">
+<input type="button" data-url="{:url('save')}" class="btn btn-success ok_submit" value="保存">
+</form>
+{/block}
+{block name="js"}
+{js href="__static__/admin/js/template/edit.js"/}
+{/block}
+

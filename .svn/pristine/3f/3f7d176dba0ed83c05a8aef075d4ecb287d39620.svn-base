@@ -1,0 +1,76 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/28
+ * Time: 9:59
+ */
+
+namespace app\index\controller;
+
+
+class ChannelSet extends Common
+{
+    /** 频道基础设置_直播引导图 */
+     public function set_guide_map(){
+         $this->assign("type","set_guide_map");
+         return $this->fetch();
+     }
+
+    /** 频道基础设置_直播窗口背景 */
+    public function set_window_background(){
+        $this->assign("type","set_window_background");
+        return $this->fetch();
+    }
+
+    /** 频道基础设置_直播视频LOGO */
+    public function set_video_logo(){
+        $this->assign("type","set_video_logo");
+        return $this->fetch();
+    }
+
+    /** 频道基础设置_直播视频图标 */
+    public function set_video_icon(){
+        $this->assign("type","set_video_icon");
+        return $this->fetch();
+    }
+
+    /** 互动打赏设置_打赏设置 */
+    public function set_reward(){
+        $this->assign("type","set_reward");
+        return $this->fetch();
+    }
+
+    /** 互动打赏设置_礼物打赏记录 */
+    public function gift_reward_record(){
+        $this->assign("type","gift_reward_record");
+        return $this->fetch();
+    }
+
+    /** 互动打赏设置_红包打赏记录 */
+    public function red_reward_record(){
+        $this->assign("type","red_reward_record");
+        return $this->fetch();
+    }
+
+    /** 观看设置 */
+    public function set_look(){
+        $this->assign("type","set_look");
+        return $this->fetch();
+    }
+    /** 微信分享设置 */
+    public function set_weixin_share(){
+        $this->assign("type","set_weixin_share");
+        return $this->fetch();
+    }
+    /** 嵌入地址 */
+    public function set_embed_address(){
+        $this->assign("type","set_embed_address");
+        return $this->fetch();
+    }
+    /** 视频回放 */
+    public function video_back_play(){
+        $this->assign("type","video_back_play");
+        return $this->fetch();
+    }
+}

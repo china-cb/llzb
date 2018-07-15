@@ -1,0 +1,20 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/12
+ * Time: 17:22
+ */
+
+namespace app\index\controller;
+
+
+use think\Controller;
+
+class Admin extends Common
+{
+    /** 控制台首页 */
+    public function index(){
+        return $this->fetch();
+    }
+}

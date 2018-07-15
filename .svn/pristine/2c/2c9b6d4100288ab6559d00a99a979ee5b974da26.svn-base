@@ -1,0 +1,132 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}会员管理{/block}
+{block name="site_nav_2"}会员列表{/block}
+{block name='content'}
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <span class="l">
+            <a href="javascript:;" class="btn btn-primary radius open_form" data-url="{:url('member_exec',['type'=>'add'])}"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+        </span>
+        <div class="text-c">
+            名称搜索:
+            <input type="text" class="input-text" style="width:250px" placeholder="请输入玲珑ID/登录账号/手机号" id="" name="search_word"  value="{:input('get.search_word')}">
+            &nbsp;&nbsp;
+            <select class="select" size="1" name="user_type"  style="width: 200px;">
+                <option value="1" {eq name="user_type" value="1"}selected{/eq}>个人</option>
+                <option value="2" {eq name="user_type" value="2"}selected{/eq}>企业</option>
+            </select>
+            &nbsp;
+            <button type="submit" class="btn btn-success " ><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  id="search_empty"><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total}</strong> 条</span>
+        </div>
+    </form>
+</div>
+
+<div class="mt-20">
+    <table class="table table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th><input type="checkbox" name="" value=""></th>
+            <th>UID</th>
+            <th>玲珑ID</th>
+            <th>登录账号</th>
+            <th>手机号</th>
+            <th>邮箱</th>
+            <th>用户状态</th>
+            <th>用户类型</th>
+            <th>认证状态</th>
+            <th>真实姓名</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {empty name="list"}
+        <tr>
+            <td class="text-c" colspan="14">暂无数据..</td>
+        </tr>
+        {else/}
+        {volist name="list" id='vo'}
+        <tr class="text-c">
+            <td><input type="checkbox" value="1" name=""></td>
+            <td>{$vo['member_id']|default='--'}</td>
+            <td>{$vo['num_id']|default='--'}</td>
+            <td>{$vo['account']|default='--'}</td>
+            <td>{$vo['phone']|default='--'}</td>
+            <td>{$vo['email']|default='--'}</td>
+            <td>
+                {switch name="vo.status"}
+                    {case value="1"}<span class="label label-success radius">正常</span>{/case}
+                    {case value="-1"}<span class="label label-danger radius">禁用</span>{/case}
+                    {case value="-2"}<span class="label label-danger radius">删除</span>{/case}
+                    {default /}<span class="label label-success radius">正常</span>
+                {/switch}
+            </td>
+            <td>
+                {switch name="vo.user_type"}
+                    {case value="1"}个人{/case}
+                    {case value="2"}企业{/case}
+                    {default /}个人
+                {/switch}
+            </td>
+            <td>
+                {switch name="vo.state"}
+                    {case value="0"}<span class="label label-warning radius">未认证</span>{/case}
+                    {case value="1"}<span class="label label-primary radius">待审核</span>{/case}
+                    {case value="2"}<span class="label label-success radius">已认证</span>{/case}
+                    {case value="-1"}<span class="label label-danger radius">认证失败</span>{/case}
+                    {default /}<span class="label label-warning radius">未认证</span>
+                {/switch}
+            </td>
+            <td>{$vo.true_name|default='无'}</td>
+            <td>
+                {empty name="vo['create_time']"}
+                --
+                {else/}
+                {$vo['create_time']|date="Y-m-d H:i:s",###}
+                {/empty}
+            </td>
+            <td class="td-manage">
+                <a title="查看详情" data-url="{:url('member_exec',['type'=>'info','id'=>$vo['member_id']])}" href="javascript:;"  class="ml-5 open_form" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;</i></a>
+                <a title="编辑" data-url="{:url('member_exec',['type'=>'edit','id'=>$vo['member_id']])}" href="javascript:;" class="ml-5 open_form" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                {if $vo['status'] eq 1}
+                <a style="text-decoration:none" class="switch_btn" data-tip="禁用" data-id="{$vo['member_id']}" data-value="-1" href="javascript:;" title="禁用"><i class="Hui-iconfont">&#xe631;</i></a>
+                {else}
+                <a class="switch_btn" href="javascript:;" data-tip="启用" data-id="{$vo['member_id']}" title="启用" data-value="1" style="text-decoration:none"><i class="Hui-iconfont">&#xe615;</i></a>
+                {/if}
+        </tr>
+        {/volist}
+        {/empty}
+        </tbody>
+    </table>
+</div>
+
+<input type="hidden" id="switch_url" value="{:Url('member_status')}">
+
+<nav class="page_admin">
+    {$page|default=""}
+</nav>
+{/block}
+
+
+{block name='js'}
+<script type="text/javascript">
+     $(document).on("click",".switch_btn",function(){
+         var url = $("#switch_url").val();
+         var tips = $(this).data("tip");
+         var id = $(this).data("id");
+         var value = $(this).data("value");
+         layer.confirm("您确定要"+tips+"么?",{btn:['确定','取消']},function(){
+             common.ajax_post(url,{id:id,value:value},true,function(rt){
+                  common.post_tips(rt);
+                 var obj = common.str2json(rt);
+                 if(obj.code == 1){
+                     location.reload();
+                 }
+             },true)
+         });
+     });
+</script>
+{/block}

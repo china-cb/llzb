@@ -1,0 +1,54 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/control_inner.css"/}
+{/block}
+{block name="title"}直播设置 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="statistics">
+
+    <div class="main admin ">
+        <div class="container">
+            <!-- inject:live_menu:html -->
+            {include file="base/channel_set_menu"/}
+            <!-- endinject -->
+            <div class="content">
+                <div class="block">
+                    <h1 class="basic_h1">
+                        <span class="basic_h1_left">直播窗口背景</span>
+                    </h1>
+                    <div class="guide">
+                      <form id="window_list">
+                        <label class="guide_label">上传图片<input class="file_upload box_img" type="file" name="window_img" value="" /></label>
+                      </form>
+                        <p class="guide_p">图片大小为2M以内；图片分辨率865*486像素;支持PNG、JPG、JPEG格式</p>
+                        <p class="guide_p guide_p2">手机预览图：</p>
+                        <div class="preview3 win_preview3">
+                            {empty name='list.window'}
+                            <img class="preview" src="__static__/index/src/img/admin/win_preview.png"/>
+                            {else/}
+                            <img class="preview" src="{$Think.config.CONFIG_CDN_URL}{$list.map_guide|default=''}"/>
+                            {/empty}
+                        </div>
+                        <div style="clear: both"></div>
+                        <!-- 正在审核  preview_sub添加 guide_layer_act，guide_layer显示-->
+                        <!-- <div class="guide_layer"></div> -->
+                        <input type="submit" name="" value="提交" class="preview_sub "/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="window_id" value="{$id}"><!--当前房间ID-->
+<input type="hidden" id="map_window" value=""><!--窗口背景值写入-->
+<input type="hidden" id="up_window_url" value="{:url('index/channel_set/up_window')}"><!--窗口背景上传-->
+、<input type="hidden" id="window_url" value="{:url('index/channel_set/up_window_list')}"><!--窗口背景提交-->
+
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

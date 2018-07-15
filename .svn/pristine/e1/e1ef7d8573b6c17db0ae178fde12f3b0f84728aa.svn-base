@@ -1,0 +1,54 @@
+<div class="header">
+    <div class="h-bar">
+        <div class="warp">
+            <h6 class="info" >服务热线：200-190000（周一至周五9:00～18:00）</h6>
+            <div class="nav">
+                <a class="nav-link">芝麻代理</a>
+                <a class="nav-link">梦蝶跑腿</a>
+                <a class="nav-link">梦蝶直播</a>
+                <a class="nav-link">梦蝶一元购</a>
+            </div>
+        </div>
+    </div>
+    <div class="h-main">
+        <div class="warp">
+            <a class="logo-top-index"></a>
+            <div class="hm-nav">
+                <a class="">首页</a>
+                <a class="">产品体验</a>
+                <a class="">应用场景</a>
+                <a class="">套餐购买</a>
+                <a class="">帮助中心</a>
+            </div>
+            <div class="hm-qu-link">
+                <a class="hq-item" href="{:url('index/admin/index')}">控制台</a>
+                <a class="hq-item" href="{:url('index/login/index')}">登录</a>
+                <a class="hq-item" href="{:url('index/login/register')}">注册</a>
+                <a class="hq-info" href="">
+                    <img src="__static__/index/src/img/temp/user_ava.png">
+                    <h4>你好, 虫虫科技</h4>
+                    <i class="iconfont"></i>
+                </a>
+                <div class="user-info-warp ">
+                    <div class="user-ava">
+                        <img src="__static__/index/src/img/temp/user_ava.png">
+                        <h4>你好,<span>大兄弟!</span></h4>
+                        <div class="user-auth">
+                            <a href="{:url('index/user_center/account','type=1')}" class="real-name "></a>
+                            <a href="{:url('index/user_center/account','type=5')}" class="phone "></a>
+                            <a href="{:url('index/user_center/account','type=6')}" class="email "></a>
+                        </div>
+                        <div class="user-info">
+                            <div class="info-item">
+                                <p><span>账户类型 :</span>企业版<a class="updata">升级</a></p>
+                                <p><span>账户余额 :</span><i class="iconfont">&#xe644;</i>9999.00<a class="charge" href="{:url('index/user_center/account','type=3')}">充值</a></p>
+                                <p><span>套餐类型 :</span>高级VIP<a class="buy">购买</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="mc-close quit_btn">退出</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

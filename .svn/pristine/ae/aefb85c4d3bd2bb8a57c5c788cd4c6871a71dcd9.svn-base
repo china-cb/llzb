@@ -1,0 +1,32 @@
+/**
+ * Created by deloo on 2016/12/8.
+ */
+
+var preview_page = {
+    on_off:function() {
+        $(".on_off").on("click",function() {
+             $(".on_off i").toggleClass("off_act");
+        });
+    },
+    file_uploads:function () {
+         $(".file_upload").change(function() {
+                var $file = $(this); 
+                var $file_indx = $(this).index(".file_upload");
+                var fileObj = $file[0];
+                var windowURL = window.URL || window.webkitURL;
+                var dataURL;
+                var $img = $(".preview").eq($file_indx);
+                if(fileObj && fileObj.files && fileObj.files[0]){
+                    dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                    $img.attr('src',dataURL);
+                }else{
+                    dataURL = $file.val();var imgObj = $(".preview").eq($file_indx);
+                }
+            }
+        );
+    },
+}
+$(function(){
+    preview_page.on_off();
+    preview_page.file_uploads();
+});

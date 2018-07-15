@@ -1,0 +1,537 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_monitor.css"/}
+{css file="__static__/index/src/css/preview.css"/}
+<style>
+    #wisIframe {
+        min-height:720px;
+        width: 850px;
+        margin:0 auto;
+    }
+    #__wis__sm__container__{
+        display: none;
+    }
+</style>
+{/block}
+{block name="title"}频道管理 - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:admin_menu:html -->
+        <ul class="menu">
+            <li class="menu-item channel_menu active">
+                <a class="mi-text" href="{:url('index/admin/channel',['id'=>$channel_info['id']])}">
+                    <i class="iconfont">&#xe615;</i>
+                    直播监控
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="mi-text" href="{:url('index/admin/channel_setting',['id'=>$channel_info['id']])}">
+                    <i class="iconfont">&#xe729;</i>
+                    频道设置
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="mi-text" href="{:url('index/admin/channel_count',['id'=>$channel_info['id']])}">
+                    <i class="iconfont">&#xe610;</i>
+                    用户管理
+                </a>
+            </li>
+            <li class="menu-item">
+                <a class="mi-text" href="{:url('index/admin/channel_count_data',['id'=>$channel_info['id']])}">
+                    <i class="iconfont">&#xe656;</i>
+                    数据统计
+                </a>
+            </li>
+        </ul>
+        <!-- endinject -->
+        <div class="content">
+            <div class="block-com view-top">
+                <h4 class="title">直播监控</h4>
+                <div class="object">
+                    <div class="warp" id="media1">
+                    </div>
+                    <div class="warp" id="media2" style="display: none">
+                    </div>
+                    <a class="control" style="display: none">断开直播</a>
+                </div>
+                <div class="info">
+                    <div class="nav">
+                        <a class="active">推流地址</a>
+                        <a class="">拉流直播</a>
+                        <a class="">列表直播</a>
+                        <a class="">桌面直播</a>
+                        <a class="">手机直播</a>
+                    </div>
+                    <div class="content ">
+                        <div class="m-input">
+                            <label>
+                                <input value="{$channel_info.push_url|default=''}" id="push_url1">
+                                <button class="btn" onClick="copy_push_url1()">复制</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="content ">
+                        <div class="m-input">
+                            <label>
+                                <input class="rtmp_url" placeholder="请输入拉流地址">
+                                <button class="btn start_live">开始直播</button>
+                            </label>
+                            <p class="tip">
+                                拉流地址支持：  直播流：rtmp ; 点播流：hls
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content  view-list">
+                        <div class="view-list-menu">
+                            <ul class="warp">
+                                <li class="item add" data-ref="" data-id="{$channel_info['id']|default=''}"><i class="iconfont">&#xe637;</i>添加列表</li>
+                                {volist name="video_list" id="vo" key="k"}
+                                    <li data-listid="ref_{$k}" class="item channel-video" data-id="{$vo.list_id|default=''}">
+                                        <span class="list-name">{$vo.list_name|default='暂无名称'}</span>
+                                        <label>
+                                            <input class="list_name" type="text">
+                                            <a class="ensure" data-tip="保存"></a>
+                                        </label>
+                                        <a class="edit" data-tip="编辑"></a>
+                                        <a class="delete" data-tip="删除"></a>
+                                    </li>
+                                {/volist}
+
+                                <!--<li data-listid="ref_2" class="item">-->
+                                    <!--<span>列表一</span>-->
+                                    <!--<label><input><a class="ensure" data-tip="保存"></a></label>-->
+                                    <!--<a class=" edit" data-tip="编辑"></a>-->
+                                    <!--<a class="  delete" data-tip="删除"></a>-->
+                                <!--</li>-->
+                            </ul>
+                        </div>
+                        <div class="view-content">
+                            {volist name="video_list" id="vo" key="k"}
+                                <div id="ref_{$k}" class="vc-block">
+                                    {empty name="vo.data"}
+                                        <div class="empty">
+                                            <h6>当前列表为空</h6>
+                                            <a class="upload_video" data-lid="{$vo.list_id|default=''}"><i class="iconfont">&#xe638;</i>添加视频</a>
+                                        </div>
+                                    {else/}
+                                    <div class="container">
+                                        <div class="warp">
+                                            {volist name="vo.data" id="list" }
+                                            <div class="video-list">
+                                                {empty name="list.cover_img"}
+                                                   <img src="__static__/index/src/img/temp/cover-img.png">
+                                                {else/}
+                                                   <img src="{$list.cover_img|default=''}" alt="">
+                                                {/empty}
+                                                <div class="info">
+                                                    <h4><span>原片</span>{$list.name|default='暂无名称'}</h4>
+                                                    <!--<div class="process" >-->
+                                                    <!--<div class="axis"><span style="width:15.5%"></span></div>-->
+                                                    <!--<span class="label">14.5%</span>-->
+                                                    <!--</div>-->
+                                                </div>
+                                                <span>{$list.duration|default='0'}</span>
+                                            </div>
+                                            {/volist}
+                                            <!--<a class="video-new upload_video" data-lid="{$vo.list_id|default=''}"><i class="iconfont">&#xe638;</i> 添加新视频</a>-->
+                                            <!--<a class="video-new list_live" data-lid="{$vo.list_id|default=''}"><i class="iconfont">&#xe638;</i>开始直播</a>-->
+                                        </div>
+                                    </div>
+                                    <div class="vc-con-bar">
+                                        <a class="btn list_live" data-lid="{$vo.list_id|default=''}"><i class="iconfont">&#xe606;</i>开始直播</a>
+                                        <a class="btn upload_video" data-lid="{$vo.list_id|default=''}"><i class="iconfont">&#xe638;</i>添加新视频</a>
+                                    </div>
+                                    {/empty}
+                                </div>
+                            {/volist}
+                        </div>
+                    </div>
+                    <div class="content ">
+                        <div class="tablet-download">
+                            <h4>支持摄像头直播 电脑桌面演示直播</h4>
+                            <div class="down-btn">
+                                <a>Windows 版</a>
+                                <a>Mac 版</a>
+                            </div>
+                            <p>桌面直播推流地址: <span>{$channel_info.push_url|default=''}</span></p>
+                        </div>
+                    </div>
+                    <div class="content phone">
+                        <div class="m-input">
+                            <label>
+                                <input value="{$channel_info.push_url|default=''}" id="push_url2">
+                                <button class="btn" onClick="copy_push_url2()">复制</button>
+                            </label>
+                        </div>
+                        <div class="download-qr"><i class="iconfont">&#xe6f6;</i>安卓扫码下载
+                            <div class="hd-block">
+                                <img src="__static__/index/src/img/temp/qr.png">
+                            </div>
+                        </div>
+                        <div class="download-qr"><i class="iconfont">&#xe712;</i>苹果扫码下载
+                            <div class="hd-block"><img src="__static__/index/src/img/temp/qr.png"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block-com view-docs">
+                <h4 class="title">直播文档</h4>
+                <div class="doc-top">
+                    <div class="right-control">
+                        <div class="hide-switch">
+                            <span>观看页显示</span>
+                            <label class="ll-switch">
+                                <input id="hs-1" type="checkbox" {eq name="channel_info.wis_type" value="1"} checked="checked" {/eq}>
+                                <label class="white_switch"></label>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="doc-view wis-block {eq name='channel_info.wis_type' value='0'}hide{/eq}" >
+                    <iframe id="wisIframe" frameborder="0" name="wisIframe" ></iframe>
+                    <a class="doc-bt-view" href="{:url('index/preview/index',['cid'=>$channel_info.id])}" target="_blank">观看预览</a>
+                </div>
+            </div>
+            <div class="block-com view-message ">
+                <!--<span class="con-tips forbid">用户被禁言</span>-->
+                <h4 class="title">聊天互动</h4>
+                <div class="mes-list ">
+                    <div class="container ">
+                        <ul class="mes-l-warp">
+                        </ul>
+                    </div>
+                    <div class="doc-send">
+                        <div class="warp">
+                            <input placeholder="我也来说两句" data-tip="ctrl + enter 快捷发送">
+                            <a class="face" data-tip="发送表情"><i class="iconfont">&#xe635;</i>
+
+                            </a>
+                            <div class="face-block">
+                                <span class="face-warp"></span>
+                            </div>
+                            <a class="send">发表
+
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<div>-->
+                <!--<iframe id="wisIframe" frameborder="0" ></iframe>-->
+                <!--<a href="{:url('white_live',['uid'=>$uid,'cid'=>$channel_info.id])}" target="_blank">观看预览</a>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+<input type="hidden" id="upload_html_url" value="{:url('index/admin/upload_html')}">
+<input type="hidden" id="cid" value="{$channel_info.id|default=''}">
+<input type="hidden" id="uid" value="{$channel_info.uid|default=''}">
+<input type="hidden" id="add_video_url" value="{:url('index/admin/add_video_list')}">
+<input type="hidden" id="edit_video_url" value="{:url('index/admin/update_video')}">
+<input type="hidden" id="update_live" value="{:url('index/admin/update_live')}">
+<input type="hidden" id="hls_live_url" value="{:url('index/admin/hls_live')}">
+<input type="hidden" id="recordUrl" value="{$recordUrl|default=''}">
+<input type="hidden" id="update_live_record" value="{:url('update_live_record')}">
+<input type="hidden" id="first_url" value="{:url('get_first_url')}">
+<input type="hidden" id="break_url" value="{:url('break_channel_live')}">
+<input type="hidden" id="white_switch_url" value="{:url('white_switch')}">
+
+<input type="hidden" id="sign" value="false">
+<input type="hidden" id="last_update_time" value="0">
+<input type="hidden" id="msg_url" value="{:url('index/admin/msg',['cid'=>$channel_info.id])}">
+<input type="hidden" id="nick_name" value="{$user_info.nick_name|default='匿名网友'}">
+<input type="hidden" id="user_face" value="{$Think.config.CONFIG_CDN_URL}{$channel_info.user_face|default='09b0deb8ac55e50fef76c0870d5a0052.png'}">
+<input type="hidden" id="background" value="{$Think.config.CONFIG_CDN_URL}{$channel_info.window|default=''}">
+<input type="hidden" id="user_type" value="1">
+<input type="hidden" id="user_value" value="{$channel_info.uid|default=''}">
+<input type="hidden" id="gag_url" value="{:url('gag_channel_user')}">
+<input type="hidden" id="top_url" value="{:url('top_news')}">
+<input type="hidden" id="top_and_gag_url" value="{:url('get_top_gag_info')}">
+<input type="hidden" id="delete_tis_url" value="{:url('delete_tis')}">
+<input type="hidden" id="check_account_balance_url" value="{:url('core/business/check_account_balance')}">
+<input type="hidden" id="recharge_url" value="{:url('index/index/package')}">
+<input type="hidden" id="del_video_list" value="{:url('del_video')}">
+{/block}
+{block name="js"}
+<script src="http://cdn.aodianyun.com/wis/exchange.js"></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/jqueryui/1.10.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/plupload/js/jquery.simple.ui.plupload/jquery.simple.ui.plupload.min.js"></script>
+<script type="text/javascript" src="http://cdn.aodianyun.com/static/plupload/js/i18n/zh_CN.js"></script>
+{js href="__static__/index/src/js/tis/tis_api.js"/}
+{js href="__static__/index/src/js/tis/tis.js"/}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/admin_monitor.js"/}
+{js href="__static__/index/js/admin/upload.js"/}
+
+
+<script type="text/javascript" src="http://cdn.aodianyun.com/lss/aodianplay/player.js"></script>
+<script>
+    function copy_push_url1()
+    {
+        var Url1=document.getElementById("push_url1");
+        Url1.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        layer.msg('已复制,按ctr+v粘贴',{time:1000});
+    }
+    function copy_push_url2()
+    {
+        var Url1=document.getElementById("push_url2");
+        Url1.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        layer.msg('已复制,按ctr+v粘贴',{time:1000});
+    }
+</script>
+<script type="text/javascript">
+    $(function(){
+        $(".white_switch").click(function(){
+            if($('#hs-1').is(':checked')){
+                $('#hs-1').prop("checked",true);
+                var  white_value = 0;
+                var  tips = "您确定要关闭直播文档么?";
+            }else{
+                $('#hs-1').prop("checked",false);
+                var  tips = "您确定要打开直播文档么?";
+                var  white_value = 1;
+            }
+            layer.confirm(tips,{btn:['确定','取消'],icon:3,skin:'layui-layer-lan',title:'玲珑TV小提示'},function(){
+                var white_switch_url = $("#white_switch_url").val();
+                common.ajax_post(white_switch_url,{cid:cid,white_value:white_value},true,function(rt){
+                    var obj = common.str2json(rt);
+                    if(obj.code == 1){
+                        if(white_value == 0){
+                            $('#hs-1').prop("checked",false);
+                            $(".wis-block").addClass('hide');
+                        }else{
+                            $('#hs-1').prop("checked",true);
+                            $(".wis-block").removeClass('hide');
+                        }
+                    }
+                    common.post_tips(rt);
+                });
+            });
+
+        });
+        var index1;
+        var index2;
+        var uid = $("#uid").val();
+        var cid = $("#cid").val();
+        var objectPlayer1=new aodianPlayer({
+            container:'media1',//播放器容器ID，必要参数
+            rtmpUrl:"rtmp://26836.lssplay.aodianyun.com/linglong735/0_1?k=d7b7140d463c4b6d98b4fddc118babfe&t=1484190902",//控制台开通的APP rtmp地址，必要参数
+            /* 以下为可选参数*/
+            width: '320',//播放器宽度，可用数字、百分比等
+            height: '180',//播放器高度，可用数字、百分比等
+            autostart: true,//是否自动播放，默认为false
+            bufferlength: '1',//视频缓冲时间，默认为3秒。hls不支持！手机端不支持
+            maxbufferlength: '2',//最大视频缓冲时间，默认为2秒。hls不支持！手机端不支持
+            stretching: '1',//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。hls初始设置不支持，手机端不支持
+            controlbardisplay: 'enable',//是否显示控制栏，值为：disable、enable默认为disable。
+            adveDeAddr: $("#background").val(),//封面图片链接
+            adveWidth: '320',//封面图宽度
+            adveHeight: '180',//封面图高度
+            //adveReAddr: '',//封面图点击链接
+            //isclickplay: false,//是否单击播放，默认为false
+            isfullscreen: true//是否双击全屏，默认为true
+        });
+
+        /** 拉流直播 */
+        $(document).on("click",".start_live",function(){
+            window.clearInterval(index1);
+            $("#media1").show();
+            $("#media2").hide();
+            var live_url = $(".rtmp_url").val();
+            var url = $("#update_live_record").val();
+            setTimeout(function(){
+                common.ajax_post(url,{cid:cid,live_url:live_url,url_style:1,live_type:2},true,function(rt){
+                    var obj = common.str2json(rt);
+                    if(obj.code == 1){
+                        objectPlayer1.changePlayer(live_url);
+                        $(".control").show();
+                    }else{
+                        common.post_tips(rt);
+                    }
+                },true);
+            },1000);
+        });
+
+        var objectPlayer2=new aodianPlayer({
+            container:'media2',//播放器容器ID，必要参数
+            hlsUrl:"http://26836.hlsplay.aodianyun.com/linglong735/111111111111.m3u8?",//控制台开通的APP hls地址，必要参数
+            /* 以下为可选参数*/
+            width: '320',//播放器宽度，可用数字、百分比等
+            height: '180',//播放器高度，可用数字、百分比等
+            autostart: true,//是否自动播放，默认为false
+            bufferlength: '1',//视频缓冲时间，默认为3秒。hls不支持！手机端不支持
+            maxbufferlength: '2',//最大视频缓冲时间，默认为2秒。hls不支持！手机端不支持
+            stretching: '1',//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。hls初始设置不支持，手机端不支持
+            controlbardisplay: 'enable',//是否显示控制栏，值为：disable、enable默认为disable。
+            adveDeAddr: 'www.oss.com',//封面图片链接
+            adveWidth: '320',//封面图宽度
+            adveHeight: '180',//封面图高度
+            //adveReAddr: '',//封面图点击链接
+            //isclickplay: false,//是否单击播放，默认为false
+            isfullscreen: true//是否双击全屏，默认为true
+        });
+
+        //首次加载时判断当前是否在直播
+        var first_url = $("#first_url").val();
+        setTimeout(function(){
+            common.ajax_post(first_url,{uid:uid,cid:cid},true,function(rt){
+                var obj = common.str2json(rt);
+                var data = obj.ret_data;
+                if(obj.code == 1){
+                    if(data['url_style'] == 1){
+                        $("#media1").show();
+                        $("#media2").hide();
+                         objectPlayer1.changePlayer(data['url']);
+                        $(".control").show();
+                    }else{
+                        $("#media2").show();
+                        $("#media1").hide();
+                        $(".control").show();
+                        var first_time = 0;
+                        index1 = setInterval(function(){
+                            first_time = objectPlayer2.currenttime();
+                            if(first_time == 0){
+                                objectPlayer2.changePlayer(data['url']);
+                            }
+                        },2000);
+                    }
+                }
+            });
+        },3000);
+
+        /** 检测余额 */
+        setInterval(function(){
+            var uid = $("#uid").val();
+            var url = $("#check_account_balance_url").val();
+            common.ajax_post(url,{uid:uid},true,function(rt){
+                var obj = common.str2json(rt);
+                if(obj.code != 1){
+                    layer.confirm(obj.msg,{btn:['立即充值','取消'],icon:3,skin:'layui-layer-lan',title:'玲珑TV小提示'},function(){
+                         var recharge_url = $("#recharge_url").val();
+                         window.open(recharge_url);
+                    });
+                    objectPlayer1.stopPlay();//停止直播 */
+                    objectPlayer2.stopPlay();//停止直播 */
+                }
+            });
+        },30000);
+
+        /**断开直播 */
+        $(document).on("click",".control",function(){
+            var break_url = $("#break_url").val();
+            layer.confirm("您确定要关闭直播吗?<br><span style='font-size: 13px;color:#ff0000;font-weight: bolder;'>如果您是使用推流直播,请先关闭OBS等推流软件再关闭直播</span>",{btn:['确定','取消'],icon:3,skin:'layui-layer-lan',title:'玲珑TV小提示'},function(){
+                common.ajax_post(break_url,{uid:uid,cid:cid},false,function(rt){
+                    var obj = common.str2json(rt);
+                    if(obj.code == 1){
+                        clearInterval(index1);
+                        clearInterval(index2);
+                        if(obj.ret_data == 1){
+                            objectPlayer1.stopPlay();//停止直播 */
+                        }else{
+                            objectPlayer2.stopPlay();
+                        }
+                        layer.msg("断开成功",{icon:1});
+                        $(".control").hide();
+                    }else{
+                        common.post_tips(rt);
+                    }
+                });
+            });
+        });
+
+        $(document).on("click",".list_live",function(){
+            $("#media1").hide();
+            $("#media2").show();
+            var curr = 0; // 初始化播放的视频索引
+            var vList = '';
+            var cid = $("#cid").val();
+            var lid = $(this).data('lid');
+            var url = $("#hls_live_url").val();
+            common.ajax_post(url,{cid:cid,lid:lid},true,function(rt){
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    vList = obj.ret_data; // 初始化播放列表
+                    var vLen = vList.length; // 播放列表的长度
+                    var cur_time = 0;
+                    setTimeout(function(){
+                        index2 = setInterval(function(){
+                            cur_time = objectPlayer2.currenttime();
+                            if(cur_time == 0){
+                                var update_url = $("#update_live_record").val();
+                                common.ajax_post(update_url,{cid:cid,live_url:vList[curr],url_style:2,live_type:3},true,function(rt){
+                                    var obj = common.str2json(rt);
+                                    if(obj.code == 1){
+                                        objectPlayer2.changePlayer(vList[curr]);
+                                        curr++;
+                                        if (curr >= vLen){
+                                            curr = 0; // 播放完了，重新播放
+                                        }
+                                    }else{
+                                        common.post_tips(rt);
+                                    }
+                                });
+                            }
+                        },2000);
+                    },1000);
+                }
+            });
+        });
+
+        $(".menu-item").removeClass("active");
+        $(".channel_menu").addClass("active");
+    });
+    /* rtmpUrl与hlsUrl同时存在时播放器优先加载rtmp*/
+    /* 以下为Aodian Player支持的事件 */
+    /* objectPlayer.startPlay();//播放 */
+    /* objectPlayer.pausePlay();//暂停 */
+    /* objectPlayer.stopPlay();//停止 hls不支持*/
+    /* objectPlayer.closeConnect();//断开连接 */
+    /* objectPlayer.setMute(true);//静音或恢复音量，参数为true|false */
+    /* objectPlayer.setVolume(volume);//设置音量，参数为0-100数字 */
+    /* objectPlayer.setFullScreenMode(1);//设置全屏模式,1代表按比例撑满至全屏,2代表铺满全屏,3代表视频原始大小,默认值为1。手机不支持 */
+
+</script>
+<script>
+    var urlParam = $("#recordUrl").val() + "&tm=" + new Date().getTime();
+    var url = "http://web.wis.aodianyun.com/record.php?" + urlParam;
+    $(function () {
+        $("#wisIframe").attr("src", url + "&style=112");
+        $("#wisIframe").load(function () {
+            console.log(WISExchange);
+            WISExchange.Init({
+                iframe: "wisIframe",
+                onSuccess: function (info) {
+                },
+                onDocLoad: function (info) {
+                    WISExchange.Clear();
+                    WISExchange.AllowDraw({ ballow: false });
+                    $("#__wis__sm__container__").hide();
+                },
+                onPageChange: function (info) {
+                    WISExchange.Clear();
+                    WISExchange.AllowDraw({ ballow: false });
+                    $("#__wis__sm__container__").hide();
+                },
+                onFailure: function (info) {
+                    console.log("onFailure", info.error);
+                }
+            });
+
+        });
+
+        $(".toggleBtn").click(function() {
+            if ($(this).hasClass("active"))
+                $(this).removeClass("active");
+            else
+                $(this).addClass("active");
+        });
+    });
+</script>
+{/block}
+

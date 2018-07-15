@@ -1,0 +1,55 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: 翟垒垒
+ * Date: 2016/12/10
+ * Time: 13:53
+ */
+namespace app\admin\controller;
+
+use app\admin\model\LogManagerModel;
+use app\lib\Condition;
+use think\Controller;
+use think\Exception;
+Class LogManager extends Controller
+{
+    public function login_log(){
+        $page = input('param.page', 1);
+        $type = input("param.type",0);
+
+        //获取列表
+        $map = '';
+        $condition = input("param.search_word",'');
+        if(!empty($condition)){
+            $map['phone'] = $condition;
+        }
+        $condition_rule = array(
+            array(
+                'field' => "phone",
+                'value' => $condition,
+                'operator'=> 'like'
+            ),
+            array(
+                'field' => 'create_time',
+                'value' => strtotime(input('get.start_time', '')),
+                'operator' => '>='
+            ),
+            array(
+                'field' => 'create_time',
+                'value' => strtotime(input('get.end_time', '')),
+                'operator' => '<='
+            )
+        );
+        
+        $model = new Condition($condition_rule,$page);//取数据
+        $model->init();
+        $m = new LogManagerModel();
+        $r = $m->get_log_manager_list($model,$map,$type);
+ 
+        $this->assign('page', $r->render());
+        $this->assign('live_list', $r->all());
+        $this->assign('total',$r->total());
+        $this->assign('type',$type);
+        return $this->fetch();
+    }
+}

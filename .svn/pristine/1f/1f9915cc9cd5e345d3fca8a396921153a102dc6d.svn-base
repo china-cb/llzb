@@ -1,0 +1,23 @@
+<?php
+namespace app\index\model;
+
+
+use think\Model;
+
+class ChannelSetModel extends Model
+{
+    /** 获取user_av_room 值 */
+    public function get_user_av_room_list($id,$mid){
+        return db_func('user_av_room','sp_')
+            ->where(['id' => $id,'uid' => $mid])
+            ->field('cover,map_guide,guide_type,window,logo,logo_type,logo_position')
+            ->find();
+    }
+    /** 直播间设置 */
+    public function up_map_guide($mid,$id,$data){
+        return db_func('user_av_room','sp_')
+            ->where(['id' => $id,'uid' => $mid])
+            ->update($data);
+    }
+
+}

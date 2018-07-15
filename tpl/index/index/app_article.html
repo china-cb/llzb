@@ -1,0 +1,75 @@
+{extend name="base/base"/}
+{block name="css"}
+{css file="__static__/index/src/css/swiper.min.css"/}
+{css file="__static__/index/src/css/applications.css"/}
+{css file="__static__/index/src/css/animate.min.css"/}
+<style>
+	html,body{background-color: #f5f6f7}
+</style>
+{/block}
+{block name="title"}应用场景{/block}
+{block name="content"}
+	<div class="applications_inner">
+		<section>
+		   <h1><a href="{:url('index/index/application')}">应用场景>></a><a>{$info.title|default=""}</a></h1>
+           <h2>{$info.name|default=""}</h2>
+		   <div class="edits">
+		   		{$info.content|default=''}
+		   </div>
+		</section>
+		<article>
+			<h1>精彩直播</h1>
+			<div class="list_content">
+                {notempty name="recommend"}
+				<a href="{:url('index/index/app_article',['id'=>$recommend.0.id])}" title="" class="list_top">
+					<span class="imgs"><img src="{$Think.config.CONFIG_CDN_URL}{$recommend.0.cover|default=''}" alt=""/></span>
+					<span class="img_h1">
+						 {elt name="recommend.0.name|mb_strlen='utf8'" value="22"}
+							{$recommend.0.name|default=''}
+						 {else/}
+							{$recommend.0.name|mb_substr=0,22,'utf-8'}...
+						 {/elt}
+					</span>
+					<!-- php截取文章前部详细字段 -->
+					<span class="img_h2">
+						{elt name="recommend.0.desc|mb_strlen='utf8'" value="33"}
+							{$recommend.0.desc|default=''}
+						{else/}
+							{$recommend.0.desc|mb_substr=0,33,'utf-8'}...
+						{/elt}
+					</span>
+				</a>
+                {/notempty}
+                {volist name="recommend" id="vo" key="k"}
+                     {gt name="k" value="1"}
+                        <a href="{:url('index/index/app_article',['id'=>$vo.id])}" title="" class="list_a">
+                            <span class="imgs"><img src="{$Think.config.CONFIG_CDN_URL}{$vo.cover|default=''}" alt=""/></span>
+                            <span class="img_h1">
+								{elt name="vo['name']|mb_strlen='utf8'" value="22"}
+									{$vo['name']|default=''}
+								{else/}
+								    {$vo['name']|mb_substr=0,22,'utf-8'}...
+								{/elt}
+							</span>
+                            <!-- 异步之后加载 函数 applications.hiddens() -->
+                            <span class="img_h2"><span class="h2_inner">
+								{elt name="vo['desc']|mb_strlen='utf8'" value="33"}
+								     {$vo['desc']|default=''}
+								{else/}
+									 {$vo['desc']|mb_substr=0,33,'utf-8'}...
+								{/elt}
+							</span></span>
+                        </a>
+                     {/gt}
+                {/volist}
+				<a href="{:url('index/index/application')}" title="" class="mores">查看更多</a>
+			</div>
+		</article>
+	</div>
+
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/swiper.min.js"/}
+{js href="__static__/index/src/js/swiper.animate1.0.2.min.js"/}
+{js href="__static__/index/src/js/applications.js"/}
+{/block}

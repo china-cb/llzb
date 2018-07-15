@@ -1,0 +1,67 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}会员管理{/block}
+{block name="site_nav_2"}用户反馈{/block}
+{block name='content'}
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c"> 日期范围：
+            <input type="text" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"  name="start_time" value="{:input('get.start_time')}" class="input-text Wdate" style="width:180px;" placeholder="开始时间">
+            -
+            <input type="text"  onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})"  name="end_time" value="{:input('get.end_time')}"class="input-text Wdate" style="width:180px;" placeholder="结束时间">&nbsp;&nbsp;&nbsp;&nbsp;名称搜索:
+            <input type="text" class="input-text" style="width:250px" placeholder="请输入用户ID" id="" name="search_word"  value="{:input('get.search_word')}">
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i>搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  id="search_empty"><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total}</strong> 条</span>
+        </div>
+    </form>
+</div>
+
+<div class="mt-20">
+<table class="table table-border table-bordered table-bg">
+    <thead>
+    <tr class="text-c">
+        <th>序号</th>
+        <th>用户ID</th>
+        <th>用户昵称</th>
+        <th>反馈内容</th>
+        <th>反馈日期</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+     {empty name="list"}
+     <tr>
+         <td class="text-c" colspan="12">暂无数据..</td>
+     </tr>
+     {else/}
+     {/empty}
+    {volist name="list" id='vo'}
+    <tr class="text-c">
+        <td>{$vo['id']|default='--'}</td>
+        <td>
+           {$vo.uid|default=''}
+        </td>
+        <td>{$vo['nickname']|default='--'}</td>
+        <td>{$vo['content']|default='--'}</td>
+        <td>
+            {$vo.createline|date="Y/m/d H:i:s",###}
+        </td>
+        <td>
+            <a title="查看详情" href="javascript:;" data-url="{:url('look_feedback',['type'=>'look','id'=>$vo['id']])}" class="ml-5 open_form radius" style="text-decoration:none"><i class="Hui-iconfont">&#xe695;&nbsp;</i></a>
+            <a title="删除" href="javascript:;" data-url="{:url('del_feedback')}" data-id="{$vo['id']|default=''}" class="ml-5 radius del_by_id" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+</div>
+<nav class="page_admin">
+    {$page|default=''}
+</nav>
+{/block}
+{block name="js"}{/block}
+
+
+
+

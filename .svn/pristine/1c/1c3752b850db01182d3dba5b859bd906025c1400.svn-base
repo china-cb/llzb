@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <!-- inject:admin_base:html -->                                         <!--base-->
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="玲珑直播">
+    <meta name="keywords" content="玲珑直播">
+    <link rel="shortcut icon" href="../../src/img/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="../../src/img/favicon.png" type="image/x-icon" />
+    <link href="../../src/css/common.css" rel="stylesheet">
+    <script  src="../../src/js/jquery.min.js" type="text/javascript"></script>
+    <script  src="../../src/js/common.js" type="text/javascript"></script>
+    <script  src="../../src/js/admin/admin.js" type="text/javascript"></script>
+                                     <!-- endinject -->
+    <link href="../../src/css/admin.css" rel="stylesheet">
+    <link href="../../src/css/mCustomScrollbar.css" rel="stylesheet">
+    <link href="../../src/css/admin_channel.css" rel="stylesheet">
+
+    <title>频道管理-用户管理 直播中心</title>
+</head>
+<body>
+
+<!-- inject:admin_header:html -->
+<div class="header admin">
+    <div class="h-bar">
+        <div class="warp">
+            <a class="logo" href=""></a>
+            <div class="nav">
+                <div class="name">你好,<a>这是用户名</a></div>
+                <a class="logout">退出</a>
+                <a class="nav-item">安全中心</a>
+                <a class="nav-item">会员保障</a>
+                <a class="nav-item">客户服务</a>
+            </div>
+        </div>
+    </div>
+    <div class="h-main">
+        <div class="warp">
+            <a class="logo-top"></a>
+            <ul class="hm-menu">
+                <li class="menu-item"><a href="/index.html">玲珑首页</a></li>
+                <li class="menu-item">
+                    <div class="mi-list">
+                        <div class="menu-content">
+                            <a class="mc-close">
+                                <i class="iconfont">&#xe61f;</i>
+                            </a>
+                            <a href="" class="mc-item">
+                                频道管理
+                            </a>
+                            <a href="" class="mc-item">
+                                数据统计
+                            </a>
+                        </div>
+                        <div class="menu-title">直播服务</div>
+                    </div>
+                </li>
+                <li class="menu-center">
+                    <div class="mc-warp">
+                        <div class="user-ava">
+                            <img src="../../src/img/temp/user_ava.png">
+                            <h4>你好,<span>虫虫科技</span></h4>
+                            <div class="user-auth">
+                                <a class="real-name"></a>
+                                <a class="phone"></a>
+                                <a class="email"></a>
+                            </div>
+                            <div class="user-info">
+                                <div class="info-item">
+                                    <p><span>账户类型 :</span>基础版<a class="updata">升级</a></p>
+                                    <p><span>账户余额 :</span><i class="iconfont">&#xe644;</i>50.00<a class="charge">充值</a></p>
+                                    <p><span>套餐类型 :</span>--<a class="buy">购买</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="mc-close">退出</a>
+                    </div>
+                </li>
+                <li class="menu-item"><a href="/index.html">点播服务</a></li>
+                <li class="menu-item">
+                    <div class="mi-list">
+                        <div class="menu-content">
+                            <a class="mc-close">
+                                <i class="iconfont">&#xe61f;</i>
+                            </a>
+                            <a href="" class="mc-item">
+                                账户信息
+                            </a>
+                            <a href="" class="mc-item">
+                                账单详情
+                            </a>
+                            <a href="" class="mc-item">
+                                余额充值
+                            </a>
+                            <a href="" class="mc-item">
+                                充值订单
+                            </a>
+                        </div>
+                        <div class="menu-title">账户管理</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- endinject -->
+<div class="main admin admin-bg-1 channel-user">
+    <div class="channel-title">
+        直播监控
+        <div class="drop-sel channel-change">
+            <div class="dp-content">
+                <span class="dp-text">我的频道-02</span>
+                <button class="dp-icon"></button>
+                <input type="hidden" value="2010-01-01">
+                <ul class="dp-group">
+                    <li class="dp-item" data-val="2010-01-01">我的频道-01</li>
+                    <li class="dp-item" data-val="2010-01-01">我的频道-02</li>
+                    <li class="dp-item" data-val="2010-01-01">我的频道-03</li>
+                    <li class="dp-item" data-val="2010-01-01">我的频道-04</li>
+                    <li class="dp-item" data-val="2010-01-01">我的频道-05</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="content  ">
+            <span class="cu-title">用户管理</span>
+            <h4>累计用户量:
+                <span>12321321</span>
+                <a>数据导出</a>
+            </h4>
+            <div class="cu-sheet">
+                <div class="cs-th">
+                    <div class="cs-td nick"><i class="iconfont">&#xe630;</i>用户昵称</div>
+                    <div class="cs-td address"><i class="iconfont">&#xe642;</i>地址</div>
+                    <div class="cs-td time"><i class="iconfont">&#xe619;</i>观看时长</div>
+                    <div class="cs-td phone"><i class="iconfont">&#xe627;</i>手机号</div>
+                    <div class="cs-td vv"><i class="iconfont">&#xe6f8;</i>访问次数</div>
+                    <div class="cs-td chat"><i class="iconfont">&#xe613;</i>聊天数</div>
+                    <div class="cs-td time-1"><i class="iconfont">&#xe61a;</i>首次登录时间</div>
+                    <div class="cs-td time-2"><i class="iconfont">&#xe695;</i>最后在线时间</div>
+                    <div class="cs-td device"><i class="iconfont">&#xe628;</i>最后登录设备</div>
+                    <div class="cs-td way"><i class="iconfont">&#xe675;</i>最后登录方式</div>
+                </div>
+                <div class="cs-tr">
+                    <div class="cs-td nick">
+                        <h4>
+                            <img src="../../src/img/temp/user_ava.png">
+                            <span>这是用户名</span>
+                        </h4>
+                    </div>
+                    <div class="cs-td address">
+                        <span>这事地址地址地址</span>
+                    </div>
+                    <div class="cs-td time">
+                        <span>01:00:00</span>
+                    </div>
+                    <div class="cs-td phone">
+                        <span>1234567890</span>
+                    </div>
+                    <div class="cs-td vv">
+                        <span>123</span>
+                    </div>
+                    <div class="cs-td chat">
+                        <span>435</span>
+                    </div>
+                    <div class="cs-td time-1">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td time-2">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td device">
+                        <span>移动端</span>
+                    </div>
+                    <div class="cs-td way">
+                        <span>微信</span>
+                    </div>
+                </div>
+                <div class="cs-tr">
+                    <div class="cs-td nick">
+                        <h4>
+                            <img src="../../src/img/temp/user_ava.png">
+                            <span>这是用户名</span>
+                        </h4>
+                    </div>
+                    <div class="cs-td address">
+                        <span>这事地址地址地址</span>
+                    </div>
+                    <div class="cs-td time">
+                        <span>01:00:00</span>
+                    </div>
+                    <div class="cs-td phone">
+                        <span>1234567890</span>
+                    </div>
+                    <div class="cs-td vv">
+                        <span>123</span>
+                    </div>
+                    <div class="cs-td chat">
+                        <span>435</span>
+                    </div>
+                    <div class="cs-td time-1">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td time-2">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td device">
+                        <span>移动端</span>
+                    </div>
+                    <div class="cs-td way">
+                        <span>微信</span>
+                    </div>
+                </div>
+                <div class="cs-tr">
+                    <div class="cs-td nick">
+                        <h4>
+                            <img src="../../src/img/temp/user_ava.png">
+                            <span>这是用户名</span>
+                        </h4>
+                    </div>
+                    <div class="cs-td address">
+                        <span>这事地址地址地址</span>
+                    </div>
+                    <div class="cs-td time">
+                        <span>01:00:00</span>
+                    </div>
+                    <div class="cs-td phone">
+                        <span>1234567890</span>
+                    </div>
+                    <div class="cs-td vv">
+                        <span>123</span>
+                    </div>
+                    <div class="cs-td chat">
+                        <span>435</span>
+                    </div>
+                    <div class="cs-td time-1">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td time-2">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td device">
+                        <span>移动端</span>
+                    </div>
+                    <div class="cs-td way">
+                        <span>微信</span>
+                    </div>
+                </div>
+                <div class="cs-tr">
+                    <div class="cs-td nick">
+                        <h4>
+                            <img src="../../src/img/temp/user_ava.png">
+                            <span>这是用户名</span>
+                        </h4>
+                    </div>
+                    <div class="cs-td address">
+                        <span>这事地址地址地址</span>
+                    </div>
+                    <div class="cs-td time">
+                        <span>01:00:00</span>
+                    </div>
+                    <div class="cs-td phone">
+                        <span>1234567890</span>
+                    </div>
+                    <div class="cs-td vv">
+                        <span>123</span>
+                    </div>
+                    <div class="cs-td chat">
+                        <span>435</span>
+                    </div>
+                    <div class="cs-td time-1">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td time-2">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td device">
+                        <span>移动端</span>
+                    </div>
+                    <div class="cs-td way">
+                        <span>微信</span>
+                    </div>
+                </div>
+                <div class="cs-tr">
+                    <div class="cs-td nick">
+                        <h4>
+                            <img src="../../src/img/temp/user_ava.png">
+                            <span>这是用户名</span>
+                        </h4>
+                    </div>
+                    <div class="cs-td address">
+                        <span>这事地址地址地址</span>
+                    </div>
+                    <div class="cs-td time">
+                        <span>01:00:00</span>
+                    </div>
+                    <div class="cs-td phone">
+                        <span>1234567890</span>
+                    </div>
+                    <div class="cs-td vv">
+                        <span>123</span>
+                    </div>
+                    <div class="cs-td chat">
+                        <span>435</span>
+                    </div>
+                    <div class="cs-td time-1">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td time-2">
+                        <span>2016.12.12 12:00</span>
+                    </div>
+                    <div class="cs-td device">
+                        <span>移动端</span>
+                    </div>
+                    <div class="cs-td way">
+                        <span>微信</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pages">
+                <a class="items text">前页</a>
+                <a class="items active">1</a>
+                <a class="items">2</a>
+                <a class="items disable">3</a>
+                <a class="items text">后页</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- inject:admin_footer:html -->
+<!--footer-->
+<div class="footer">
+    <div class="fot-top">
+        <div class="fb-item"><i class="iconfont">&#xe612;</i>100倍故障时长赔偿</div>
+        <div class="fb-item"><i class="iconfont">&#xe640;</i>7*24小时售后支持</div>
+        <div class="fb-item"><i class="iconfont">&#xe636;</i>7天无理由赔偿</div>
+        <div class="fb-item"><i class="iconfont">&#xe611;</i>首充多少送多少</div>
+    </div>
+    <div class="fot-list">
+        <div class="fl-group">
+            <h4><i class="iconfont">&#xe744;</i>联系我们</h4>
+            <p><span>微信</span>General</p>
+            <p><span>QQ</span>800-133-388</p>
+            <p><span>邮箱</span>yyg@mengdie.com</p>
+        </div>
+        <div class="fl-group">
+            <h4><i class="iconfont">&#xe658;</i>关于我们</h4>
+            <a >关于我们链接</a>
+            <a >关于我们链接</a>
+            <a >关于我们链接</a>
+            <a >关于我们链接</a>
+        </div>
+        <div class="fl-group">
+            <h4><i class="iconfont">&#xe616;</i>合作伙伴</h4>
+            <a >合作伙伴链接</a>
+            <a >合作伙伴链接</a>
+            <a >合作伙伴链接</a>
+        </div>
+        <div class="focus-qr">
+            <img src="../../src/img/temp/qr.png">
+            <h4>关注微信</h4>
+            <h6>了解更多直播方案</h6>
+        </div>
+    </div>
+    <div class="fot-bar">
+        <p><a>虫虫加速器</a>|<a>芝麻代理</a>|<a>一元购</a>|<a>梦蝶直播</a></p>
+        <h6>徐州灵匠信息科技有限公司 版权所有</h6>
+    </div>
+</div>
+
+<!-- endinject -->
+<!-- inject:main:html --><!--通用模块--><!-- endinject -->
+<script src="../../src/js/mCustomScrollbar.js " type="text/javascript"></script>
+<script src="../../src/js/admin_account.js " type="text/javascript"></script>
+</body>
+</html>

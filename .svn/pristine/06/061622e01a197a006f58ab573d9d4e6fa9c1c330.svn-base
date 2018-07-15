@@ -1,0 +1,206 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin-index.css"/}
+{/block}
+{block name="title"}玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="main admin-index">
+    <div class="container">
+        <div class="ai-cards">
+            <div class="user-info">
+                <a class="user-ava">
+                    {empty name='user_info.user_face'}
+                    <img src="__static__/index/src/img/temp/user_ava.png">
+                    {else/}
+                    <img src="{$Think.config.CONFIG_CDN_URL}{$user_info.user_face|default=''}">
+                    {/empty}
+                </a>
+                <a class="user-name">你好,
+                    {empty name="user_info.nick_name"}
+                       {$user_info.phone|default=''}
+                    {else/}
+                       {$user_info.nick_name|default="大哥,您火星来的吧"}
+                    {/empty}
+                </a>
+                <div class="user-auth">
+                    {eq name="user_info.state" value="2"}
+                        <a href="{:url('index/user_center/account','type=1')}" class="ua-item ua-success">
+                            <i class="iconfont">&#xe61d;</i>
+                        </a>
+                    {else/}
+                        <a href="{:url('index/user_center/account','type=1')}" class="ua-item ua-warning">
+                            <i class="iconfont">&#xe61d;</i>
+                        </a>
+                    {/eq}
+                    {empty name="user_info.phone"}
+                        <a href="{:url('index/user_center/account','type=5')}" class="ua-item ua-warning">
+                            <i class="iconfont">&#xe737;</i>
+                        </a>
+                    {else/}
+                        <a href="{:url('index/user_center/account','type=5')}" class="ua-item ua-success">
+                            <i class="iconfont">&#xe737;</i>
+                        </a>
+                    {/empty}
+                    {empty name="user_info.email"}
+                        <a href="{:url('index/user_center/account','type=6')}" class="ua-item ua-warning">
+                            <i class="iconfont">&#xe603;</i>
+                        </a>
+                    {else/}
+                        <a href="{:url('index/user_center/account','type=6')}" class="ua-item ua-success">
+                            <i class="iconfont">&#xe603;</i>
+                        </a>
+                    {/empty}
+                </div>
+                <div class="user-num">
+                    <h4>
+                        账户类型：<span>
+                        {switch name="user_info.account_type"}
+                            {case value="1"}基础版{/case}
+                            {case value="2"}专业版{/case}
+                            {case value="3"}企业版{/case}
+                            {default /}基础版
+                        {/switch}
+                    </span>
+                        <a>升级</a>
+                    </h4>
+                    <h4>
+                        账户余额：<span><i class="iconfont">&#xe644;</i>{$user_info.balance|default='0.00'}</span>
+                        <a href="{:url('index/user_center/account','type=3')}">充值</a>
+                    </h4>
+                    <h4>
+                        套餐类型：<span>{$user_info.type|default='无'}</span>
+                        <a>购买</a>
+                    </h4>
+                </div>
+            </div>
+            <div class="adi-card fee">
+                <span class="title">账户余额</span>
+                <h4>{$user_info.balance|default='0.00'}</h4>
+                <a href="{:url('index/user_center/account',['type'=>3])}">立即充值</a>
+            </div>
+            <div class="adi-card bill">
+                <!--<span class="title">本月账单</span>-->
+                <div class="chart">
+                    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+                    <div id="main1" style="width: 400px;height:280px;"></div>
+                    <a class="detail" href="{:url('index/user_center/account',['type'=>2])}">查看详情</a>
+                </div>
+            </div>
+            <div class="adi-card count">
+                <span class="title">数据概况</span>
+                <h4>本月计费方式：观看时长</h4>
+                <div class="count-list">
+                    <span>昨日流量：<i class="iconfont">&#xe644;</i><b>0.0</b>GB</span>
+                    <span>直播频道总数：<b>{$data['all_rooms']|default='0'}</b>个</span>
+                    <span>昨日宽带峰值：<b>10</b>Mbps</span>
+                    <span>正在直播频道数：<b>{$data['live_rooms']|default='0'}</b>个</span>
+                </div>
+            </div>
+        </div>
+        <h4 class="ai-title">所有服务</h4>
+        <ul class="ai-tips">
+            <li class="ai-item">
+                <h4>直播</h4>
+                <p>全方位的端到端解决方案，提供低延时、高并发的1对多视频直播服务。</p>
+            </li>
+            <li class="ai-item">
+                <h4>点播</h4>
+                <p>全方位的端到端解决方案，提供低延时、高并发的1对多视频直播服务。</p>
+            </li>
+            <li class="ai-item empty">
+            </li>
+        </ul>
+    </div>
+</div>
+<input type="hidden" id="count_url" value="{:url('count_bill')}">
+<!-- inject:admin_footer:html -->
+{/block}
+{block name="js"}
+{js href="__static__/index/js/echarts.min.js"/}
+{js href="__static__/index/src/js/login/login.js"/}
+<script>
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('main1'));
+    myChart1.showLoading();
+    myChart1.setOption(option = {
+        title : {
+            text: '本月账单',
+            subtext: '',
+            x:'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            data: ['直播','点播']
+        },
+        series: [
+            {
+                name:'本月账单',
+                type:'pie',
+                selectedMode: 'single',
+                radius: [0, '30%'],
+
+                label: {
+                    normal: {
+                        position: 'inner'
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data:[
+
+                ]
+            },
+            {
+                name:'账单花费',
+                type:'pie',
+                radius: ['40%', '55%'],
+
+                data:[
+
+                ]
+            }
+        ]
+    });
+    // 异步加载数据
+    var url = $("#count_url").val();
+    common.ajax_post(url,false,true,function(rt){
+        myChart1.hideLoading();
+        var obj = common.str2json(rt);
+        var cate1_1 = [];
+        var data1_1 = [];
+        var data1_2 = [];
+
+        for(var i in obj.ret_data){
+            cate1_1.push(obj.ret_data[i]["name"]);
+            data1_1.push(obj.ret_data[i]);
+        }
+
+// 上个月人员完成工单数填入数据
+        myChart1.setOption({
+            legend: {
+                data: cate1_1
+            },
+            series: [
+                {
+// 根据名字对应到相应的系列
+                    data: []
+                },
+                {
+// 根据名字对应到相应的系列
+                    data: data1_1
+                }
+            ]
+        });
+    });
+</script>
+{/block}

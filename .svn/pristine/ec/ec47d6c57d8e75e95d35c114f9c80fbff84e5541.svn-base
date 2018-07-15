@@ -1,0 +1,64 @@
+{extend name="base/admin_base"/}
+{block name="css"}
+{css file="__static__/index/src/css/admin.css"/}
+{css file="__static__/index/src/css/admin_live.css"/}
+{/block}
+{block name="title"}视频Logo - 玲珑直播{/block}
+{block name="content"}
+<!-- endinject -->
+<div class="statistics">
+<div class="main admin ">
+    <div class="container">
+        <!-- inject:live_menu:html -->
+        {include file="base/channel_set_menu"/}
+        <!-- endinject -->   
+        <div class="content">
+            <div class="block">
+                <h1 class="basic_h1">
+                    <span class="basic_h1_left">频道图标</span>
+                </h1>
+                <div class="guide guide_left">
+                    <form id="cover_url">
+                    <label class="guide_label">上传图片<input class="file_upload box_img" name="cover_file" type="file" value="1" /></label>
+                    </form>
+                    <p class="guide_p">图片大小为2M以内；</p>
+                    <p class="guide_p">支持PNG、JPG、JPEG格式；</p>
+                    <p class="guide_p">您上传的图片自动会生成128*128像素的图片</p>
+                    <p class="guide_p guide_p4">频道图标预览：</p>
+                    <img class="preview preview4s" src="__static__/index/src/img/admin/preview2.png"/>
+                    <div style="clear: both"></div>
+                    <p class="guide_p guide_p2">128*128</p>
+                    <div style="clear: both"></div>
+                    <!-- 正在审核  preview_sub添加 guide_layer_act，guide_layer显示-->
+                    <!-- <div class="guide_layer"></div> -->
+                    <input type="submit" name="" value="提交" class="preview_sub preview_sub3"/>
+                    
+                </div>
+                <span class="x-vertical"></span>
+                <div class="x-current">
+                    <p>当前频道图标：</p>
+                    {empty name='list.map_guide'}
+                    <img src="__static__/index/src/img/admin/preview2.png" alt="">
+                    {else/}
+                    <img src="{$Think.config.CONFIG_CDN_URL}{$list.cover|default=''}"/>
+                    {/empty}
+                    <div style="clear: both"></div>
+                     <p>128*128</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<input type="hidden" id="cover_id" value="{$id}"><!--当前房间ID-->
+<input type="hidden" id="map_cover" value=""><!--视频图标值写入-->
+<input type="hidden" id="up_cover_url" value="{:url('index/channel_set/up_cover')}"><!--视频图标上传-->
+<input type="hidden" id="map_cover_url" value="{:url('index/channel_set/map_cover_list')}"><!--视频图标提交-->
+
+{/block}
+{block name="js"}
+{js href="__static__/index/src/js/admin/admin.js"/}
+{js href="__static__/index/src/js/admin/control_inner.js"/}
+{js href="__static__/index/js/admin/channel_set.js"/}
+{/block}

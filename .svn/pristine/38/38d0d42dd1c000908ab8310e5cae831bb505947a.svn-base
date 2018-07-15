@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/30
+ * Time: 10:45
+ */
+include_once 'aliyun-php-sdk-core/Config.php';
+use Mts\Request\V20140618 as Mts;
+$accessKeyID = 'LTAIVn2vJMKMgSU4'; // 替换成真实的id
+$accessKeySecret = 'lZZIldxJB9qMtlYqLvZMYdl2Yuhl0y'; // 替换成真实的secret
+$profile = DefaultProfile::getProfile('cn-hangzhou',
+    $accessKeyID,
+    $accessKeySecret);
+$client = new DefaultAcsClient($profile);
+
+function queryMediaById($client, $mediaID)
+{
+    $request = new Mts\QueryMediaListRequest();
+    $request->setAcceptFormat('JSON');
+    $request->setMediaIds($mediaID);
+    $response = $client->getAcsResponse($request);
+    return $response;
+}
+function printMedia($media)
+{
+    if (array_key_exists('Title', $media)) {
+        print_r('Title: '.$media->{'Title'}."\n");
+    }
+    if (array_key_exists('Description', $media)) {
+        print_r('Description: '.$media->{'Description'}."\n");
+    }
+    if (array_key_exists('Tags', $media)) {
+        print_r('Tags: '.$media->{'Tags'}->{'Tag'}[0]."\n");
+    }
+    if (array_key_exists('CoverURL', $media)) {
+        print_r('CoverURL: '.$media->{'CoverURL'}."\n");
+    }
+    print_r('Format: '.$media->{'Format'}."\n");
+    print_r('Resolution: '.$media->{'Width'}.'x'.$media->{'Height'}."\n");
+    print_r('FileSize: '.$media->{'Size'}."\n");
+    print_r('Bitrate: '.$media->{'Bitrate'}."\n");
+    print_r('FPS: '.$media->{'Fps'}."\n");
+}
+$mediaID = '99df63bc19b646a6b16e0acc23ad5978'; // 替换成真实的mediaID
+$medias = queryMediaById($client, $mediaID)->{'MediaList'}->{'Media'};
+for ($i=0; $i < count($medias); $i++) {
+    printMedia($medias[$i]);
+}

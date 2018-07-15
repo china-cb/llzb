@@ -1,0 +1,24 @@
+<?php
+namespace app\index\model;
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2017/1/14
+ * Time: 16:37
+ */
+class PreviewModel
+{
+    /** 获取频道信息 */
+     public function get_channel_info($cid){
+         return db("user_av_room r")
+             ->join("channel_record c","r.id = c.cid","LEFT")
+             ->field("r.*,count(c.id) as people")
+             ->where("r.id",$cid)
+             ->find();
+     }
+
+    /** 获取用户信息 */
+    public function get_member_info($mid){
+        return db("member")->field("member_id,nick_name,user_face")->find($mid);
+    }
+}

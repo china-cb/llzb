@@ -1,0 +1,103 @@
+<?php
+namespace app\core\model;
+
+Class BusinessModel
+{
+    /** 获取用户信息 */
+    public function get_user_info_by_id($mid){
+        return db('member')->where(['member_id'=>$mid,'status'=>1])->find();
+    }
+
+    //创建订单
+    public function create_order($order)
+    {
+        $order_id =$pak_id= $name = $origin = $username = $exec_data = $type = $money = $coupon = $remark = $promoter_pos = $uid = $create_time = null;
+        extract($order);
+
+        $data = [
+            'pak_id'=> $pak_id,
+            'order_id' => $order_id,
+            'name' => $name,
+            'username' => $username,
+            'exec_data' => $exec_data,
+            'origin' => $origin,
+            'type' => $type,
+            'money' => $money,
+            'coupon' => $coupon,
+            'remark' => $remark,
+            'promoter_pos' => $promoter_pos,
+            'uid' => $uid,
+            'create_time' => NOW_TIME
+        ];
+        return db_func('order_list', 'md_')->insert($data);
+    }
+
+    /** 检测频道直播状态 */
+    public function get_channel_live_status($uid,$cid){
+        return db("live_record")->field("status")->where(["uid"=>$uid,"cid"=>$cid])->order("create_time desc")->limit(1)->find();
+    }
+
+    /** 根据mid获取会员观看记录 */
+    public function get_channel_record_by_mid($uid,$cid,$mid){
+        return db("channel_record")->where(['uid'=>$uid,"cid"=>$cid,'mid'=>$mid])->find();
+    }
+
+    /** 根据ip获取游客观看记录 */
+    public function get_channel_record_by_ip($uid,$cid,$ip){
+        return db("channel_record")->where(['uid'=>$uid,"cid"=>$cid,'ip'=>$ip])->find();
+    }
+
+    /** 添加观看记录 */
+    public function add_channel_record($data){
+        return db("channel_record")->insert($data);
+    }
+
+    /** 更新观看记录 */
+    public function update_channel_record($data){
+        return db("channel_record")->update($data);
+    }
+
+    /** 根据mid获取用户基本信息 */
+    public function get_user_info_by_mid($mid){
+        return db("member")->where("member_id",$mid)->find();
+    }
+
+    /** 获取频道信息 */
+    public function get_user_av_room($cid,$uid){
+        return db("user_av_room")->where(["id"=>$cid,"uid"=>$uid])->find();
+    }
+
+    /** 获取直播记录信息 */
+    public function get_live_record_last($uid,$cid){
+        return db("live_record")->where(['uid'=>$uid,'cid'=>$cid])->order('id desc')->limit(1)->find();
+    }
+
+    /** 获取所有正在推流的频道 */
+    public function get_all_push_channel(){
+        return db("live_record")->where(["status"=>1,"url_status"=>1])->select();
+    }
+
+    /** 添加直播记录 */
+    public function add_live_record_do($data){
+        return db("live_record")->insert($data);
+    }
+
+    /** 更新直播频道记录,标记直播结束 */
+    public function update_live_record($id){
+        $data = [
+            'id'=>$id,
+            'status'=>-1,
+            'end_time'=>NOW_TIME
+        ];
+        return db("live_record")->update($data);
+    }
+
+    /** 获取频道的设置信息 */
+    public function get_user_av_room_config($uid,$cid){
+        return db("user_av_room")->field("push_switch,rtmp,hls,live_type,wis_type")->where(["uid"=>$uid,"id"=>$cid])->find();
+    }
+    /** 获取频道的详细信息 */
+    public function get_channel_info($cid){
+        return db("user_av_room")->where('id',$cid)->count();
+    }
+}

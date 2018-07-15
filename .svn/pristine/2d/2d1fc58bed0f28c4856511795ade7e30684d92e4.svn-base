@@ -1,0 +1,229 @@
+@charset "utf-8";
+@import"core/setting";
+@import"core/css3";
+@import"core/_mixin";
+.guide_h1_left{
+	margin-left: 22px;
+	font-size: 12px;
+	color: #666666;
+}
+
+.guide{
+	position: relative;
+	margin: 0 auto;
+	width: 845px;
+	%clearfix{
+	  display:block;clear:both;content:"";visibility:hidden;height:0
+	}
+	// 过度
+	@mixin transitions ($value: 0.6s){
+		transition: all $value;
+	    -webkit-transition: all $value; /* Safari */
+	    -moz-transition: all $value;
+	    -o-transition: all $value;
+	}
+	@mixin translateX($translateX:2px) {
+	  transform: translateX($translateX);
+	    -webkit-transform: translateX($translateX);
+	    -moz-transform: translateX($translateX);
+	    -ms-transform: translateX($translateX);
+	}
+	text-align: left;
+	.guide_title{
+		margin: 0 auto;
+		width: 845px;
+		text-align: left;
+		line-height: 67px;
+		height: 67px;
+		font-size: 16px;
+		color: #222222;
+		border-bottom:3px solid #e4e6f2;
+		.on_off{
+			cursor: pointer;
+			position: relative;
+			top: 10px;
+			display: inline-block;
+			width: 60px;
+			height: 30px;
+			border-radius: 15px;
+			background-color: #e4e6f2;
+			i{
+				position: absolute;
+				top: 2px;
+				right: 3px;
+				display: inline-block;
+				width: 26px;
+				height: 26px;
+				border-radius: 50%;
+				background-color: #33cde5;
+				box-shadow:  0 0 2px #33cde5;
+				@include transitions(0.35s);
+				&:hover{background-color: #099eb6}
+			}
+			.off_act{
+				right: 31px;
+				background-color: #80d4e2;
+    			box-shadow: 0 0 2px #80d4e2;
+    			&:hover{    background-color: #5bccdf;}
+			}
+		}
+	}
+	.guide_label{
+		cursor: pointer;
+		position: relative;
+		margin: 20px 0;
+		display: block;
+		width: 340px;
+		height: 40px;
+		background-color: #00c4e3;
+		color: #fff;
+		text-align: center;
+		line-height: 40px;
+		font-size: 14px;
+		border-radius: 2px;
+		@include transitions;
+		&:hover{background-color: #06a1ba}
+		input{position: absolute;opacity: 0;width: 0;height: 0;top: 0;left: 0;}
+	}
+	.guide_p{
+		font-size: 12px;
+		color: #fb8446;
+	}
+	.guide_p2{
+		margin-top: 10px;
+		color: #222;
+	}
+	.preview2{
+		position: relative;
+		display: block;
+		text-align: center;
+		float: left;
+		border: 10px solid #eef4f5;
+		margin: 60px 0 0 90px;
+		width: 150px;
+		height: 150px;
+		background-color: #eef4f5;
+		>span:nth-child(1){
+			position: relative;
+			line-height: 150px;
+			z-index: 1;
+			padding: 5px 10px;
+			font-size: 12px;
+			color: #799296;
+			background-color: #eef4f5;
+		}
+		.preview2_t{
+			position: absolute;
+			top: 170px;
+			left: 0;
+			color: #222222;
+			font-size: 12px;
+			display: block;
+			width: 150px;
+			height: 30px;
+			// line-height: 
+		}
+		img{
+			position: absolute;
+			z-index: 0;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.preview3{
+		position: relative;
+		margin: 20px 160px 0 0;
+		float: right;
+		width: 135px;
+		height: 275px;
+		border-radius:13px;
+		font-size: 12px;
+		color: #799296;
+		background-color: #e4ebec;
+		i{
+			position: absolute;
+			background-color: #c9d6d8;
+		}
+		.p_radius{
+			left: 46px;
+			top: 15px;
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+		}
+		.p_lines{
+			left: 54px;
+			top: 15px;
+			width: 33px;
+			height: 4px;
+			border-radius: 2px;
+		}
+		.p_radiu2s{
+			left: 50%;
+			margin-left: -13px;
+			bottom:5px;
+			width: 26px;
+			height: 26px;
+			border-radius: 50%;
+		}
+		img{
+			border-radius: 2px;
+			overflow: hidden;
+			display: block;
+			margin: 0;
+			width: 119px;
+			height: 213px;
+		}
+		.preview_p1{
+			position: absolute;
+			top: 120px;
+			left: -150px;
+			color: #222222;
+			font-size: 12px;
+		}
+	}
+	.win_preview3{
+		position: relative;
+		float: left;
+		width: 720px;
+		height: 405px;
+		border-radius: 0;
+		img{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	.preview_sub{
+		margin-top: 100px;
+		border:none;
+		display: block;
+		line-height: 35px;
+		text-align: center;
+		color: #fff;
+		width: 150px;
+		height: 35px;
+		border-radius: 2px;
+		background-color: #00c4e3;
+		font-size: 14px;
+		@include transitions;
+		&:hover{background-color: #06a1ba}
+	}
+	
+ .guide_layer{
+ 	position: absolute;
+ 	top: 0;
+ 	left: 0;
+ 	z-index: 11;
+ 	width: 100%;
+ 	height: 100%;
+ 	background-color: rgba(255, 255, 255, 0.37);
+ }
+   .guide_layer_act{
+   		background-color: #df6400;
+   }  
+}

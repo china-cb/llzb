@@ -1,0 +1,89 @@
+{extend name="base/base"/}
+{block name="css"}{/block}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}充值管理{/block}
+{block name="site_nav_2"}套餐配置列表{/block}
+{block name='content'}
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <span class="l">
+       <button type="button" class="btn btn-success radius open_form" data-url="{:url('exec',['type'=>'add'])}"><i class="Hui-iconfont">&#xe600;</i> 添加套餐配置</button>
+    </span>
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c">
+            名称搜索：
+            <input type="text" name="search_word" value="{:input('param.search_word','')}" placeholder="请输入套餐钱数" class="input-text" style="width:250px;">
+            <button type="submit" class="btn btn-success radius" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default radius" onclick="$('input[name=\'search_word\']').val('')"  name=""><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">共有数据：<strong>{$total}</strong> 条</span>
+        </div>
+    </form>
+</div>
+<div class="mt-20 list_div dataTables_wrapper no-footer">
+    <table class="table table-border table-bordered table-hover table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th>序号</th>
+            <th>套餐名称</th>
+            <th>套餐价格</th>
+            <th>额外赠送</th>
+            <th>套餐时长</th>
+            <th>套餐描述</th>
+            <th>状态</th>
+            <th>创建时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="search_list">
+        {empty name="list"}
+        <tr>
+            <td class="text-c" colspan="9">暂无数据..</td>
+        </tr>
+        {else/}
+        {volist name="list" id="vo"}
+        <tr class="text-c">
+            <td>{$vo.id|default=''}</td>
+            <td>
+               {$vo.name|default='--'}
+            </td>
+            <td>
+                {$vo.money|default=''}元
+                {notempty name="vo.unit"}
+                   /{$vo.unit|default='秒'}
+                {/notempty}
+            </td>
+            <td>{$vo.extra|default=''}元</td>
+            <td>
+                {empty name="vo.all_time"}
+                   --
+                {else/}
+                   {$vo.all_time|default='0'}分钟
+                {/empty}
+            </td>
+            <td>{$vo.desc|default=""}</td>
+            <td>
+                {switch name="vo.status"}
+                {case value="1"}<span class="label label-success radius">可用</span>{/case}
+                {case value="-1"}<span class="label label-default radius">禁用</span>{/case}
+                {/switch}
+            </td>
+            <td>{$vo.create_time|date="Y-m-d H:i:s",###}</td>
+            <td class="td-manage">
+                <a title="编辑" data-url="{:url('exec',['type'=>'edit','id'=>$vo['id']])}" href="javascript:;" class="ml-5 open_form" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6df;</i>
+                </a>
+                <a  title="删除" data-url="{:url('del_recharge_conf')}" data-id="{$vo.id|default=0}" href="javascript:;" class="ml-5 del_by_id" style="text-decoration:none">
+                    <i class="Hui-iconfont">&#xe6e2;</i>
+                </a>
+        </tr>
+        {/volist}
+        {/empty}
+        </tbody>
+    </table>
+</div>
+<nav class="page_admin">
+    {$page|default=''}
+</nav>
+{/block}
+
+
+

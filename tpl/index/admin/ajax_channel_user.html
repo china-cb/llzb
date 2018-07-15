@@ -1,0 +1,77 @@
+<div class="cs-th">
+    <div class="cs-td nick"><i class="iconfont">&#xe630;</i>用户昵称</div>
+    <div class="cs-td address"><i class="iconfont">&#xe642;</i>地址</div>
+    <div class="cs-td time"><i class="iconfont">&#xe619;</i>观看时长</div>
+    <div class="cs-td phone"><i class="iconfont">&#xe627;</i>手机号</div>
+    <div class="cs-td vv"><i class="iconfont">&#xe6f8;</i>访问次数</div>
+    <div class="cs-td chat"><i class="iconfont">&#xe613;</i>聊天数</div>
+    <div class="cs-td time-1"><i class="iconfont">&#xe61a;</i>首次登录时间</div>
+    <div class="cs-td time-2"><i class="iconfont">&#xe695;</i>最后在线时间</div>
+    <div class="cs-td device"><i class="iconfont">&#xe628;</i>最后登录设备</div>
+    <div class="cs-td way"><i class="iconfont">&#xe675;</i>最后登录方式</div>
+</div>
+{empty name="channel_user"}
+<div class="cs-tr" colspan="12">暂无记录..</div>
+{else/}
+{volist name="channel_user" id="vo" }
+<div class="cs-tr">
+    <div class="cs-td nick">
+        <h4>
+            {empty name="vo.face_img"}
+            <img src="__static__/index/src/img/temp/user_ava.png">
+            {else/}
+            {/empty}
+            <span>
+               {elt name="vo['nick_name']|mb_strlen='utf8'" value="5"}
+                   {$vo['nick_name']|default='匿名用户'}
+               {else/}
+                   {$vo['nick_name']|mb_substr=0,5,'utf-8'}...
+               {/elt}
+            </span>
+        </h4>
+    </div>
+    <div class="cs-td address">
+        <span>{$vo.address|default="--"}</span>
+    </div>
+    <div class="cs-td time">
+        <span>{$vo.watch_count|gmstrftime="%H:%M:%S",###|default="0"}</span>
+    </div>
+    <div class="cs-td phone">
+        <span>{$vo.phone|default="--"}</span>
+    </div>
+    <div class="cs-td vv">
+        <span>{$vo.visit_count|default='0'}</span>
+    </div>
+    <div class="cs-td chat">
+        <span>{$vo.chat_count|default='0'}</span>
+    </div>
+    <div class="cs-td time-1">
+        <span>
+            {empty name="vo.create_time"}
+               --
+            {else/}
+               {$vo.create_time|date="Y.m.d H:i:s",###}
+            {/empty}
+        </span>
+    </div>
+    <div class="cs-td time-2">
+        <span>
+            {empty name="vo.end_time"}
+               --
+            {else/}
+               {$vo.end_time|date="Y.m.d H:i:s",###}
+            {/empty}
+        </span>
+    </div>
+    <div class="cs-td device">
+        <span>{$vo.last_login_device|default="电脑端"}</span>
+    </div>
+    <div class="cs-td way">
+        <span>{$vo.last_login_type|default="pc"}</span>
+    </div>
+</div>
+{/volist}
+{/empty}
+<div class="pages">
+    {$page|default=''}
+</div>

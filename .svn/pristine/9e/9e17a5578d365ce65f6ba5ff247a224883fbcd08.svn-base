@@ -1,0 +1,30 @@
+<div class="header">
+    <div class="h-bar">
+        <div class="warp">
+            <h6 class="info" >服务热线：200-190000（周一至周五9:00～18:00）</h6>
+            <div class="nav">
+                <a class="nav-link">芝麻代理</a>
+                <a class="nav-link">梦蝶跑腿</a>
+                <a class="nav-link">梦蝶直播</a>
+                <a class="nav-link">梦蝶一元购</a>
+            </div>
+        </div>
+    </div>
+    <div class="h-main">
+        <div class="warp">
+            <a class="logo-top-index"></a>
+            <div class="hm-nav">
+                <a class="">首页</a>
+                <a class="">产品体验</a>
+                <a class="">应用场景</a>
+                <a class="">套餐购买</a>
+                <a class="">帮助中心</a>
+            </div>
+            <div class="hm-qu-link">
+                <a class="hq-item" href="{:url('index/admin/index')}">控制台</a>
+                <a class="hq-item" href="{:url('index/login/index')}">登录</a>
+                <a class="hq-item" href="{:url('index/login/register')}">注册</a>
+            </div>
+        </div>
+    </div>
+</div>

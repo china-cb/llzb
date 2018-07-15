@@ -1,0 +1,292 @@
+<?php
+namespace app\index\controller;
+use app\lib\TisApi;
+use app\lib\WisApi;
+use think\Controller;
+//use Mts\Request\V20140618 as Mts;
+
+/**
+ * Created by PhpStorm.
+ * User: 冯天元
+ * Date: 2016/12/5
+ * Time: 13:19
+ */
+class Index extends Controller
+{
+    protected $partNum;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->partNum = 1;
+    }
+
+    /** 玲珑TV首页 */
+    public function index()
+    {
+        return $this->fetch();
+    }
+
+    public function index3(){
+        $authKey = "b5b0ee4142a0692e1ab23ad888c3639f";
+        $userId = 26836;
+        $wisId = "lc_fd8bc7344dbe52a32106ae20cdcffe7f";
+        $power = 60; //观看端为1, 上麦端为60
+        $domain = "";
+        $expire = "1512151322";
+        $rand = rand(1000,9999).'';
+        $signStr = $this->signStr($authKey, $userId, $wisId, $power, $domain, $expire, $rand);
+        $dmn = empty($_REQUEST['domain'])?'':1;
+        $recordUrl = "http://linglong.tv/index.php/index/index/index3".
+            "?wisId=".$wisId.
+            "&power=".$power.
+            "&expire=".$expire.
+            "&rand=".$rand.
+            "&dmn=".$dmn.
+            "&sign=".$signStr;
+        echo "上麦地址：".$recordUrl;
+        return $this->fetch();
+    }
+
+    public function index4(){
+        return $this->fetch();
+    }
+
+    public function index5(){
+        return $this->fetch();
+    }
+
+    public function interface1(){
+        $api = new WisApi("089317301056","ZbQtc0Xk93vdqt4uMx35A0RKmwze1nM4");
+
+        $method = $_REQUEST['method'];
+        if($method == "AllowDraw"){
+            echo json_encode(array("Flag"=>100));
+            exit();
+        }
+        $rst = $api->$method($_REQUEST);
+        echo json_encode($rst);
+    }
+
+    public function signstr($authKey, $wisId, $userId, $domain, $power, $expire, $rand){
+            $sigArr = array($wisId, $userId.'', $expire.'');
+            if(!empty($power))
+                $sigArr[] = $power;
+            if(!empty($domain))
+                $sigArr[] = $domain;
+            if(!empty($rand))
+                $sigArr[] = $rand;
+            sort($sigArr,SORT_STRING);
+            $signStr = join("",$sigArr);
+            return urlencode(base64_encode(hash_hmac("sha1", $signStr, $authKey, true)));
+    }
+
+    public function text()
+    {
+        @set_time_limit(0);
+        $access_id = '038510768257'; //填入access_id
+        $access_key = 'Hm7S7LHTlni47D2hwE8r5O47Fr6tEH24';//填入access_key
+        $upload_api = 'http://upload.dvr.aodianyun.com/v2'; //上传接口地址
+
+        $fileName = 'demo.mp4';//上传的文件路径
+
+        $offset = 0;
+        $flag = 0;
+        $sliceSize = 5 * 1024 * 1024;//分片大小
+        $partNum = 1;
+        $fileSize = filesize($fileName);
+
+        while ($flag != 1) {
+            $dataSize = 0;
+
+            //计算本次上传分片的大小
+            if ($offset + $sliceSize > $fileSize) {
+                $dataSize = $fileSize - $offset;
+            } else {
+                $dataSize = $sliceSize;
+            }
+            $part = urlencode(base64_encode(file_get_contents($fileName, false, NULL, $offset, $dataSize)));
+            $param = array(
+                'access_id' => $access_id,
+                'access_key' => $access_key,
+                'fileName' => $fileName,
+                'part' => $part,
+                'partNum' => $partNum
+            );
+            $res = $this->curl($upload_api . '/DVR.UploadPart', 'parameter=' . json_encode($param));
+            echo $res . '<br>';
+            if (!empty($res) && $flag == 0) {
+                $res = json_decode($res, true);
+                if ($res['Flag'] == 100) {
+                    $partNum++;
+                    $offset += $dataSize;
+                }
+            }
+
+            if ($offset == $fileSize) {
+                $flag = 1;
+                $param = array(
+                    'access_id' => $access_id,
+                    'access_key' => $access_key,
+                    'fileName' => $fileName
+                );
+                echo $this->curl($upload_api . '/DVR.UploadComplete', 'parameter=' . json_encode($param));
+            }
+        }
+    }
+
+    public function curl($url, $data)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        $return_str = curl_exec($curl);
+        curl_close($curl);
+        return $return_str;
+    }
+
+    public function query()
+    {
+        $access_id = '038510768257'; //填入access_id
+        $access_key = 'Hm7S7LHTlni47D2hwE8r5O47Fr6tEH24';//填入access_key
+        $fileName = 'demo.mp4';//上传的文件路径
+        $upload_api = 'http://upload.dvr.aodianyun.com/v2'; //上传接口地址
+        $data = [
+            'access_id' => $access_id,
+            'access_key' => $access_key,
+            'fileName' => $fileName,
+            'partNum' => $this->partNum
+        ];
+        $result = $this->curl($upload_api . '/DVR.UploadQuery', 'parameter=' . json_encode($data));
+        echo_json($result);
+    }
+
+    public function upload()
+    {
+        return $this->fetch();
+    }
+
+    public function upload_do()
+    {
+        // Make sure file is not cached (as it happens for example on iOS devices)
+        header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+        header("Cache-Control: no-store, no-cache, must-revalidate");
+        header("Cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+
+        $access_id = '038510768257'; //填入access_id
+        $access_key = 'Hm7S7LHTlni47D2hwE8r5O47Fr6tEH24';//填入access_key
+        $upload_api = 'http://upload.dvr.aodianyun.com/v2'; //上传接口地址
+// 5 minutes execution time
+        @set_time_limit(5 * 60);
+// Get a file name
+        if (isset($_POST["name"])) {
+            $fileName = $_POST["name"];
+        } elseif (isset($_GET["name"])) {
+            $fileName = $_GET["name"];
+        } elseif (!empty($_FILES)) {
+            $fileName = $_FILES["file"]["name"];
+        }
+
+// Chunking might be enabled
+        $chunk = 0;
+        $chunks = 0;
+        if (isset($_POST["chunk"])) {
+            $chunk = intval($_POST["chunk"]);
+        } elseif (isset($_GET["chunk"])) {
+            $chunk = intval($_GET["chunk"]);
+        }
+        if (isset($_POST["chunks"])) {
+            $chunks = intval($_POST["chunks"]);
+        } elseif (isset($_GET["chunks"])) {
+            $chunks = intval($_GET["chunks"]);
+        }
+
+        if (!empty($_FILES)) {
+            if ($_FILES["file"]["error"] || !$_FILES["file"]["size"] || !is_uploaded_file($_FILES["file"]["tmp_name"])) {
+                die('{"Flag":101,"FlagString":"服务器异常，无法移动上传的文件。"}');
+            }
+        }
+
+        $part = urlencode(base64_encode(file_get_contents($_FILES["file"]["tmp_name"])));
+        $partNum = $chunk + 1;//partNum从1开始
+        $param = array(
+            'access_id' => $access_id,
+            'access_key' => $access_key,
+            'fileName' => $fileName,
+            'part' => $part,
+            'partNum' => $partNum
+        );
+        $res = $this->curl($upload_api . '/DVR.UploadPart', 'parameter=' . json_encode($param));
+        if (!empty($res)) {
+            $res = json_decode($res, true);
+            if ($res['Flag'] != 100) {
+                die('{"Flag":102,"FlagString":"' . $res['FlagString'] . '"}');
+            }
+        } else {
+            die('{"Flag":102,"FlagString":"Part文件上传接口或网络异常"}');
+        }
+
+// Check if file has been uploaded
+        if (!$chunks || $chunk == $chunks - 1) {
+            $param = array(
+                'access_id' => $access_id,
+                'access_key' => $access_key,
+                'fileName' => $fileName
+            );
+            $success = $this->curl($upload_api . '/DVR.UploadComplete', 'parameter=' . json_encode($param));
+            if (!empty($success)) {
+                $res = json_decode($success, true);
+                if ($res['Flag'] != 100) {
+                    die('{"Flag":102,"FlagString":"' . $res['FlagString'] . '"}');
+                }
+            } else {
+                die('{"Flag":102,"FlagString":"上传完成接口或网络异常"}');
+            }
+        }
+
+// Return Success JSON-RPC response
+        die('{"Flag":100,"FlagString":"上传完成"}');
+    }
+
+    public function index2()
+    {
+        return $this->fetch();
+    }
+
+    public function queryMediaById()
+    {
+        $accessKeyID = 'LTAIVn2vJMKMgSU4'; // 替换成真实的id
+        $accessKeySecret = 'lZZIldxJB9qMtlYqLvZMYdl2Yuhl0y'; // 替换成真实的secret
+        $profile = \DefaultProfile::getProfile('cn-hangzhou',
+            $accessKeyID,
+            $accessKeySecret);
+        $client = new \DefaultAcsClient($profile);
+
+        $mediaID = '99df63bc19b646a6b16e0acc23ad5978'; // 替换成真实的mediaID
+
+        $request = new QueryMediaListRequest();
+        dump($request);
+        $request->setAcceptFormat('JSON');
+        $request->setMediaIds($mediaID);
+        $response = $client->getAcsResponse($request);
+        dump($response);
+    }
+
+    public function index6(){
+        return $this->fetch();
+    }
+
+    public function interface2(){
+        $api = new TisApi(config("LIVE_ACCESS_ID"),config("LIVE_ACCESS_KEY"));
+        $method = $_REQUEST['method'];
+        $tisId = "32758a159be54401852a75cde152714b";
+        $rst = $api->$method($_REQUEST,$tisId);
+        echo json_encode($rst);
+    }
+}

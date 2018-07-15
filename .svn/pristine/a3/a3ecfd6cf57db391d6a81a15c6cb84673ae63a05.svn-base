@@ -1,0 +1,47 @@
+/**
+ * Created by admin on 2016/12/12.
+ */
+$(function () {
+
+    var func = {
+        init: function () {
+        },
+
+
+        /**修改用户信息*/
+        modify_msg: function () {
+
+            var vocation =$("#vocation_val").val();
+            var enterprise_name = $("input[name='industry']").val();
+            var url = $("#change_message").val();
+            common.ajax_post(url,{enterprise_name:enterprise_name,vocation:vocation},true,function(rt){
+                common.post_tips(rt);
+                var obj = common.str2json(rt);
+                if(obj.code == 1){
+                    layer.msg(obj.msg,{icon:1});
+                    $(".basic-modify").addClass("basic_info_act");
+                    $(".modify-msg").addClass("modify_act");
+                    $(".save-msg").removeClass("modify_act");
+                    $(".basic-save").removeClass("basic_info_act");
+                    $(".industry_ul").removeClass("industry_ul_act");
+                    location.reload();
+                }else{
+                    layer.msg(obj.msg,{icon:2});
+                }
+            })
+        }
+    };
+    /** 调出用户修改界面 */
+    $(document).on("click",".modify-msg",function(){
+        $(".basic-modify").removeClass("basic_info_act");
+        $(".modify-msg").removeClass("modify_act");
+        $(".save-msg").addClass("modify_act");
+        $(".basic-save").addClass("basic_info_act");
+        $(".industry_ul").removeClass("industry_ul_act");
+    });
+    /** 修改用户信息 */
+    $(document).on("click",".save-msg",function(){
+        func.modify_msg();
+    });
+    func.init();
+});

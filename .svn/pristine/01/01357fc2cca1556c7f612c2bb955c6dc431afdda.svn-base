@@ -1,0 +1,148 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: admin
+ * Date: 2016/12/5
+ * Time: 14:27
+ */
+namespace app\index\model;
+
+use think\Model;
+class UserCenterModel extends Model
+{
+    //用户信息
+    public function get_user_message($mid){
+        return db_func('member m','sp_')
+            ->join('recharge_conf r','m.package_id = r.id',"LEFT")
+            ->where('member_id',$mid)
+            ->field('m.nick_name,m.account_type,m.advance,m.account,m.state,m.phone,m.email,m.enterprise_name,m.vocation,m.user_face,m.create_time,r.name')
+            ->find();
+    }
+    //修改用户信息
+    public function change_user_message($post){
+        return db_func('member','sp_')->update($post);
+    }
+    //实名认证
+    public function judge_my_audit($mid,$post){
+        if (empty($mid)) return;
+        empty($post) && wrong_return('缺少必要参数');
+        if($post['type'] == 1){
+            $post[3]['business_img_url'] = '';
+            $post['enterprise_name'] = '';
+            $post['registration'] = '';
+        }
+        //校验用户
+        $audit = db('audit')->where('mid',$mid)->find();
+        $data = array(
+            'mid'=>$mid,
+            'type'=>$post['type'],
+            'true_name'=>$post['true_name'],
+            'identity_card'=>$post['identity_card'],
+            'province'=>$post['province'],
+            'city'=>$post['city'],
+            'industry'=>$post['industry'],
+            'registration'=>$post['registration'],
+            'detailed_address'=>$post['detailed_address'],
+            'enterprise_name'=>$post['enterprise_name'],
+            'positive_img_url'=>$post[0]['version_name'],
+            'negative_img_url'=>$post[1]['negative_img_url'],
+            'business_img_url'=>$post[3]['business_img_url'],
+            'description'  => '暂无描述',
+            'create_time'=>NOW_TIME,
+            'update_time'=>NOW_TIME,
+            'status' =>0
+        );
+        if(!empty($audit)){//已经有验证信息
+            //如果没有通过的，可以将新审核信息放上去 0=待审核，1=已审核，-1不通过,
+            if($audit['status'] == 0 ){
+                $temp = db('audit')->where('mid',$mid)->update($data);
+                $temp2 = db('member')->where('member_id',$mid)->update(['state'=>1]);//更新到待审核
+                if($temp && $temp2){
+                    ok_return('提交成功');
+                }
+            }
+            if($audit['status'] == 1){
+                wrong_return('您已经提交了实名认证，请耐心等待工作人员审核');
+            }
+            if($audit['status'] == 2){
+                wrong_return('您已经认证完成，如有其他需要，请联系客服');
+            }
+        }else{
+            $temple= db('audit')->insert($data);
+            $temp2 = db('member')->where('member_id',$mid)->update(['state' => 1]);//更新到待审核
+            if($temple && $temp2){
+                ok_return('提交成功');
+            }
+        }
+
+    }
+    /**判断是否绑定手机号*/
+    public function judge_user_phone($phone){
+        return db_func('member','sp_')->where('phone',$phone)->find();
+    }
+    /**判断输入手机号是否为已绑定的手机号*/
+    public function get_use_phone($mid,$phone){
+        return db_func('member','sp_')->where(['member_id' => $mid,'phone' => $phone])->find();
+    }
+    /***判断是否发送过信息*/
+    public function get_code($phone,$type){
+        return db_func('phone_code')->field('create_time')->where(array('phone'=>$phone,'type'=>$type))->order('id DESC')->limit(1)->find();
+    }
+    /**手機驗證碼入庫*/
+    public function update_code($data){
+        return db_func('phone_code','sp_')->insert($data);
+    }
+    /** 邮箱验证码入库 */
+    public function insert_email($data){
+        return db_func('email_phone')->insert($data);
+    }
+    /** 验证邮箱验证 */
+    public function mailbox_verify($mid,$code){
+        return db_func('email_phone')->where(['mid' =>$mid,'code'=>$code])->find();
+    }
+    /**主播认证头像上传 */
+    public function get_up_img_data($id,$version_name){
+        return db_func('member')->where('member_id',$id)->update(['user_face' => $version_name]);
+    }
+    /** 当月账单详情 */
+    public function get_this_month_data($mid){
+        return db_func('recharge')
+            ->where('uid',$mid)
+            ->whereTime('create_time', 'month')
+            ->sum('money');
+    }
+    /**账单详情 */
+    public function get_month_data($mid,$data1,$data2){
+        return db_func('order_list_parent')
+            ->where(['uid' => $mid,'pay_status' => 2,'status' => 1])
+            ->where('pay_status',2)
+            ->whereTime('birthday', 'between', [$data1, $data2])
+            ->order('id desc')
+            ->paginate(9,false,['query' => request()->param()]);
+    }
+    /** 根据条件，获取带分页的充值列表 */
+    static function get_recharge_list($model){
+        $condition = !empty($model) ? $model->wheresql : null;
+        $m = db_func('recharge r', 'sp_');
+        return $m->where($condition)
+            ->order('r.create_time desc')
+            ->paginate(9,false,['query' => request()->param()]);
+    }
+    /** 验证用户手机号是已注册 */
+    public function get_user_info_by_phone($phone){
+        return db('member')->where("phone",$phone)->field("member_id")->find();
+    }
+    /** 验证用户手机号与验证码是否正确 */
+    public function get_phone_code_by_phone($map){
+        return db_func('phone_code')->where($map)->find();
+    }
+    /***绑定手机号*/
+    public function change_phone($mid,$phone){
+        return db_func('member')->where('member_id',$mid)->update(['phone' => $phone]);
+    }
+
+    /** 修改密码*/
+    public function change_pwd($mid,$password){
+        return db_func('member','sp_')->where('member_id',$mid)->update(['password' => $password]);
+    }
+}

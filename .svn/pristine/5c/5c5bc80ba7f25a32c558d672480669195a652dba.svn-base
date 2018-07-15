@@ -1,0 +1,84 @@
+{extend name="base:base" /}
+{block name="site_nav_0"}后台{/block}
+{block name="site_nav_1"}订单管理{/block}
+{block name="site_nav_2"}使用订单{/block}
+{block name="content"}
+
+<div class="cl pd-5 bg-1 bk-gray mt-20">
+    <form id="form_condition" class="form-search" method="get">
+        <div class="text-c">
+            &nbsp;名称搜索:&nbsp;
+            <input type="text"  name="search_word" value="{:input('param.search_word','')}" class="input-text" style="width:250px" placeholder="请输入登录账户/订单号">
+            &nbsp;&nbsp;
+            日期范围：
+            <input type="text" name="start_time" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="input-text start_time" style="width:250px;" placeholder="开始时间" value="{:input('param.start_time')}">&nbsp;-&nbsp;
+            <input type="text" name="end_time" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" class="input-text end_time" style="width:250px;" placeholder="结束时间" value="{:input('param.end_time')}">
+            <button type="submit" class="btn btn-success " name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+            <button type="submit" class="btn btn-default" onclick="$('input[name=\'search_word\']').val('')"  id="search_empty"><i class="fa fa-times"></i> 清空搜索</button>
+            <span class="r">总订单数量：<strong style="color: #ff0000" >{$total}</strong></span>
+        </div>
+    </form>
+</div>
+
+
+<div class="mt-20">
+    <table class="table table-border table-bordered table-bg table-sort">
+        <thead>
+        <tr class="text-c">
+            <th>玲珑ID</th>
+            <th>登陆账号</th>
+            <th>服务类型</th>
+            <th>订单号</th>
+            <th>减少时长(分钟)</th>
+            <th>剩余时长</th>
+            <th>扣款时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {empty name="list"}
+        <tr>
+            <td class="text-c" colspan="11">暂无数据...</td>
+        </tr>
+        {else/}
+        {volist name='list' id='vo'}
+        <tr class="text-c">
+            <td>{$vo['num_id']|default='--'}</td>
+            <td>{$vo['account']|default='--'}</td>
+            <td>
+                {switch name="vo.ser_type"}
+                    {case value="1"}直播{/case}
+                    {case value="2"}点播{/case}
+                    {default /}直播
+                {/switch}
+            </td>
+            <td>{$vo['order_id']|default='--'}</td>
+            <td>{$vo.consume|default='--'}分钟</td>
+            <td>{$vo.package_rest|default='--'}分钟</td>
+            <td>
+                {empty name="vo.create_time"}
+                    --
+                {else/}
+                   {$vo.create_time|date="Y-m-d H:i:s",###}
+                {/empty}
+            </td>
+        </tr>
+        {/volist}
+        {/empty}
+        </tbody>
+    </table>
+</div>
+<nav class="page_admin">
+    {$page}
+</nav>
+
+
+{/block}
+{block name='js'}
+<!--{js href="__static__/admin/js/finance/recharge_list.js"}-->
+<script>
+    $("#search_empty").click(function(){
+        $("input[name='start_time']").val('');
+        $("input[name='end_time']").val('');
+    });
+</script>
+{/block}

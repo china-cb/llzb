@@ -1,0 +1,37 @@
+<footer>
+    <div class="introduce">
+        <div class="introduce_inner">
+            <span class="introduce_time">
+               <i class="iconfont">&#xe614;</i>
+               <span>售前咨询</span>
+               <span>200-8000-900</span>
+            </span>
+            <ul>
+                <li>全方位购买咨询</li>
+                <li>精准的配置推荐</li>
+                <li>灵活的价格方案</li>
+                <li>1对1贴心服务</li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer_inner">
+        <section class="footer_main">
+            <p>
+                <a href="">关于我们</a>
+                <a href="">法律声明</a>
+                <a href="">友情链接</a>
+            </p>
+            <p>
+                <a href="">梦蝶一元购</a>
+                <a href="">梦蝶直播</a>
+                <a href="">梦蝶跑腿</a>
+                <a href="">跑嘀快</a>
+                <a href="">虫虫加速器</a>
+                <a href="">芝麻代理</a>
+                <a href="">梦蝶直播</a>
+            </p>
+        </section>
+    </div>
+</footer>
+<input type="hidden" id="index_url" value="{:url('index/admin/index')}">
+<input type="hidden" id="get_phone_code_url" value="{:url('core/api/get_phone_code')}">
